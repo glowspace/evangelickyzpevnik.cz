@@ -1,0 +1,24 @@
+@import url("https://fonts.googleapis.com/css?family=Nunito:200,400,600");
+
+@font-face {
+    font-family: "Cocogoose";
+    src: url("/fonts/cocogoose-pro-regular.ttf");
+}
+
+@import "variables";
+$main-red: #d83027;
+$main-blue: #3961ad;
+$main-green: #098845;
+$main-yellow: #faa61b;
+
+@import "~bootstrap-material-design/scss/bootstrap-material-design"; // Materialize.css
+
+@import "base";
+@import "navbar";
+@import "cards";
+@import "search";
+@import "song";
+@import "about";
+@import "dark";
+@import "print";
+@import "utility";

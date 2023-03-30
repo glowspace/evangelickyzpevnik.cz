@@ -1,0 +1,62 @@
+@media print {
+    @page {
+        margin: 1cm 2cm;
+    }
+
+    html,
+    body {
+        height: initial;
+    }
+
+    .container,
+    .col-lg-9 {
+        max-width: 100%;
+        flex: none;
+    }
+
+    .container,
+    .col-lg-9,
+    .card-body,
+    .p-1,
+    .card-footer,
+    .px-3.py-2.d-inline-block {
+        padding: 0 !important;
+    }
+
+    .card-footer {
+        padding-top: 10px !important;
+        margin-top: 10px;
+    }
+
+    .row {
+        margin: 0 !important;
+    }
+
+    .ml-3 {
+        margin-left: 0 !important;
+    }
+
+    .card-lyrics .card-header,
+    .position-sticky,
+    .btn,
+    .col-lg-3,
+    .song-number {
+        display: none;
+    }
+
+    body,
+    .card-footer,
+    .tag,
+    .container {
+        background-color: #fff !important;
+        min-width: initial !important;
+    }
+
+    .flex-md-row {
+        flex-direction: column !important;
+    }
+
+    .justify-content-md-end {
+        justify-content: flex-start !important;
+    }
+}
