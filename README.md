@@ -1,8 +1,8 @@
-# Zpěvník pro scholy SPA
+# Portál hudba.e-cirkev.cz
 
-[![Gitpod ready](https://img.shields.io/badge/Gitpod-ready-blue?logo=gitpod)](https://gitpod.io/#https://github.com/proscholy/zpevnik-proscholy-spa)
+>  Projekt vzniká pod záštitou České církve evangelické (e-cirkev.cz) ve spolupráci s komunitou Glow Space.
 
->  User frontend of zpevnik.proscholy.cz written in Nuxt.js
+Logo ČCE je jejím duševním vlastnictvím a nevztahuje se na něj open-source licence, pod kterou je zdrojový kód aplikace zveřejněný.
 
 ## Build Setup
 
