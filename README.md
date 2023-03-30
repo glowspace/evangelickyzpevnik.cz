@@ -4,7 +4,12 @@
 
 Logo ČCE je jejím duševním vlastnictvím a nevztahuje se na něj open-source licence, pod kterou je zdrojový kód aplikace zveřejněný.
 
-## Build Setup
+## Prostředí pro vývoj
+1. Zkopírovat .env.example do .env
+2. yarn install
+3. yarn start
+
+Server se spustí na adrese localhost:3000.
 
 ```bash
 # install dependencies
