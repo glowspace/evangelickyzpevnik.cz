@@ -4,6 +4,8 @@
 
 Logo ČCE je jejím duševním vlastnictvím a nevztahuje se na něj open-source licence, pod kterou je zdrojový kód aplikace zveřejněný.
 
+Rozsáhlejší dokumentace vývoje je dostupná v Confluence komunity Glow Space na adrese: 
+
 ## Prostředí pro vývoj
 1. Zkopírovat .env.example do .env
 2. yarn install

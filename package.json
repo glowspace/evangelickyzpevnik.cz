@@ -1,6 +1,6 @@
 {
-    "name": "zpevnik-proscholy-spa",
-    "version": "1.0.0",
+    "name": "evangelicky-zpevnik",
+    "version": "0.1.1",
     "description": " User frontend of zpevnik.proscholy.cz written in Nuxt.js",
     "author": "Team ProScholy.cz",
     "private": true,
