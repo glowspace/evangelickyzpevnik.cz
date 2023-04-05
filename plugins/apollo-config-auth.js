@@ -8,7 +8,7 @@ export default function() {
     link: createHttpLink({
       credentials: 'include',
 
-      uri: process.env.APP_URL || 'https://' + process.env.VERCEL_URL + '/api',
+      uri: '/api',
 
       fetch: (uri, options) => {
         // preparing for the new Laravel Sanctum authentication
