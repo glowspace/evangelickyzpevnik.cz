@@ -4,7 +4,7 @@ import glob from 'glob-all'
 import path from 'path'
 
 export default {
-    ssr: !process.env.NUXT_SPA,
+    ssr: false,
     env: {
         baseUrl: 'https://zpevnik.proscholy.cz',
         titleWebsite: 'ProScholy.cz',
@@ -28,7 +28,7 @@ export default {
             // { property: 'og:image', content: 'https://zpevnik.proscholy.cz/banner.png' },
             // { property: 'twitter:card', content: 'summary_large_image' },
             // { property: 'twitter:image', content: 'https://zpevnik.proscholy.cz/banner.png' }
-            
+
             { name: 'apple-itunes-app', content: 'app-id=1475375453' }
         ],
         link: [
