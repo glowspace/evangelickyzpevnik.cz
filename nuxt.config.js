@@ -4,7 +4,7 @@ import glob from 'glob-all'
 import path from 'path'
 
 export default {
-    ssr: false,
+    ssr: !process.env.NUXT_SPA,
     env: {
         baseUrl: 'https://zpevnik.proscholy.cz',
         titleWebsite: 'ProScholy.cz',
