@@ -1,21 +1,22 @@
-import { createHttpLink } from 'apollo-link-http'
+import {createHttpLink} from 'apollo-link-http'
 import Cookies from 'js-cookie'
 
-export default function() {
-  return {
-    defaultHttpLink: false,
+export default function () {
 
-    link: createHttpLink({
-      credentials: 'include',
+    return {
+        defaultHttpLink: false,
 
-      uri: process.env.APP_URL || process.env.VERCEL_URL + '/api',
+        link: createHttpLink({
+            credentials: 'include',
 
-      fetch: (uri, options) => {
-        // preparing for the new Laravel Sanctum authentication
-        options.headers['X-XSRF-TOKEN'] = Cookies.get('XSRF-TOKEN')
+            uri: process.env.APP_URL ? process.env.APP_URL + '/api' : process.env.VERCEL_URL + '/api',
 
-        return fetch(uri, options)
-      },
-    }),
-  }
+            fetch: (uri, options) => {
+                // preparing for the new Laravel Sanctum authentication
+                options.headers['X-XSRF-TOKEN'] = Cookies.get('XSRF-TOKEN')
+
+                return fetch(uri, options)
+            },
+        }),
+    }
 }
