@@ -8,7 +8,7 @@ export default {
     env: {
         baseUrl:  process.env.APP_URL
             ? process.env.APP_URL
-            : process.env.VERCEL_URL
+            : 'https://' + process.env.VERCEL_URL
         ,
         titleWebsite: 'Evangelický zpěvník',
         titleSeparator: ' – ',
