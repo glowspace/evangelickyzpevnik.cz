@@ -7,7 +7,7 @@ export default {
     ssr: !process.env.NUXT_SPA,
     env: {
         baseUrl:  process.env.APP_URL,
-        titleWebsite: 'ProScholy.cz',
+        titleWebsite: 'Evangelický zpěvník',
         titleSeparator: ' – ',
         adminUrl: process.env.ADMIN_URL || '',
         regenschoriUrl: process.env.REGENSCHORI_URL || 'https://www.regenschori.cz'
