@@ -6,7 +6,10 @@ import path from 'path'
 export default {
     ssr: !process.env.NUXT_SPA,
     env: {
-        baseUrl:  process.env.APP_URL,
+        baseUrl:  process.env.APP_URL
+            ? process.env.APP_URL
+            : process.env.VERCEL_URL
+        ,
         titleWebsite: 'Evangelický zpěvník',
         titleSeparator: ' – ',
         adminUrl: process.env.ADMIN_URL || '',
