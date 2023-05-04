@@ -154,9 +154,9 @@
 
             <app-links v-if="init" />
 
-            <a href="http://www.musicasacra.cz/" class="footer-logo">
+            <!-- <a href="http://www.musicasacra.cz/" class="footer-logo">
                 <img src="/img/musica-sacra.svg" />
-            </a>
+            </a> -->
 
             <a
                 class="btn btn-secondary mb-0 search-report bg-transparent"
