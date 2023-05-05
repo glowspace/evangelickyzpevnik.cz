@@ -217,7 +217,13 @@ export default {
 
   mounted() {
     if (!this.$apollo.loading && this.author === null) {
-      this.$nuxt.error({ statusCode: 404 });
+      // this.$nuxt.error({ statusCode: 404 });
+      // https://nuxt.com/docs/getting-started/error-handling#createerror
+      throw createError({
+        statusCode: 404,
+        statusMessage: 'Page Not Found',
+        fatal: true,
+      });
     }
   },
 };

@@ -1,10 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  nitro: {
-    routeRules: {
-      '/api': { proxy: process.env.REMOTE_API },
-    },
-  },
   runtimeConfig: {
     public: {
       siteName: 'Evangelický zpěvník',
@@ -20,6 +15,11 @@ export default defineNuxtConfig({
       adminUrl: process.env.ADMIN_URL || '',
       regenschoriUrl:
         process.env.REGENSCHORI_URL || 'https://www.regenschori.cz',
+    },
+  },
+  nitro: {
+    routeRules: {
+      '/api': { proxy: process.env.REMOTE_API },
     },
   },
 });
