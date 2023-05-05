@@ -60,7 +60,7 @@
 
     <div class="p-1 mb-3 mt-n2">
       <div class="px-3 py-2 d-inline-block">
-        Zpěvník ProScholy.cz <img src="/img/logo.svg" width="20px" />
+        Evangelický zpěvník <img src="/img/logo.svg" width="20px" />
         {{ new Date().getFullYear() }}
       </div>
       <div class="float-right">
@@ -199,7 +199,7 @@ export default {
       let str = 'Písně i ';
       let type = this.author && this.author.type ? this.author.type : 0;
       str += this.thisStrings[type];
-      str += ' najdete ve Zpěvníku pro scholy.';
+      str += ' najdete v Evangelickém zpěvníku.';
       return str;
     },
   },

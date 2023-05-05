@@ -15,8 +15,11 @@
   "dependencies": {
     "@apollo/client": "^3.7.14",
     "@vue/apollo-option": "^4.0.0-beta.4",
+    "bowser": "^2.11.0",
     "destr": "^1.2.2",
     "graphql": "^16.6.0",
-    "graphql-tag": "^2.12.6"
+    "graphql-tag": "^2.12.6",
+    "lodash": "^4.17.21",
+    "nosleep.js": "^0.12.0"
   }
 }

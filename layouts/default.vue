@@ -27,29 +27,29 @@ useHead({
   ],
   link: [
     { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-    {
-      rel: 'apple-touch-icon',
-      sizes: '180x180',
-      href: '/favicon/apple-touch-icon.png',
-    },
-    {
-      rel: 'icon',
-      type: 'image/png',
-      sizes: '32x32',
-      href: '/favicon/favicon-32x32.png',
-    },
-    {
-      rel: 'icon',
-      type: 'image/png',
-      sizes: '16x16',
-      href: '/favicon/favicon-16x16.png',
-    },
-    { rel: 'manifest', href: '/favicon/site.webmanifest' },
-    {
-      rel: 'mask-icon',
-      href: '/favicon/safari-pinned-tab.svg',
-      color: '#5bbad5',
-    },
+    // {
+    //   rel: 'apple-touch-icon',
+    //   sizes: '180x180',
+    //   href: '/favicon/apple-touch-icon.png',
+    // },
+    // {
+    //   rel: 'icon',
+    //   type: 'image/png',
+    //   sizes: '32x32',
+    //   href: '/favicon/favicon-32x32.png',
+    // },
+    // {
+    //   rel: 'icon',
+    //   type: 'image/png',
+    //   sizes: '16x16',
+    //   href: '/favicon/favicon-16x16.png',
+    // },
+    // { rel: 'manifest', href: '/favicon/site.webmanifest' },
+    // {
+    //   rel: 'mask-icon',
+    //   href: '/favicon/safari-pinned-tab.svg',
+    //   color: '#5bbad5',
+    // },
     { rel: 'preconnect', href: 'https://fonts.gstatic.com' },
     {
       rel: 'stylesheet',
@@ -79,12 +79,12 @@ onMounted(() => {
   }
 
   // http://patorjk.com/software/taag/#p=display&f=Ivrit&t=ProScholy.cz
-  console.log(
-    "%c  ____           ____       _           _                 \n |  _ \\ _ __ ___/ ___|  ___| |__   ___ | |_   _   ___ ____\n | |_) | '__/ _ \\___ \\ / __| '_ \\ / _ \\| | | | | / __|_  /\n |  __/| | | (_) |__) | (__| | | | (_) | | |_| || (__ / / \n |_|   |_|  \\___/____/ \\___|_| |_|\\___/|_|\\__, (_)___/___|\n                                          |___/           ",
-    'font-family: monospace; font-weight: bold;'
-  );
-  console.log(
-    'Hmm, asi se tady vyznáš… Stále hledáme posily do našeho týmu vývojářů, takže jestli se k nám chceš přidat, neváhej nás kontaktovat na redakce@proscholy.cz.'
-  );
+  // console.log(
+  //   "%c  ____           ____       _           _                 \n |  _ \\ _ __ ___/ ___|  ___| |__   ___ | |_   _   ___ ____\n | |_) | '__/ _ \\___ \\ / __| '_ \\ / _ \\| | | | | / __|_  /\n |  __/| | | (_) |__) | (__| | | | (_) | | |_| || (__ / / \n |_|   |_|  \\___/____/ \\___|_| |_|\\___/|_|\\__, (_)___/___|\n                                          |___/           ",
+  //   'font-family: monospace; font-weight: bold;'
+  // );
+  // console.log(
+  //   'Hmm, asi se tady vyznáš… Stále hledáme posily do našeho týmu vývojářů, takže jestli se k nám chceš přidat, neváhej nás kontaktovat na redakce@proscholy.cz.'
+  // );
 });
 </script>

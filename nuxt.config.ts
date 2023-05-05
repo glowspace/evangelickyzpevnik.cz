@@ -15,6 +15,7 @@ export default defineNuxtConfig({
       adminUrl: process.env.ADMIN_URL || '',
       regenschoriUrl:
         process.env.REGENSCHORI_URL || 'https://www.regenschori.cz',
+      proscholyUrl: process.env.PROSCHOLY_URL || 'https://zpevnik.proscholy.cz',
     },
   },
   nitro: {

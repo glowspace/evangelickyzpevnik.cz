@@ -1,6 +1,8 @@
 <template>
     <div class="card">
-        <div class="card-header p-1"><v-skeleton-loader type="text" class="px-3 pb-2 pt-3" max-width="200" /></div>
+        <div class="card-header p-1">
+          <!-- <v-skeleton-loader type="text" class="px-3 pb-2 pt-3" max-width="200" /> -->
+        </div>
         <div class="card-body p-0 overflow-hidden">
             <table class="table m-0">
                 <tbody>
