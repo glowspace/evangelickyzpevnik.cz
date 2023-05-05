@@ -9,6 +9,7 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@nuxtjs/tailwindcss": "^6.6.7",
     "@rollup/plugin-graphql": "^2.0.3",
     "@types/node": "^18",
     "nuxt": "^3.4.3"
@@ -23,7 +24,6 @@
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
     "lodash": "^4.17.21",
-    "nosleep.js": "^0.12.0",
-    "tailmater": "https://github.com/aribudin/tailmater"
+    "nosleep.js": "^0.12.0"
   }
 }

@@ -1,0 +1,9 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@import './lib';
+
+body {
+  /* @apply p-7 bg-red-200; */
+}

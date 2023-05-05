@@ -2,7 +2,8 @@ import graphql from '@rollup/plugin-graphql';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  debug: true,
+  // debug: true,
+  modules: ['@nuxtjs/tailwindcss'],
   runtimeConfig: {
     public: {
       siteName: 'Evangelický zpěvník',
@@ -28,5 +29,8 @@ export default defineNuxtConfig({
     routeRules: {
       '/api': { proxy: process.env.REMOTE_API },
     },
+  },
+  tailwindcss: {
+    configPath: '~/assets/tailwind.config.js',
   },
 });
