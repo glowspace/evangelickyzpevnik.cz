@@ -1,5 +1,6 @@
 <script>
-import { isEmpty, isEqual } from 'lodash';
+import lodash from 'lodash';
+const { isEqual, isEmpty } = lodash;
 
 export default {
   methods: {

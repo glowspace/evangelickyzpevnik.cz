@@ -2,6 +2,7 @@ import graphql from '@rollup/plugin-graphql';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  debug: true,
   runtimeConfig: {
     public: {
       siteName: 'Evangelický zpěvník',

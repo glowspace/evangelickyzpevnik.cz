@@ -403,14 +403,15 @@
 
 <script>
 import { store } from '../../store.js';
-import { throttle } from 'lodash';
+import lodash from 'lodash';
+const { throttle } = lodash;
 
 import FontSizer from './FontSizer';
 import ChordMode from './ChordMode';
 import ChordSharpFlat from './ChordSharpFlat';
 import RightControls from './RightControls';
 import Transposition from './Transposition';
-import SongLyricParts from '../Renderer/SongLyricParts.vue';
+import SongLyricParts from '../Renderer/SongLyricParts';
 import { getFullName } from '~/components/SongName';
 import Tags from '../Tags';
 
