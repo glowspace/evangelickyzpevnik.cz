@@ -1,3 +1,5 @@
+import graphql from '@rollup/plugin-graphql';
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   runtimeConfig: {
@@ -17,6 +19,9 @@ export default defineNuxtConfig({
         process.env.REGENSCHORI_URL || 'https://www.regenschori.cz',
       proscholyUrl: process.env.PROSCHOLY_URL || 'https://zpevnik.proscholy.cz',
     },
+  },
+  vite: {
+    plugins: [graphql()], // Allow usage of .gql/.graphql files
   },
   nitro: {
     routeRules: {

@@ -4,6 +4,16 @@ import type { RouterOptions } from '@nuxt/schema';
 export default <RouterOptions>{
   routes: (_routes) => [
     {
+      name: 'index',
+      path: '/',
+      component: () => import('~/pages/search/Search.vue'),
+    },
+    {
+      name: 'song',
+      path: '/pisen/:id/:slug?',
+      component: () => import('~/pages/song/Song.vue'),
+    },
+    {
       name: 'author',
       path: '/autor/:id',
       component: () => import('~/pages/author/Author.vue'),
@@ -12,11 +22,6 @@ export default <RouterOptions>{
       name: 'about',
       path: '/o-zpevniku',
       component: () => import('~/pages/about/About.vue'),
-    },
-    {
-      name: 'song',
-      path: '/pisen/:id/:slug?',
-      component: () => import('~/pages/song/Song.vue'),
     },
   ],
 };
