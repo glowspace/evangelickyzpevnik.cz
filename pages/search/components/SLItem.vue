@@ -2,14 +2,14 @@
   <tr>
     <!-- <td class="p-1 align-middle text-right w-min">
       <nuxt-link
-        class="p-2 pl-3 w-100 d-flex justify-content-between text-secondary"
+        class="p-2 pl-3 w-full d-flex justify-content-between text-secondary"
         :to="song_lyric.public_route"
       >
         <span>{{ number }}</span>
       </nuxt-link>
     </td> -->
-    <td class="p-1 align-middle">
-      <nuxt-link class="p-2 w-100 d-inline-block" :to="song_lyric.public_route">
+    <td class="p-1" :colspan="song_lyric.lang != 'cs' ? 1 : 2">
+      <nuxt-link class="p-2 w-full inline-block" :to="song_lyric.public_route">
         <song-name :song="song_lyric" :multiline="true" />
       </nuxt-link>
     </td>
@@ -34,13 +34,13 @@
       </span>
     </td> -->
     <td
-      class="no-left-padding text-right text-uppercase small align-middle pr-3"
+      class="text-right pr-3 uppercase text-sm"
       v-if="song_lyric.lang != 'cs'"
     >
       <span
         :class="[
           {
-            'text-very-muted': !song_lyric.has_lyrics,
+            'text-secondary/20': !song_lyric.has_lyrics,
           },
           'pr-sm-0 pr-1',
         ]"
@@ -48,43 +48,39 @@
         >{{ song_lyric.lang.substring(0, 3) }}</span
       >
     </td>
-    <td
-      style="width: 10px"
-      class="no-left-padding align-middle d-none d-sm-table-cell"
-    >
-      <i
-        v-if="song_lyric.has_chords"
-        class="fas fa-guitar text-primary"
-        title="Tato píseň má přidané akordy."
-      ></i>
-      <i
-        v-else-if="song_lyric.has_lyrics"
-        class="fas fa-align-left text-secondary"
-        title="U této písně je zaznamenán text (bez akordů)."
-      ></i>
-      <i v-else class="fas fa-align-left text-very-muted"></i>
-    </td>
-    <td
-      style="width: 10px"
-      class="no-left-padding align-middle d-none d-sm-table-cell"
-    >
-      <i
-        v-if="song_lyric.scores.length"
-        class="fas fa-file-alt text-danger"
-        title="U této písně je k dispozici soubor s notami."
-      ></i>
-      <i v-else class="fas fa-file-alt text-very-muted"></i>
-    </td>
-    <td
-      style="width: 10px"
-      class="no-left-padding pr-4 align-middle d-none d-sm-table-cell"
-    >
-      <i
-        v-if="song_lyric.recordings.length"
-        class="fas fa-headphones text-success"
-        title="U této písně je k dispozici nahrávka."
-      ></i>
-      <i v-else class="fas fa-headphones text-very-muted"></i>
+    <td class="w-24">
+      <div class="icons">
+        <BasicIcon
+          v-if="song_lyric.has_chords"
+          fa="fas fa-guitar text-primary text-lg -mt-px"
+          class=""
+          title="Tato píseň má přidané akordy."
+        ></BasicIcon>
+        <BasicIcon
+          v-else-if="song_lyric.has_lyrics"
+          title="U této písně je zaznamenán text (bez akordů)."
+          >subject</BasicIcon
+        >
+        <BasicIcon v-else class="text-secondary/20">subject</BasicIcon>
+
+        <BasicIcon
+          v-if="song_lyric.scores.length"
+          title="U této písně je k dispozici soubor s notami."
+          class="text-error-500"
+          fill
+          >audio_file</BasicIcon
+        >
+        <BasicIcon v-else class="text-secondary/20" fill>audio_file</BasicIcon>
+
+        <BasicIcon
+          v-if="song_lyric.recordings.length"
+          title="U této písně je k dispozici nahrávka."
+          class="text-green"
+          fill
+          >headphones</BasicIcon
+        >
+        <BasicIcon v-else class="text-secondary/20" fill>headphones</BasicIcon>
+      </div>
     </td>
   </tr>
 </template>
@@ -92,3 +88,24 @@
 <script setup>
 const props = defineProps(['song_lyric', 'number']);
 </script>
+
+<style lang="postcss" scoped>
+tr:hover {
+ @apply bg-surface-50;
+}
+
+td {
+  @apply align-middle;
+}
+
+.icons {
+  @apply flex;
+
+  & > * {
+    @apply mr-2;
+
+    width: 25px;
+    text-align: center;
+  }
+}
+</style>

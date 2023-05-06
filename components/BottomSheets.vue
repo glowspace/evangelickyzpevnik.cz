@@ -4,14 +4,14 @@
     <!-- background sheets dialogs -->
     <div
       @click="show = false"
-      class="group-[&.show]:opacity-60 dark:group-[&.show]:opacity-60 group-[&.show]:inset-0 fixed z-40 opacity-0 -top-full bg-neutral-900 transition-opacity"
+      class="background group-[&.show]:opacity-60 dark:group-[&.show]:opacity-60 group-[&.show]:inset-0 fixed z-40 opacity-0 -top-full bg-neutral-900 transition-opacity"
     ></div>
     <!-- side sheets dialogs -->
     <div
-      class="group-[&.show]:translate-y-0 fixed left-0 bottom-0 right-0 z-50 h-4/5 transition-transform translate-y-full duration-[400ms] flex flex-col gap-2"
+      class="sheet group-[&.show]:translate-y-0 fixed left-0 bottom-0 right-0 z-50 h-4/5 transition-transform translate-y-full duration-[400ms] flex flex-col gap-2"
     >
       <div
-        class="bg-surface-100 dark:bg-surfacedark-100 rounded-t-2xl h-full flex flex-col"
+        class="bg-surface-100 dark:bg-surfacedark-100 rounded-t-2xl h-full w-full flex flex-col"
         style="max-width: 400px; margin: 0 auto;"
       >
         <!-- header -->
@@ -44,3 +44,15 @@ const show = computed({
   },
 });
 </script>
+
+<style lang="postcss" scoped>
+.background, .sheet {
+  visibility: hidden;
+}
+
+.show {
+  .background, .sheet {
+    visibility: visible;
+  }
+}
+</style>

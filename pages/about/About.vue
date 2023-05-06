@@ -1,6 +1,6 @@
 <template>
   <TopBar title="O Evangelickém zpěvníku" @back="navigateTo('/')" />
-  <div class="container">
+  <div class="cont">
     <h2>Kdo za projektem stojí?</h2>
 
     <p>
@@ -11,12 +11,12 @@
       rychlou a praktickou alternativu.
     </p>
 
-    <h3>Náš tým</h3>
+    <h2>Náš tým</h2>
 
     <div class="our-team">
-      <h4>Vývoj</h4>
+      <h3>Vývoj</h3>
 
-      <div class="d-block d-sm-flex flex-wrap">
+      <ul>
         <user-card name="Miroslav Šerý" info="vedoucí vývojář, vývoj webu" />
         <user-card
           name="Michael Dojčár"
@@ -25,7 +25,7 @@
         <user-card name="Vít Kološ" info="vývoj webu, návrh rozhraní" />
         <user-card name="Patrik Dobiáš" info="mobilní aplikace pro iOS" />
         <user-card name="Benjamín Tichý" info="logo, design, návrh rozhraní" />
-      </div>
+      </ul>
     </div>
   </div>
 </template>
@@ -51,3 +51,25 @@ export default {
   },
 };
 </script>
+
+<style lang="postcss" scoped>
+  .cont {
+    @apply mx-6 my-4;
+  }
+
+  h2, h3, h4  {
+    @apply mt-6;
+  }
+
+  p {
+    @apply my-3
+  }
+
+  h2 {
+    @apply text-xl;
+  }
+
+  h3 {
+    @apply uppercase;
+  }
+</style>

@@ -30,7 +30,7 @@
             <tr v-for="(author, index) in authors" :key="author.id">
               <td class="p-1 align-middle">
                 <nuxt-link
-                  class="p-2 pl-3 w-100 d-inline-block"
+                  class="p-2 pl-3 w-full d-inline-block"
                   :to="author.public_route"
                   >{{ author.name }}</nuxt-link
                 >

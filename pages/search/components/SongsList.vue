@@ -1,29 +1,23 @@
 <template>
   <!-- todo: refactor so that it does not need client-only wrapper -->
   <client-only>
-    <div class="songs-list">
+    <div class="songs-list mb-4">
       <!-- <v-progress-linear
             indeterminate
             color="bg-main-blue"
             :height="4"
             :class="[results_loaded ? '' : 'opacity-1', 'custom-progress-bar']"
         ></v-progress-linear> -->
-      <table class="table m-0">
+      <table class="table m-0 w-full">
         <tbody>
           <tr v-if="!results_loaded && !(song_lyrics && song_lyrics.length)">
-            <td style="width: 4rem">
-              <div class="d-flex justify-content-end align-items-center">
-                <span>&nbsp;</span>
-                <span
-                  class="spinner-border spinner-border-sm"
-                  role="status"
-                  aria-hidden="true"
-                ></span>
-              </div>
+          <!-- <tr v-if="true"> -->
+            <td class="pl-8 pr-3">
+                <BasicSpinner />
             </td>
-            <td>Načítám...</td>
+            <td class="py-2">Načítám…</td>
             <td class="p-1" colspan="5">
-              <a
+              <!-- <a
                 class="btn btn-secondary float-right"
                 :href="
                   'https://proscholy.atlassian.net/servicedesk/customer/portal/1/group/6/create/20?customfield_10056=' +
@@ -31,7 +25,7 @@
                 "
               >
                 Nahlásit
-              </a>
+              </a> -->
             </td>
           </tr>
           <template v-else-if="song_lyrics && song_lyrics.length">
@@ -67,19 +61,14 @@
           </tr>
         </tbody>
       </table>
-      <div class="text-center">
+      <div class="text-center my-2">
         <div
-          class="btn btn-primary d-inline-flex align-items-center"
+          class="inline-flex items-center uppercase text-sm"
           v-if="enable_more && results_loaded"
           @click="loadMore"
         >
-          <span
-            class="spinner-border spinner-border-sm mr-3"
-            role="status"
-            aria-hidden="true"
-            v-if="caniuseObserver"
-          ></span
-          >{{ caniuseObserver ? 'Načítám' : 'Načíst' }} další výsledky (celkem
+          <BasicSpinner v-if="caniuseObserver" class="mr-3" />
+          {{ caniuseObserver ? 'Načítám' : 'Načíst' }} další výsledky (celkem
           {{ song_lyrics_paginated.paginatorInfo.total }})
         </div>
       </div>

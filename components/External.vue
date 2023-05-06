@@ -2,13 +2,13 @@
   <tr v-if="line">
     <td class="p-0 align-middle">
       <a
-        class="p-2 w-100 d-inline-flex align-items-center"
+        class="p-2 w-full d-inline-flex align-items-center"
         :href="mediaLink"
         target="_blank"
         @click="openPreview($event)"
       >
         <span><i :class="[typeClass, 'pl-1 pr-3']"></i></span>
-        <span class="pr-3 w-100">{{ displayName }}</span>
+        <span class="pr-3 w-full">{{ displayName }}</span>
         <span><i :class="[previewClass, 'pl-0 pr-0']"></i></span>
       </a>
     </td>
@@ -66,19 +66,19 @@
         ></a>
       </div>
       <div class="flex-grow-1">
-        <table class="w-100 external-table">
+        <table class="w-full external-table">
           <tbody>
             <tr>
               <td colspan="2">
                 <span class="d-flex">
                   <a
-                    class="w-100 d-inline-flex"
+                    class="w-full d-inline-flex"
                     :href="mediaLink"
                     target="_blank"
                     @click="openPreview($event)"
                   >
                     <span class="px-0"><i :class="typeClass"></i></span>
-                    <span class="pl-2 pr-3 w-100 font-weight-bold">{{
+                    <span class="pl-2 pr-3 w-full font-weight-bold">{{
                       displayName
                     }}</span>
                     <span><i class="fas fa-external-link-alt"></i></span>
@@ -172,7 +172,7 @@
         "
         :src="source"
         controls
-        class="w-100"
+        class="w-full"
       >
         Váš prohlížeč bohužel nepodporuje přehrávání zvukových souborů.
       </audio>
@@ -183,7 +183,7 @@
         class="overflow-auto"
         :style="'height:' + height"
       >
-        <img :src="source" class="w-100" />
+        <img :src="source" class="w-full" />
       </div>
       <iframe
         v-else

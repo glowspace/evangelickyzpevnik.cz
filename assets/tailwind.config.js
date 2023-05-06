@@ -9,6 +9,7 @@ module.exports = {
       transparent: 'transparent',
       black: '#000',
       white: '#fff',
+      green: '#44B436',
       primary: {
         DEFAULT: '#006EB7',
         50: '#EAF7FF',

@@ -6,7 +6,7 @@
                 <tbody>
                     <tr v-for="(sl, key) in songs" :key="key">
                         <td class="p-1 align-middle">
-                            <nuxt-link class="px-3 py-2 w-100 d-inline-block" :to="sl.public_route"><song-name :song="sl"/></nuxt-link>
+                            <nuxt-link class="px-3 py-2 w-full d-inline-block" :to="sl.public_route"><song-name :song="sl"/></nuxt-link>
                         </td>
                         <td class="author-secondary-links px-1 py-2 align-middle">
                             <song-author-label :song="sl"></song-author-label>
