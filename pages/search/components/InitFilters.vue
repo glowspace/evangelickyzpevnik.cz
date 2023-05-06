@@ -1,26 +1,20 @@
 <template>
-  <div
-    :class="[
-      { 'opacity-1': !$apollo.loading },
-      'song-tags song-tags--init-filters',
-    ]"
-  >
-    <a
-      v-show="randomTags.length"
-      class="tag tag--filter-icon px-1"
-      @click="$emit('input', null)"
-      ><i class="fas fa-filter text-white"></i
-    ></a>
+  <div :class="[{ 'opacity-100': randomTags.length }, 'flex flex-row flex-wrap items-center opacity-0 h-10 overflow-hidden ml-6 mr-4']">
+    <BasicButton
+      icon="filter_alt"
+      icon-fill
+      icon-only
+      compact
+      text
+      @click="$emit('update:modelValue', {})"
+    />
     <client-only>
-      <span>
-        <a
-          class="tag border-0"
-          v-for="tag in randomTags"
-          :key="'tag-' + tag.id"
-          @click="selectTag(tag)"
-          >{{ tag.name }}</a
-        >
-      </span>
+      <BasicChip
+        v-for="tag in randomTags"
+        :key="tag.id"
+        @click="selectTag(tag)"
+        >{{ tag.name }}</BasicChip
+      >
     </client-only>
   </div>
 </template>

@@ -4,7 +4,16 @@
     :to="to"
     :href="href"
     @click="clicked"
-    :class="['btn', btnType, props.class]"
+    :class="[
+      'btn',
+      btnType,
+      {
+        'icon-only': iconOnly,
+        /*'!pr-8': icon*/
+        compact,
+      },
+      props.class,
+    ]"
   >
     <BasicIcon v-if="icon" :fill="iconFill">{{ icon }}</BasicIcon>
     <slot />
@@ -21,6 +30,8 @@ const props = defineProps({
   class: String,
   text: Boolean,
   iconFill: Boolean,
+  compact: Boolean,
+  iconOnly: Boolean,
 });
 
 function clicked() {
@@ -51,5 +62,14 @@ const btnType = computed(() => {
 .btn.text {
   @apply hover:bg-surface-200
   dark:text-primary-200 dark:hover:bg-surfacedark-200;
+}
+
+.icon-only {
+  @apply relative !inline-flex !items-center justify-center w-12 h-12 gap-x-2 py-2.5 px-6 rounded-[6.25rem] text-sm tracking-[.00714em] text-center font-medium dark:text-primary-200;
+  @apply hover:bg-surface-300 focus:bg-surface-400 dark:hover:bg-surfacedark-300 dark:focus:bg-surfacedark-400;
+}
+
+.compact {
+  @apply w-8 h-8 p-1;
 }
 </style>

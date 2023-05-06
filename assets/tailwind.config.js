@@ -25,6 +25,7 @@ module.exports = {
         950: '#003B63'
       },
       secondary: {
+        DEFAULT: '#787579',
         10: '#FFFBFE',
         50: '#F6EDFF',
         100: '#E8DEF8',

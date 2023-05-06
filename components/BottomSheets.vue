@@ -1,0 +1,46 @@
+<template>
+  <!-- side sheets dialog -->
+  <div class="group" :class="{ show }">
+    <!-- background sheets dialogs -->
+    <div
+      @click="show = false"
+      class="group-[&.show]:opacity-60 dark:group-[&.show]:opacity-60 group-[&.show]:inset-0 fixed z-40 opacity-0 -top-full bg-neutral-900 transition-opacity"
+    ></div>
+    <!-- side sheets dialogs -->
+    <div
+      class="group-[&.show]:translate-y-0 fixed left-0 bottom-0 right-0 z-50 h-4/5 transition-transform translate-y-full duration-[400ms] flex flex-col gap-2"
+    >
+      <div
+        class="bg-surface-100 dark:bg-surfacedark-100 rounded-t-2xl h-full flex flex-col"
+        style="max-width: 400px; margin: 0 auto;"
+      >
+        <!-- header -->
+        <div class="min-h-[56px] flex flex-row items-center gap-3 px-6 pt-6">
+          <h3 class="flex flex-grow text-base tracking-[.009375em]">
+            {{ title }}
+          </h3>
+          <button @click="show = false" class="flex items-center justify-center">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <!-- body -->
+        <div class="relative text-left px-6 py-2 overflow-y-scroll">
+          <slot />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+const props = defineProps(['title', 'modelValue']);
+const emit = defineEmits(['update:modelValue']);
+const show = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value) {
+    emit('update:modelValue', value);
+  },
+});
+</script>

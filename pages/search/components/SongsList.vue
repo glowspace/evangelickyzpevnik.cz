@@ -35,103 +35,12 @@
             </td>
           </tr>
           <template v-else-if="song_lyrics && song_lyrics.length">
-            <tr v-for="song_lyric in song_lyrics" :key="song_lyric.id">
-              <td class="p-1 align-middle text-right w-min">
-                <nuxt-link
-                  class="p-2 pl-3 w-100 d-flex justify-content-between text-secondary"
-                  :to="song_lyric.public_route"
-                >
-                  <span>{{ getSongNumber(song_lyric, true) }}</span>
-                  <span>{{ getSongNumber(song_lyric, false) }}</span>
-                </nuxt-link>
-              </td>
-              <td class="p-1 align-middle">
-                <nuxt-link
-                  class="p-2 w-100 d-inline-block"
-                  :to="song_lyric.public_route"
-                >
-                  <song-name :song="song_lyric" :multiline="true" />
-                </nuxt-link>
-              </td>
-              <td
-                class="p-1 align-middle"
-                :colspan="song_lyric.lang != 'cs' ? 1 : 2"
-              >
-                <span
-                  v-for="(ap, authorIndex) in song_lyric.authors_pivot"
-                  :key="authorIndex"
-                >
-                  <span v-if="authorIndex">,</span>
-                  <nuxt-link
-                    :to="ap.pivot.author.public_route"
-                    :title="
-                      song_lyric.type
-                        ? { GENERIC: '', LYRICS: 'text', MUSIC: 'hudba' }[
-                            'LYRICS'
-                          ]
-                        : { GENERIC: '', LYRICS: 'text', MUSIC: 'hudba' }[
-                            ap.pivot.authorship_type
-                          ]
-                    "
-                    class="text-secondary"
-                    >{{ ap.pivot.author.name }}</nuxt-link
-                  >
-                </span>
-              </td>
-              <td
-                class="no-left-padding text-right text-uppercase small align-middle pr-3"
-                v-if="song_lyric.lang != 'cs'"
-              >
-                <span
-                  :class="[
-                    {
-                      'text-very-muted': !song_lyric.has_lyrics,
-                    },
-                    'pr-sm-0 pr-1',
-                  ]"
-                  :title="song_lyric.lang_string"
-                  >{{ song_lyric.lang.substring(0, 3) }}</span
-                >
-              </td>
-              <td
-                style="width: 10px"
-                class="no-left-padding align-middle d-none d-sm-table-cell"
-              >
-                <i
-                  v-if="song_lyric.has_chords"
-                  class="fas fa-guitar text-primary"
-                  title="Tato píseň má přidané akordy."
-                ></i>
-                <i
-                  v-else-if="song_lyric.has_lyrics"
-                  class="fas fa-align-left text-secondary"
-                  title="U této písně je zaznamenán text (bez akordů)."
-                ></i>
-                <i v-else class="fas fa-align-left text-very-muted"></i>
-              </td>
-              <td
-                style="width: 10px"
-                class="no-left-padding align-middle d-none d-sm-table-cell"
-              >
-                <i
-                  v-if="song_lyric.scores.length"
-                  class="fas fa-file-alt text-danger"
-                  title="U této písně je k dispozici soubor s notami."
-                ></i>
-                <i v-else class="fas fa-file-alt text-very-muted"></i>
-              </td>
-              <td
-                style="width: 10px"
-                class="no-left-padding pr-4 align-middle d-none d-sm-table-cell"
-              >
-                <i
-                  v-if="song_lyric.recordings.length"
-                  class="fas fa-headphones text-success"
-                  title="U této písně je k dispozici nahrávka."
-                ></i>
-                <i v-else class="fas fa-headphones text-very-muted"></i>
-              </td>
-            </tr>
+            <template v-for="song_lyric in song_lyrics" :key="song_lyric.id">
+              <SLItem
+                :song_lyric="song_lyric"
+                :number="getSongNumber(song_lyric)"
+              />
+            </template>
             <tr v-if="results_loaded">
               <td class="p-0 border-top-0">
                 <scroll-trigger
@@ -186,7 +95,7 @@ import buildElasticSearchParams, {
 } from '~/components/Search/buildElasticSearchParams';
 import mergeFetchMoreResult from '~/components/Search/mergeFetchMoreResult';
 import { fetchFiltersQuery } from './fetchFiltersQuery.graphql';
-import SongName from '~/components/SongName';
+import SLItem from './SLItem';
 
 // Query
 const FETCH_ITEMS = gql`
@@ -273,7 +182,7 @@ export default {
     },
   },
 
-  components: { ScrollTrigger, SongName },
+  components: { ScrollTrigger, SLItem },
 
   data() {
     return {
@@ -351,25 +260,18 @@ export default {
       }
     },
 
-    getSongNumber(song_lyric, getfirstPart) {
+    getSongNumber(song_lyric) {
       if (this.preferred_songbook_id !== null) {
         let rec = song_lyric.songbook_records.find(
           (record) => record.pivot.songbook.id === this.preferred_songbook_id
         );
 
         if (rec) {
-          if (getfirstPart) {
-            return rec.pivot.songbook.shortcut + ' ';
-          } else {
-            return rec.pivot.number;
-          }
+          return rec.pivot.songbook.shortcut + ' ' + rec.pivot.number;
         }
       }
 
-      if (!getfirstPart) {
-        return song_lyric.song_number;
-      }
-      return '';
+      return song_lyric.song_number;
     },
   },
 
@@ -425,13 +327,16 @@ export default {
       this.results_loaded = false;
     },
 
-    selectedSongbooks(val) {
-      let arr = Object.keys(val);
-      if (arr.length == 1) {
-        this.preferred_songbook_id = arr[0];
-      } else {
-        this.preferred_songbook_id = null;
-      }
+    selectedSongbooks: {
+      handler(val) {
+        let arr = Object.keys(val);
+        if (arr.length == 1) {
+          this.preferred_songbook_id = arr[0];
+        } else {
+          this.preferred_songbook_id = null;
+        }
+      },
+      deep: true,
     },
   },
 };

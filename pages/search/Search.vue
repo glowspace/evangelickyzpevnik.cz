@@ -1,84 +1,77 @@
 <template>
   <div>
-    <logo />
-    <SearchBox v-model="search_string" @enter="inputEnter" @click="init = false" />
-    <BasicButton
-      @click="displayFilter = !displayFilter"
-      icon="filter_alt"
-      icon-fill
-      :class="{ active: displayFilter }"
-      text
-    ></BasicButton>
+    <Logo v-if="init" />
+    <StickyContainer :onDashboard="init">
+      <SearchBox
+        v-model="search_string"
+        :onDashboard="init"
+        @enter="inputEnter"
+        @focus="init = false"
+        @back="
+          init = true;
+          resetState(true);
+        "
+      />
+      <FilterRow v-if="!init">
+        <Filters
+          v-model:selected-songbooks="selected_songbooks"
+          v-model:selected-tags="selected_tags"
+          v-model:selected-languages="selected_languages"
+          v-model:show-authors="showAuthors"
+          v-model:sort="sort"
+          v-model:descending="descending"
+          :search-string="search_string"
+          @refresh-seed="refreshSeed"
+          @input="updateHistoryState"
+        ></Filters>
+      </FilterRow>
+    </StickyContainer>
     <InitFilters
       v-if="init"
       v-model="selected_tags"
       @update:modelValue="init = false"
     ></InitFilters>
-    <BasicButton
-      v-if="init"
-      @click="init = false"
-      icon="add"
-      class="text-primary"
-      text
-      >Zobrazit všechy písně</BasicButton
-    >
-    <div
-      class="mx-2 d-lg-none filter-panel position-absolute"
-      v-show="!init && displayFilter"
-    >
-      <a
-        class="btn btn-secondary float-right fixed-top position-sticky"
-        @click="displayFilter = false"
+    <div class="text-center mt-1">
+      <BasicButton
+        v-if="init"
+        @click="init = false"
+        icon="add"
+        class="text-primary -ml-3"
+        text
+        >Zobrazit všechy písně</BasicButton
       >
-        <i class="fas fa-times pr-0"></i>
-      </a>
-      <!-- filters shown only for mobile -->
-      <Filters
-        v-model:selected-songbooks="selected_songbooks"
-        v-model:selected-tags="selected_tags"
-        v-model:selected-languages="selected_languages"
-        v-model:show-authors="showAuthors"
-        v-model:sort="sort"
-        v-model:descending="descending"
-        :search-string="search_string"
-        @refresh-seed="refreshSeed"
-        @input="updateHistoryState"
-      ></Filters>
     </div>
-    <div class="row justify-content-center text-center pt-4" v-show="init">
+    <!-- todo: news -->
+    <!-- <div class="row justify-content-center text-center pt-4" v-show="init">
       <div class="col-lg-8 search-column">
         <News><div class="news-opener" @click="init = false"></div></News>
       </div>
       <div class="col-lg-4 search-balance"></div>
-    </div>
-    <div class="row" v-show="!init">
-      <div class="col-lg-8">
-        <News v-show="!filters_active && !search_string" />
-        <div class="card">
-          <div class="card-body p-0">
-            <SongsList
-              v-if="!showAuthors"
-              :search-string="search_string"
-              :selected-tags="selected_tags"
-              :selected-songbooks="selected_songbooks"
-              :selected-languages="selected_languages"
-              :sort="parseInt(sort)"
-              :descending="descending"
-              :seed="parseInt(seed)"
-              @query-loaded="queryLoaded"
-            ></SongsList>
-            <AuthorsList
-              v-else
-              :search-string="search_string"
-              @query-loaded="queryLoaded"
-            ></AuthorsList>
-          </div>
-        </div>
-      </div>
+    </div> -->
+    <div v-show="!init">
+      <!-- <News v-show="!filters_active && !search_string" /> -->
+      <SongsList
+        v-if="!showAuthors"
+        :search-string="search_string"
+        :selected-tags="selected_tags"
+        :selected-songbooks="selected_songbooks"
+        :selected-languages="selected_languages"
+        :sort="parseInt(sort)"
+        :descending="descending"
+        :seed="parseInt(seed)"
+        @query-loaded="queryLoaded"
+      ></SongsList>
+      <AuthorsList
+        v-else
+        :search-string="search_string"
+        @query-loaded="queryLoaded"
+      ></AuthorsList>
     </div>
 
-    <app-links v-if="init" />
-    <a
+    <!-- todo: app links -->
+    <!-- <app-links v-if="init" /> -->
+    <!-- todo: report bug -->
+    <!-- <a
       class="btn btn-secondary search-report bg-transparent"
       title="Nahlásit"
       :href="
@@ -87,18 +80,20 @@
       "
     >
       <i class="fas fa-exclamation-triangle p-0"></i>
-    </a>
+    </a> -->
   </div>
 </template>
 
 <script>
 import SongsList from './components/SongsList';
+import FilterRow from './components/FilterRow';
 import AuthorsList from './components/AuthorsList';
 import Filters from './components/Filters';
 import InitFilters from './components/InitFilters';
 import AppLinks from './components/AppLinks';
 import Logo from './components/Logo';
 import SearchBox from './components/SearchBox';
+import StickyContainer from './components/StickyContainer';
 import SearchHistoryManager from '~/components/Search/SearchHistoryManager';
 import { mapStores } from 'pinia';
 import hpStore from '~/stores/homepage.js';
@@ -247,6 +242,8 @@ export default {
     Filters,
     InitFilters,
     SearchBox,
+    FilterRow,
+    StickyContainer,
   },
 
   computed: {

@@ -1,5 +1,8 @@
 <template>
-  <span class="material-symbols-outlined" :class="{ 'icon-fill': fill }">
+  <span
+    class="material-symbols-outlined"
+    :class="{ 'icon-fill': fill }"
+  >
     <slot />
   </span>
 </template>
