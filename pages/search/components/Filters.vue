@@ -123,9 +123,9 @@
       ></a>
     </div>
     <div class="mt-3">
-      <nuxt-link class="tag tag-blue" to="/liturgie/aktualne"
+      <!-- <nuxt-link class="tag tag-blue" to="/liturgie/aktualne"
         >Co hrát na mši</nuxt-link
-      >
+      > -->
       <a
         class="tag tag-green"
         :href="$config.public.regenschoriUrl"

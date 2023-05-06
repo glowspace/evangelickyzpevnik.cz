@@ -37,12 +37,12 @@
       </a>
       <!-- filters shown only for mobile -->
       <Filters
-        :selected-songbooks.sync="selected_songbooks"
-        :selected-tags.sync="selected_tags"
-        :selected-languages.sync="selected_languages"
-        :show-authors.sync="showAuthors"
-        :sort.sync="sort"
-        :descending.sync="descending"
+        v-model:selected-songbooks="selected_songbooks"
+        v-model:selected-tags="selected_tags"
+        v-model:selected-languages="selected_languages"
+        v-model:show-authors="showAuthors"
+        v-model:sort="sort"
+        v-model:descending="descending"
         :search-string="search_string"
         @refresh-seed="refreshSeed"
         @input="updateHistoryState"
@@ -78,22 +78,6 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-4 d-none d-lg-block desktop-filter-container">
-        <div class="fixed-top position-sticky">
-          <!-- filters shown only for desktop -->
-          <Filters
-            :selected-songbooks.sync="selected_songbooks"
-            :selected-tags.sync="selected_tags"
-            :selected-languages.sync="selected_languages"
-            :show-authors.sync="showAuthors"
-            :sort.sync="sort"
-            :descending.sync="descending"
-            :search-string="search_string"
-            @refresh-seed="refreshSeed"
-            @input="updateHistoryState"
-          ></Filters>
-        </div>
-      </div>
     </div>
 
     <app-links v-if="init" />
@@ -123,8 +107,9 @@ import InitFilters from './components/InitFilters';
 import AppLinks from './components/AppLinks';
 import Logo from './components/Logo';
 import SearchBox from './components/SearchBox';
-import News from '~/components/News';
 import SearchHistoryManager from '~/components/Search/SearchHistoryManager';
+import { mapStores } from 'pinia';
+import hpStore from '~/stores/homepage.js';
 
 import gql from 'graphql-tag';
 
@@ -145,19 +130,7 @@ export default {
   extends: SearchHistoryManager,
 
   head() {
-    return {
-      title: this.getTitle(),
-      meta: [
-        { property: 'og:title', content: this.getTitle() },
-        { property: 'twitter:title', content: this.getTitle() },
-        { name: 'description', content: this.getDescription() },
-        { property: 'og:description', content: this.getDescription() },
-        { property: 'twitter:description', content: this.getDescription() },
-      ],
-      bodyAttrs: {
-        class: ['home', this.init ? '' : 'home-scroll'],
-      },
-    };
+    return generateHead(this.getTitle(), this.getDescription());
   },
 
   data() {
@@ -169,12 +142,12 @@ export default {
       selected_tags: {},
 
       // View state
-      init: true,
+      // init: true,
       displayFilter: false,
       showAuthors: false,
 
       // Random order seed
-      seed: 0,
+      seed: this.randomInt(1, 100000),
       seedLocked: false,
 
       // Sort
@@ -183,16 +156,6 @@ export default {
 
       // Song route loading
       songLoading: false,
-    };
-  },
-
-  asyncData() {
-    const randomInteger = function randomInt(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    };
-
-    return {
-      seed: randomInteger(1, 100000),
     };
   },
 
@@ -270,13 +233,13 @@ export default {
       }
     },
 
-    refreshSeed() {
-      const randomInteger = function randomInt(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-      };
+    randomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    },
 
+    refreshSeed() {
       this.seedLocked = false;
-      this.seed = randomInteger(1, 100000);
+      this.seed = this.randomInt(1, 100000);
     },
   },
 
@@ -314,7 +277,6 @@ export default {
     AuthorsList,
     Filters,
     InitFilters,
-    News,
     SearchBox,
   },
 
@@ -332,6 +294,30 @@ export default {
           Object.keys(this.selected_languages).length >
         0
       );
+    },
+
+    ...mapStores(hpStore),
+    init: {
+      get() {
+        return this.homepageStore.init;
+      },
+      set(val) {
+        this.homepageStore.init = val;
+
+        if (val) {
+          // if (document.getElementById('search-home')) {
+          //   document.getElementById('search-home').focus();
+          // }
+          this.seedLocked = false;
+        } else {
+          if (!this.search_string && !this.seedLocked) {
+            this.seedLocked = true;
+            this.updateHistoryState(false);
+          } else {
+            this.updateHistoryState();
+          }
+        }
+      },
     },
 
     // getter / setter for the SearchHistoryManager extending component
@@ -377,20 +363,6 @@ export default {
   },
 
   watch: {
-    init(val) {
-      if (val) {
-        // if (document.getElementById('search-home')) {
-        //   document.getElementById('search-home').focus();
-        // }
-        this.seedLocked = false;
-      } else {
-        if (!this.search_string && !this.seedLocked) {
-          this.seedLocked = true;
-          this.updateHistoryState(false);
-        }
-      }
-    },
-
     showAuthors(val) {
       this.resetState();
     },

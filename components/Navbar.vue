@@ -1,14 +1,14 @@
 <template>
   <div class="menu-wrapper">
     <div class="menu">
-      <nuxt-link to="/" class="link group">
-        <div class="icon-wrapper" :class="{ active: $route.name == 'index' }">
+      <nuxt-link to="/" class="link group" @click="store.init = true">
+        <div class="icon-wrapper" :class="{ active: ($route.name == 'index' && store.init) }">
           <span class="material-symbols-outlined">home</span>
         </div>
         <p class="label">Nástěnka</p>
       </nuxt-link>
-      <nuxt-link to="/" class="link group">
-        <div class="icon-wrapper">
+      <nuxt-link to="/" class="link group" @click="store.init = false">
+        <div class="icon-wrapper" :class="{ active: ($route.name == 'index' && !store.init) }">
           <span class="material-symbols-outlined">search</span>
         </div>
         <p class="label">Hledání</p>
@@ -37,7 +37,7 @@
 }
 
 .icon-wrapper {
-  @apply relative w-16 h-8 group-hover:bg-primary-200 dark:group-hover:bg-primary-700 group-hover:bg-opacity-80 flex items-center justify-center rounded-2xl;
+  @apply relative w-16 h-8 group-hover:bg-primary-200 dark:group-hover:bg-primary-700 group-hover:bg-opacity-80 flex items-center justify-center rounded-2xl transition;
 
   &.active {
     @apply bg-primary-150;
@@ -58,16 +58,6 @@
 </style>
 
 <script setup>
-// export default {
-//   computed: {
-//     isHome() {
-//       return this.$route?.name == 'index';
-//     },
-//   },
-//   methods: {
-//     hello() {
-//       alert(':)');
-//     },
-//   },
-// };
+import hpStore from '~/stores/homepage';
+const store = hpStore();
 </script>

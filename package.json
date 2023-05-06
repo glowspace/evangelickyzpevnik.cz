@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.7.14",
+    "@pinia/nuxt": "^0.4.9",
     "@vue/apollo-option": "^4.0.0-beta.4",
     "bible-liturgy-utils": "https://github.com/glowspace/bible-liturgy-utils#2.0.2",
     "bigpicture": "^2.6.2",
@@ -24,6 +25,7 @@
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
     "lodash": "^4.17.21",
-    "nosleep.js": "^0.12.0"
+    "nosleep.js": "^0.12.0",
+    "pinia": "^2.0.35"
   }
 }
