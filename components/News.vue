@@ -49,7 +49,7 @@ export default {
 
   apollo: {
     news_items: {
-      query: FETCH_NEWS,
+      query: FETCH_NEWS
     },
   },
 };

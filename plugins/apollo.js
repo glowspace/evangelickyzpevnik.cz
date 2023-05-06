@@ -1,5 +1,6 @@
-import { ApolloClient, InMemoryCache } from '@apollo/client/core'
+import { ApolloClient, ApolloLink, InMemoryCache, createHttpLink } from '@apollo/client/core'
 import { createApolloProvider } from '@vue/apollo-option'
+import { onError } from '@apollo/client/link/error'
 import destr from 'destr'
 
 // https://github.com/nuxt-modules/apollo/blob/v5/src/runtime/plugin.ts
@@ -8,9 +9,22 @@ export default defineNuxtPlugin(nuxtApp => {
   const cache = new InMemoryCache()
   const { siteUrl, apiPath } = useRuntimeConfig()?.public
 
+  const httpLink = createHttpLink({
+    uri: siteUrl + apiPath,
+  })
+
+  const errorLink = onError((err) => {
+    // nuxtApp.callHook('apollo:error', err)
+    // https://www.npmjs.com/package/apollo-link-error
+    err.response.errors = undefined;
+    // todo: add some error logging (and something else?)
+  })
+
+  const link = ApolloLink.from([errorLink, httpLink])
+
   const apolloClient = new ApolloClient({
     cache,
-    uri: siteUrl + apiPath,
+    link,
     ...(process.server
       ? { ssrMode: true }
       : { ssrForceFetchDelay: 100 }),

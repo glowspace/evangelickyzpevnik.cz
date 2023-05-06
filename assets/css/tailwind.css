@@ -8,5 +8,5 @@
 body {
   /* @apply p-7 bg-red-200; */
   max-width: 400px;
-  margin: 0 auto;
+  @apply mx-auto;
 }

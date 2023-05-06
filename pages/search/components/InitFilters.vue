@@ -29,7 +29,7 @@
 import { fetchFiltersQuery } from './fetchFiltersQuery.graphql';
 
 export default {
-  props: ['selected-tags'],
+  props: ['modelValue'],
 
   data() {
     return {
@@ -82,8 +82,7 @@ export default {
       this.selected_tags[tag.id] = true;
 
       // notify the parent that sth has changed
-      this.$emit('update:selected-tags', this.selected_tags);
-      this.$emit('input', null);
+      this.$emit('update:modelValue', this.selected_tags);
     },
 
     shuffleArray(array) {
