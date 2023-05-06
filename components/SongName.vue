@@ -19,9 +19,10 @@
   <span v-else>
     <span class="song-name">{{ song.name }}</span>
     <span class="song-secondary-name" v-if="song.secondary_name_1">
-      ({{ song.secondary_name_1
-      }}<span v-if="song.secondary_name_2">, {{ song.secondary_name_2 }}</span
-      >)
+      ({{
+        song.secondary_name_1 +
+        (song.secondary_name_2 ? ', ' + song.secondary_name_2 : '')
+      }})
     </span>
   </span>
 </template>

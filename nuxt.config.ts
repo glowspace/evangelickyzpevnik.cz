@@ -33,4 +33,9 @@ export default defineNuxtConfig({
   tailwindcss: {
     configPath: '~/assets/tailwind.config.js',
   },
+  // vue: {
+  //   compilerOptions: {
+  //     isCustomElement: (tag) => tag.startsWith('md-'),
+  //   },
+  // },
 });

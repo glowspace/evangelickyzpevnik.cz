@@ -1,78 +1,73 @@
 <template>
-  <div>
-    <nav class="navbar navbar-expand-lg navbar-dark absolute-top">
-      <div class="container">
-        <nuxt-link to="/" class="navbar-brand" id="navbar-brand">
-          <img
-            src="/img/logo.svg"
-            style="padding-right: 10px"
-            width="60"
-            alt="logo"
-          />
-          <h1 v-if="$route?.path == '/'" class="home-h1">
-            Evangelický zpěvník
-          </h1>
-          <span v-else>Evangelický zpěvník</span>
-        </nuxt-link>
-        <div class="d-inline-flex">
-          <nuxt-link
-            to="/"
-            :class="[{ active: isHome }, 'btn btn-secondary mr-1']"
-            ><i class="fas fa-search"></i> Vyhledávání</nuxt-link
-          >
-          <nuxt-link
-            to="/o-zpevniku"
-            class="btn btn-secondary mr-1"
-            active-class="active"
-            ><i class="fas fa-info"></i> O&nbsp;zpěvníku</nuxt-link
-          >
-          <dark-mode-button v-cloak> Tmavý&nbsp;mód</dark-mode-button>
+  <div class="menu-wrapper">
+    <div class="menu">
+      <nuxt-link to="/" class="link group">
+        <div class="icon-wrapper" :class="{ active: $route.name == 'index' }">
+          <span class="material-symbols-outlined">home</span>
         </div>
-      </div>
-    </nav>
-
-    <a class="invisible btn btn-secondary mobile-padding-button">
-      <i class="fas fa-search"></i>
-    </a>
-
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-      <div class="container">
-        <nuxt-link to="/" class="btn" id="navbar-brand-small">
-          <img src="/img/logo.svg" height="24" alt="logo"
-        /></nuxt-link>
-
-        <nuxt-link
-          to="/"
-          class="btn btn-secondary"
-          :class="[{ active: isHome }, 'btn btn-secondary']"
-          ><i class="fas fa-search"></i
-        ></nuxt-link>
-
-        <nuxt-link
-          to="/o-zpevniku"
-          class="btn btn-secondary"
-          active-class="active"
-          ><i class="fas fa-info"></i
-        ></nuxt-link>
-
-        <dark-mode-button></dark-mode-button>
-      </div>
-    </nav>
+        <p class="label">Nástěnka</p>
+      </nuxt-link>
+      <nuxt-link to="/" class="link group">
+        <div class="icon-wrapper">
+          <span class="material-symbols-outlined">search</span>
+        </div>
+        <p class="label">Hledání</p>
+      </nuxt-link>
+      <nuxt-link to="/o-zpevniku" class="link group">
+        <div class="icon-wrapper" :class="{ active: $route.name == 'about' }">
+          <span class="material-symbols-outlined">info</span>
+        </div>
+        <p class="label">O zpěvníku</p>
+      </nuxt-link>
+    </div>
   </div>
 </template>
 
-<script>
-import DarkModeButton from '~/components/DarkModeButton';
+<style lang="postcss" scoped>
+.menu-wrapper {
+  @apply w-full md:max-w-[412px] text-sm flex flex-row space-x-2 items-center justify-center fixed bottom-0;
+}
 
-export default {
-  name: 'Navbar',
+.menu {
+  @apply flex flex-row justify-center gap-2 w-full md:w-[412px] bg-surface-200 dark:bg-surfacedark-200;
+}
 
-  components: { DarkModeButton },
+.link {
+  @apply flex w-1/4 md:w-32 flex-col items-center justify-center px-0 pt-3 pb-4 gap-1;
+}
 
-  computed: {
-    isHome() {
-      return this.$route?.name == 'index';
-    },
-  },
-};
+.icon-wrapper {
+  @apply relative w-16 h-8 group-hover:bg-primary-200 dark:group-hover:bg-primary-700 group-hover:bg-opacity-80 flex items-center justify-center rounded-2xl;
+
+  &.active {
+    @apply bg-primary-150;
+
+    .dark & {
+      @apply hover:bg-primary-700 bg-primary-700;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 1;
+    }
+
+    .label {
+      @apply text-xs text-neutral-900 dark:text-neutral-100 leading-tight tracking-[.0416em];
+    }
+  }
+}
+</style>
+
+<script setup>
+// export default {
+//   computed: {
+//     isHome() {
+//       return this.$route?.name == 'index';
+//     },
+//   },
+//   methods: {
+//     hello() {
+//       alert(':)');
+//     },
+//   },
+// };
 </script>

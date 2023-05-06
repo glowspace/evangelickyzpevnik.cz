@@ -1,7 +1,7 @@
 <template>
   <div>
-    <slot />
     <Navbar />
+    <slot />
   </div>
 </template>
 
@@ -50,10 +50,15 @@ useHead({
     //   href: '/favicon/safari-pinned-tab.svg',
     //   color: '#5bbad5',
     // },
-    { rel: 'preconnect', href: 'https://fonts.gstatic.com' },
+    { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+    { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: true },
     {
       rel: 'stylesheet',
-      href: 'https://fonts.googleapis.com/css2?family=Amiri&display=swap',
+      href: 'https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap',
+    },
+    {
+      rel: 'stylesheet',
+      href: 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200',
     },
     {
       rel: 'stylesheet',

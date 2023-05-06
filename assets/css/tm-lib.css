@@ -1,4 +1,7 @@
 /* https://github.com/aribudin/tailmater/ */
+/* content of this file is based on https://github.com/aribudin/tailmater/blob/main/src/tailwindcss/tailwind.css */
+/* however, it has been slightly modified */
+
 /* button default */
 .btn-outline:hover {
   background: rgba(103, 80, 164, 0.08);

@@ -2,8 +2,11 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-@import './lib';
+/* @import './tm-lib';
+@import './tm-components'; */
 
 body {
   /* @apply p-7 bg-red-200; */
+  max-width: 400px;
+  margin: 0 auto;
 }
