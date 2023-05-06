@@ -60,13 +60,13 @@ const btnType = computed(() => {
 }
 
 .btn.text {
-  @apply hover:bg-surface-200
+  @apply hover:bg-primary/10
   dark:text-primary-200 dark:hover:bg-surfacedark-200;
 }
 
 .icon-only {
   @apply relative !inline-flex !items-center justify-center w-12 h-12 gap-x-2 py-2.5 px-6 rounded-[6.25rem] text-sm tracking-[.00714em] text-center font-medium dark:text-primary-200;
-  @apply hover:bg-surface-300 focus:bg-surface-400 dark:hover:bg-surfacedark-300 dark:focus:bg-surfacedark-400;
+  @apply hover:bg-primary/10 focus:bg-primary/10 dark:hover:bg-surfacedark-300 dark:focus:bg-surfacedark-400;
 }
 
 .compact {

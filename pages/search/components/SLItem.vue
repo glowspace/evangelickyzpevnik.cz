@@ -1,19 +1,19 @@
 <template>
   <tr>
-    <td class="p-1 align-middle text-right w-min">
+    <!-- <td class="p-1 align-middle text-right w-min">
       <nuxt-link
         class="p-2 pl-3 w-100 d-flex justify-content-between text-secondary"
         :to="song_lyric.public_route"
       >
         <span>{{ number }}</span>
       </nuxt-link>
-    </td>
+    </td> -->
     <td class="p-1 align-middle">
       <nuxt-link class="p-2 w-100 d-inline-block" :to="song_lyric.public_route">
         <song-name :song="song_lyric" :multiline="true" />
       </nuxt-link>
     </td>
-    <td class="p-1 align-middle" :colspan="song_lyric.lang != 'cs' ? 1 : 2">
+    <!-- <td class="p-1 align-middle" :colspan="song_lyric.lang != 'cs' ? 1 : 2">
       <span
         v-for="(ap, authorIndex) in song_lyric.authors_pivot"
         :key="authorIndex"
@@ -32,7 +32,7 @@
           >{{ ap.pivot.author.name }}</nuxt-link
         >
       </span>
-    </td>
+    </td> -->
     <td
       class="no-left-padding text-right text-uppercase small align-middle pr-3"
       v-if="song_lyric.lang != 'cs'"
