@@ -1,26 +1,28 @@
 <template>
-  <div class="position-relative">
+  <div class="relative">
     <div
       :class="[
-        'h5 mt-2 d-flex flex-wrap align-items-center justify-content-between',
-        { 'position-relative': !isClosed },
+        'mt-2 flex flex-wrap items-center justify-between',
+        { relative: !isClosed },
       ]"
     >
       <span>{{ heading }}</span>
-      <button
-        :class="['btn btn-secondary stretched-link']"
+      <BasicButton
+        :class="['stretched-link']"
         @click="isClosed = !isClosed"
-      >
-        <i :class="['fas', 'fa-chevron-' + (isClosed ? 'down' : 'up')]"></i>
-      </button>
+        :icon="isClosed ? 'expand_more' : 'expand_less'"
+        icon-only
+        compact
+        text
+      ></BasicButton>
     </div>
-    <div :class="{ 'text-nowrap overflow-hidden': isClosed }">
-      <a
-        :class="[{ 'tag-selected': isSelectedTag(tag) }, 'tag tag-' + color]"
+    <div :class="{ 'whitespace-nowrap overflow-hidden': isClosed }">
+      <BasicChip
+        :class="[{ 'active': isSelectedTag(tag) }, 'tag-' + color]"
         v-for="tag in tagsInCategory.filter((t) => t.song_lyrics_count !== 0)"
         :key="'tag-' + tag.id"
         @click="$emit('selectTag', tag)"
-        >{{ tag.name }}</a
+        >{{ tag.name }}</BasicChip
       >
     </div>
   </div>
@@ -28,7 +30,7 @@
 
 <script>
 export default {
-  props: ['heading', 'color', 'tags-in-category', 'selected-tags'],
+  props: ['heading', 'color', 'tagsInCategory', 'selectedTags'],
 
   data() {
     return {
@@ -37,6 +39,7 @@ export default {
   },
 
   mounted() {
+    console.log(this.selectedTags);
     if (this.categoryContainsSelected) {
       this.isClosed = false;
     }

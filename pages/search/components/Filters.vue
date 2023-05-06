@@ -35,7 +35,7 @@
     >
       <BasicButtonGroupItem
         :class="{ active: localSort == 0 }"
-        :disabled="searchString"
+        :disabled="!!searchString"
         title="řadit náhodně"
         @click="
           refreshSeed();
@@ -48,7 +48,7 @@
       </BasicButtonGroupItem>
       <BasicButtonGroupItem
         :class="{ active: localSort == 1 }"
-        :disabled="searchString"
+        :disabled="!!searchString"
         :title="
           'řadit podle abecedy' +
           (localSort == 1
@@ -71,7 +71,7 @@
       </BasicButtonGroupItem>
       <BasicButtonGroupItem
         :class="{ active: localSort == 2 }"
-        :disabled="searchString"
+        :disabled="!!searchString"
         :title="
           'řadit podle čísla' +
           (localSort == 2
@@ -93,7 +93,7 @@
         {{ localSort == 2 ? (!localDescending ? '1–9' : '9–1') : '1–9' }}
       </BasicButtonGroupItem>
       <BasicButtonGroupItem
-      v-if="searchString"
+        v-if="searchString"
         class="!px-2"
         :class="{ active: searchString }"
       >
@@ -170,9 +170,6 @@ export default {
 
   data() {
     return {
-      selected_tags: {},
-      selected_songbooks: {},
-      selected_languages: {},
       all_languages: [
         { id: 'cs', name: 'čeština' },
         { id: 'sk', name: 'slovenština' },
@@ -243,6 +240,22 @@ export default {
       set(val) {
         this.$emit('update:descending', val);
         this.$emit('input', null);
+      },
+    },
+
+    selected_tags: {
+      get() {
+        return this.selectedTags;
+      },
+    },
+    selected_songbooks: {
+      get() {
+        return this.selectedSongbooks;
+      },
+    },
+    selected_languages: {
+      get() {
+        return this.selectedLanguages;
       },
     },
   },

@@ -15,13 +15,11 @@
         style="max-width: 400px; margin: 0 auto;"
       >
         <!-- header -->
-        <div class="min-h-[56px] flex flex-row items-center gap-3 px-6 pb-4 pt-6">
+        <div class="min-h-[56px] flex flex-row items-center gap-3 pl-6 pr-3 py-3">
           <h3 class="flex flex-grow text-base tracking-[.009375em]">
             {{ title }}
           </h3>
-          <button @click="show = false" class="flex items-center justify-center">
-            <span class="material-symbols-outlined">close</span>
-          </button>
+          <BasicButton @click="show = false" icon="close" text icon-only />
         </div>
         <!-- body -->
         <div class="relative text-left px-6 py-2 overflow-y-scroll">
