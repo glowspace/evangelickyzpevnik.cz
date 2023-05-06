@@ -1,5 +1,5 @@
 <template>
-  <TopBar title="O Evangelickém zpěvníku" @back="navigateTo('/')" />
+  <TopBar title="O Evangelickém zpěvníku" back="/" />
   <div class="cont">
     <h2>Kdo za projektem stojí?</h2>
 

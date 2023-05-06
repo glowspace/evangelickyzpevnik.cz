@@ -1,6 +1,6 @@
 <template>
   <component
-    :is="to ? 'nuxt-link' : href ? 'a' : 'button'"
+    :is="to ? NuxtLink : href ? 'a' : 'button'"
     :to="to"
     :href="href"
     @click="clicked"
@@ -21,6 +21,7 @@
 </template>
 
 <script setup>
+import { NuxtLink } from '#components';
 // const props = defineProps(['eventId', 'href', 'to', 'icon', 'text', 'class']);
 const props = defineProps({
   eventId: String,

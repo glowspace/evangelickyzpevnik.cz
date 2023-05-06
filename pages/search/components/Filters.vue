@@ -219,7 +219,6 @@ export default {
       },
       set(val) {
         this.$emit('update:show-authors', val);
-        this.$emit('input', null);
       },
     },
 
@@ -229,7 +228,6 @@ export default {
       },
       set(val) {
         this.$emit('update:sort', val);
-        this.$emit('input', null);
       },
     },
 
@@ -239,7 +237,6 @@ export default {
       },
       set(val) {
         this.$emit('update:descending', val);
-        this.$emit('input', null);
       },
     },
 
@@ -247,16 +244,25 @@ export default {
       get() {
         return this.selectedTags;
       },
+      set(val) {
+        this.$emit('update:selected-tags', val);
+      }
     },
     selected_songbooks: {
       get() {
         return this.selectedSongbooks;
       },
+      set(val) {
+        this.$emit('update:selected-songbooks', val);
+      }
     },
     selected_languages: {
       get() {
         return this.selectedLanguages;
       },
+      set(val) {
+        this.$emit('update:selected-languages', val);
+      }
     },
   },
 
@@ -272,10 +278,6 @@ export default {
       } else {
         delete this.selected_tags[tag.id];
       }
-
-      // notify the parent that sth has changed
-      this.$emit('update:selected-tags', this.selected_tags);
-      this.$emit('input', null);
     },
 
     selectSongbook(songbook) {
@@ -284,10 +286,6 @@ export default {
       } else {
         delete this.selected_songbooks[songbook.id];
       }
-
-      // notify the parent that sth has changed
-      this.$emit('update:selected-songbooks', this.selected_songbooks);
-      this.$emit('input', null);
     },
 
     selectLanguage(language) {
@@ -296,10 +294,6 @@ export default {
       } else {
         delete this.selected_languages[language.id];
       }
-
-      // notify the parent that sth has changed
-      this.$emit('update:selected-languages', this.selected_languages);
-      this.$emit('input', null);
     },
 
     isSelectedTag(tag) {
@@ -357,19 +351,6 @@ export default {
       if (val && !prev) {
         this.$emit('tags-loaded', null);
       }
-    },
-
-    // watch props for changes
-    selectedTags(val, prev) {
-      this.selected_tags = val;
-    },
-
-    selectedSongbooks(val, prev) {
-      this.selected_songbooks = val;
-    },
-
-    selectedLanguages(val, prev) {
-      this.selected_languages = val;
     },
   },
 };

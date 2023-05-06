@@ -1,5 +1,5 @@
 <template>
-  <div class="menu-wrapper">
+  <div class="menu-wrapper" v-if="$route.name != 'song'">
     <div class="menu">
       <nuxt-link to="/" class="link group" @click="store.showDashboard = true">
         <div class="icon-wrapper" :class="{ active: ($route.name == 'index' && store.showDashboard) }">

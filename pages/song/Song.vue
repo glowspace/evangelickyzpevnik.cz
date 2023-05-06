@@ -1,4 +1,8 @@
 <template>
+  <TopBar
+    :back="previous || '/'"
+    :title="song_lyric ? String(song_lyric?.song_number) : ''"
+  ></TopBar>
   <song-loading v-if="$apollo.loading"></song-loading>
   <song-detail v-else-if="song_lyric" :song="song_lyric"></song-detail>
 </template>
@@ -139,6 +143,19 @@ const FETCH_SONG_LYRIC = gql`
 export default {
   name: 'Song',
   components: { SongLoading, SongDetail },
+
+  data() {
+    return {
+      previous: '',
+    };
+  },
+
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      // access to component public instance via `vm`
+      vm.previous = from.fullPath;
+    });
+  },
 
   head() {
     return generateHead(this.getTitle(), this.getDescription());
