@@ -1,14 +1,14 @@
 <template>
   <div class="menu-wrapper">
     <div class="menu">
-      <nuxt-link to="/" class="link group" @click="store.init = true">
-        <div class="icon-wrapper" :class="{ active: ($route.name == 'index' && store.init) }">
+      <nuxt-link to="/" class="link group" @click="store.showDashboard = true">
+        <div class="icon-wrapper" :class="{ active: ($route.name == 'index' && store.showDashboard) }">
           <span class="material-symbols-outlined">home</span>
         </div>
         <p class="label">Nástěnka</p>
       </nuxt-link>
-      <nuxt-link to="/" class="link group" @click="store.init = false">
-        <div class="icon-wrapper" :class="{ active: ($route.name == 'index' && !store.init) }">
+      <nuxt-link to="/" class="link group" @click="store.showDashboard = false">
+        <div class="icon-wrapper" :class="{ active: ($route.name == 'index' && !store.showDashboard) }">
           <span class="material-symbols-outlined">search</span>
         </div>
         <p class="label">Hledání</p>

@@ -11,7 +11,7 @@
       <input
         type="search"
         placeholder="Hledat píseň podle názvu, čísla nebo textu…"
-        class="w-full bg-transparent py-2 px-4 ring-0 focus:outline-none"
+        class="w-full bg-transparent py-2 pr-4 ring-0 focus:outline-none"
         v-model="value"
         @keyup.enter="emit('enter')"
       />

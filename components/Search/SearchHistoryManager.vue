@@ -4,10 +4,7 @@ const { isEqual, isEmpty } = lodash;
 
 export default {
   methods: {
-    updateHistoryState(push, force) {
-      if (push !== false) {
-        push = true;
-      }
+    updateHistoryState(push = true, force) {
       let oldParams = JSON.parse(JSON.stringify(this.$route.query));
       let newParams = JSON.parse(
         JSON.stringify(toGETParameters(this.historyStateObject))

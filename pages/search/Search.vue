@@ -1,7 +1,7 @@
 <template>
   <div>
     <logo />
-    <SearchBox v-model="search_string" @enter="inputEnter" />
+    <SearchBox v-model="search_string" @enter="inputEnter" @click="init = false" />
     <BasicButton
       @click="displayFilter = !displayFilter"
       icon="filter_alt"
@@ -12,10 +12,7 @@
     <InitFilters
       v-if="init"
       v-model="selected_tags"
-      @update:modelValue="
-        updateHistoryState();
-        init = false;
-      "
+      @update:modelValue="init = false"
     ></InitFilters>
     <BasicButton
       v-if="init"
@@ -81,11 +78,6 @@
     </div>
 
     <app-links v-if="init" />
-
-    <!-- <a href="http://www.musicasacra.cz/" class="footer-logo">
-        <img src="/img/musica-sacra.svg" />
-      </a> -->
-
     <a
       class="btn btn-secondary search-report bg-transparent"
       title="Nahlásit"
@@ -180,7 +172,6 @@ export default {
       this.descending = false;
 
       if (manual) {
-        this.init = true;
         this.showAuthors = false;
         // if (document.getElementById('search-home')) {
         //   document.getElementById('search-home').focus();
@@ -245,29 +236,7 @@ export default {
 
   mounted() {
     window.onpopstate = this.applyStateChange;
-    // if (document.getElementById('navbar-brand')) {
-    //   document.getElementById('navbar-brand').onclick = () => {
-    //     this.resetState(true);
-    //   };
-    // }
-    // if (document.getElementById('navbar-brand-small')) {
-    //   document.getElementById('navbar-brand-small').onclick = () => {
-    //     this.resetState(true);
-    //   };
-    // }
-    // if (document.getElementById('search-home')) {
-    //   document.getElementById('search-home').focus();
-    // }
     this.applyStateChange();
-  },
-
-  destroyed() {
-    if (document.getElementById('navbar-brand')) {
-      document.getElementById('navbar-brand').onclick = () => {};
-    }
-    if (document.getElementById('navbar-brand-small')) {
-      document.getElementById('navbar-brand-small').onclick = () => {};
-    }
   },
 
   components: {
@@ -299,24 +268,10 @@ export default {
     ...mapStores(hpStore),
     init: {
       get() {
-        return this.homepageStore.init;
+        return this.homepageStore.showDashboard;
       },
       set(val) {
-        this.homepageStore.init = val;
-
-        if (val) {
-          // if (document.getElementById('search-home')) {
-          //   document.getElementById('search-home').focus();
-          // }
-          this.seedLocked = false;
-        } else {
-          if (!this.search_string && !this.seedLocked) {
-            this.seedLocked = true;
-            this.updateHistoryState(false);
-          } else {
-            this.updateHistoryState();
-          }
-        }
+        this.homepageStore.showDashboard = val;
       },
     },
 
@@ -365,6 +320,15 @@ export default {
   watch: {
     showAuthors(val) {
       this.resetState();
+    },
+    init(val) {
+      if (val) {
+        this.seedLocked = false;
+        this.resetState();
+      } else {
+        this.seedLocked = true;
+        this.updateHistoryState(false);
+      }
     },
   },
 };
