@@ -15,7 +15,7 @@
         style="max-width: 400px; margin: 0 auto;"
       >
         <!-- header -->
-        <div class="min-h-[56px] flex flex-row items-center gap-3 px-6 pt-6">
+        <div class="min-h-[56px] flex flex-row items-center gap-3 px-6 pb-4 pt-6">
           <h3 class="flex flex-grow text-base tracking-[.009375em]">
             {{ title }}
           </h3>

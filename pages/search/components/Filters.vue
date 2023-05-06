@@ -1,5 +1,5 @@
 <template>
-  <div class="song-tags card py-1" v-if="$apollo.loading || !tags_generic">
+  <div v-if="$apollo.loading || !tags_generic">
     <template v-for="(x, key2) in [1.3, 1.2, 1.4, 1.1, 1.2, 1.3]" :key="key2">
       <!-- <v-skeleton-loader type="heading" class="my-3" :key="key2" /> -->
       <div
@@ -12,50 +12,45 @@
       </div>
     </template>
   </div>
-  <div class="song-tags filters card py-1" v-else>
-    <div class="btn-group m-0 my-2 bg-light" role="group">
-      <a
-        class="btn btn-secondary"
-        :class="{ chosen: !localShowAuthors }"
+  <div v-else>
+    <BasicButtonGroup class="mr-2 mb-2">
+      <BasicButtonGroupItem
+        :class="{ active: !localShowAuthors }"
         @click="localShowAuthors = false"
-        ><i class="fas fa-music"></i>písně</a
       >
-      <a
-        class="btn btn-secondary"
-        :class="{ chosen: localShowAuthors }"
+        <BasicIcon>music_note</BasicIcon>
+        písně
+      </BasicButtonGroupItem>
+      <BasicButtonGroupItem
+        :class="{ active: localShowAuthors }"
         @click="localShowAuthors = true"
-        ><i class="fas fa-user"></i>autoři</a
       >
-    </div>
-    <br />
-    <div
+        <BasicIcon :fill="localShowAuthors">person</BasicIcon>
+        autoři
+      </BasicButtonGroupItem>
+    </BasicButtonGroup>
+    <BasicButtonGroup
       v-if="!localShowAuthors"
-      class="btn-group m-0 my-2 bg-light btn-group--icons"
-      role="group"
       :title="[searchString ? 'Písně jsou řazeny podle vyhledávání.' : '']"
     >
-      <a
-        :class="[
-          { chosen: !localSort },
-          { disabled: searchString },
-          'btn btn-secondary',
-        ]"
+      <BasicButtonGroupItem
+        :class="{ active: localSort == 0 }"
+        :disabled="searchString"
         title="řadit náhodně"
         @click="
           refreshSeed();
           localSort = 0;
           localDescending = false;
         "
-        ><i class="fas fa-random"></i>náhodně</a
       >
-      <a
-        :class="[
-          { chosen: localSort == 1 },
-          { disabled: searchString },
-          'btn btn-secondary',
-        ]"
+        <BasicIcon>shuffle</BasicIcon>
+        náhodně
+      </BasicButtonGroupItem>
+      <BasicButtonGroupItem
+        :class="{ active: localSort == 1 }"
+        :disabled="searchString"
         :title="
-          'řadit podle abecedy ' +
+          'řadit podle abecedy' +
           (localSort == 1
             ? localDescending
               ? 'vzestupně'
@@ -70,26 +65,15 @@
             localDescending = false;
           }
         "
-        ><i
-          :class="[
-            localSort == 1
-              ? !localDescending
-                ? 'fa-sort-alpha-up'
-                : 'fa-sort-alpha-down-alt'
-              : 'fa-sort-alpha-up',
-            'fas',
-          ]"
-        ></i
-        >{{ localSort == 1 ? (!localDescending ? 'A–Z' : 'Z–A') : 'A–Z' }}</a
       >
-      <a
-        :class="[
-          { chosen: localSort == 2 },
-          { disabled: searchString },
-          'btn btn-secondary',
-        ]"
+        <BasicIcon>sort_by_alpha</BasicIcon>
+        {{ localSort == 1 ? (!localDescending ? 'A–Z' : 'Z–A') : 'A–Z' }}
+      </BasicButtonGroupItem>
+      <BasicButtonGroupItem
+        :class="{ active: localSort == 2 }"
+        :disabled="searchString"
         :title="
-          'řadit podle čísla ' +
+          'řadit podle čísla' +
           (localSort == 2
             ? localDescending
               ? 'vzestupně'
@@ -104,35 +88,18 @@
             localDescending = false;
           }
         "
-        ><i
-          :class="[
-            localSort == 2
-              ? !localDescending
-                ? 'fa-sort-numeric-up'
-                : 'fa-sort-numeric-down-alt'
-              : 'fa-sort-numeric-up',
-            'fas',
-          ]"
-        ></i
-        >{{ localSort == 2 ? (!localDescending ? '1–9' : '9–1') : '1–9' }}</a
       >
-      <a
-        v-if="searchString"
-        :class="[{ chosen: searchString }, 'btn btn-secondary']"
-        ><i class="fas fa-search mr-0"></i
-      ></a>
-    </div>
-    <div class="mt-3">
-      <!-- <nuxt-link class="tag tag-blue" to="/liturgie/aktualne"
-        >Co hrát na mši</nuxt-link
-      > -->
-      <a
-        class="tag tag-green"
-        :href="$config.public.regenschoriUrl"
-        @click.prevent="openRSWithCurrentQS"
-        >Zobrazit více filtrů</a
+        <BasicIcon>pin</BasicIcon>
+        {{ localSort == 2 ? (!localDescending ? '1–9' : '9–1') : '1–9' }}
+      </BasicButtonGroupItem>
+      <BasicButtonGroupItem
+      v-if="searchString"
+        class="!px-2"
+        :class="{ active: searchString }"
       >
-    </div>
+        <BasicIcon>search</BasicIcon>
+      </BasicButtonGroupItem>
+    </BasicButtonGroup>
     <div v-if="!localShowAuthors" class="mb-3">
       <SearchTagCategory
         heading="Mše svatá"
@@ -282,7 +249,8 @@ export default {
 
   methods: {
     openRSWithCurrentQS() {
-      location.href = this.$config.public.regenschoriUrl + window.location.search;
+      location.href =
+        this.$config.public.regenschoriUrl + window.location.search;
     },
 
     selectTag(tag) {

@@ -50,10 +50,10 @@
     </td>
     <td class="w-24">
       <div class="icons">
+        <!-- todo: replace with image and remove FA icons -->
         <BasicIcon
           v-if="song_lyric.has_chords"
           fa="fas fa-guitar text-primary text-lg -mt-px"
-          class=""
           title="Tato píseň má přidané akordy."
         ></BasicIcon>
         <BasicIcon
