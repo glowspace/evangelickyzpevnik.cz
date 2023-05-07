@@ -1,6 +1,6 @@
 <template>
   <div class="m-5">
-    <div class="mt-4 mb-3">
+    <div class="my-4">
       <div>
         <h1 class="song-title"><song-name :song="song" /></h1>
         <div class="mt-1 text-sm basic-content">

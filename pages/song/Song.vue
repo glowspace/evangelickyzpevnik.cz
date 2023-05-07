@@ -2,7 +2,9 @@
   <TopBar
     @back="previous ? $router.back() : navigateTo('/')"
     :title="song_lyric ? String(song_lyric?.song_number) : 'načítám…'"
-  ></TopBar>
+  >
+    <BasicButton icon="more_vert" icon-only text />
+  </TopBar>
   <song-loading v-if="$apollo.loading"></song-loading>
   <song-detail v-else-if="song_lyric" :song="song_lyric"></song-detail>
 </template>

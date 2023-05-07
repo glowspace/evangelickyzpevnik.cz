@@ -2,18 +2,12 @@
   <table class="table m-0 w-full">
     <tbody>
       <tr>
-        <th
-          colspan="2"
-          class="text-primary-700"
-          v-if="song_lyric.song.song_lyrics.filter((s) => s.type == 0).length"
-        >
+        <th colspan="2" class="text-primary" v-if="filterLyrics(0).length">
           Originál
         </th>
       </tr>
       <SLItem
-        v-for="song_lyric in song_lyric.song.song_lyrics.filter(
-          (s) => s.type == 0
-        )"
+        v-for="song_lyric in filterLyrics(0)"
         :song_lyric="song_lyric"
         :key="song_lyric.id"
         :hideIcons="true"
@@ -21,16 +15,18 @@
       <tr>
         <th
           colspan="2"
-          class="pt-5 text-error-500"
-          v-if="song_lyric.song.song_lyrics.filter((s) => s.type == 1).length"
+          class="pt-5 text-error-600"
+          v-if="filterLyrics(1).length"
         >
-          Překlady
+          {{
+            filterLyrics(1).length == 1
+              ? 'Překlad'
+              : 'Překlady'
+          }}
         </th>
       </tr>
       <SLItem
-        v-for="song_lyric in song_lyric.song.song_lyrics.filter(
-          (s) => s.type == 1
-        )"
+        v-for="song_lyric in filterLyrics(1)"
         :song_lyric="song_lyric"
         :key="song_lyric.id"
         :hideIcons="true"
@@ -38,16 +34,18 @@
       <tr>
         <th
           colspan="2"
-          class="pt-5 text-green"
-          v-if="song_lyric.song.song_lyrics.filter((s) => s.type == 2).length"
+          class="pt-5 text-greendark"
+          v-if="filterLyrics(2).length"
         >
-          Autorizované překlady
+          {{
+            filterLyrics(2).length == 1
+              ? 'Autorizovaný překlad'
+              : 'Autorizované překlady'
+          }}
         </th>
       </tr>
       <SLItem
-        v-for="song_lyric in song_lyric.song.song_lyrics.filter(
-          (s) => s.type == 2
-        )"
+        v-for="song_lyric in filterLyrics(2)"
         :song_lyric="song_lyric"
         :key="song_lyric.id"
         :hideIcons="true"
@@ -59,6 +57,10 @@
 <script setup>
 import SLItem from '~/pages/search/components/SLItem';
 const props = defineProps(['song_lyric']);
+
+function filterLyrics(type) {
+  return props.song_lyric.song.song_lyrics.filter((s) => s.type == type);
+}
 </script>
 
 <style lang="postcss" scoped>

@@ -132,6 +132,6 @@ export default {
 }
 
 .songbook-number {
-  @apply pr-3 pl-2.5 bg-primary-50;
+  @apply pr-3 pl-2.5 bg-primary/10;
 }
 </style>

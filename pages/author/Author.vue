@@ -17,45 +17,41 @@
         <p>{{ author.description }}</p>
       </div>
 
-      <div class="card" v-if="author.members.length">
-        <div class="card-body">
-          <span>Související autoři: </span>
-          <span v-for="(members, key) in author.members" :key="key">
-            <span v-if="key">, </span>
-            <nuxt-link :to="members.public_route">{{ members.name }}</nuxt-link>
-          </span>
-        </div>
-      </div>
+      <p v-if="author.members.length">
+        <strong>Související autoři: </strong>
+        <span v-for="(members, key) in author.members" :key="key">
+          <span v-if="key">, </span>
+          <nuxt-link :to="members.public_route">{{ members.name }}</nuxt-link>
+        </span>
+      </p>
 
-      <div class="card" v-if="author.memberships.length">
-        <div class="card-body">
-          <span>Skupiny: </span>
-          <span v-for="(membership, key2) in author.memberships" :key="key2">
-            <span v-if="key2">, </span>
-            <nuxt-link :to="membership.public_route">{{
-              membership.name
-            }}</nuxt-link>
-          </span>
-        </div>
-      </div>
+      <p v-if="author.memberships.length">
+        <strong>Skupiny: </strong>
+        <span v-for="(membership, key2) in author.memberships" :key="key2">
+          <span v-if="key2">, </span>
+          <nuxt-link :to="membership.public_route">{{
+            membership.name
+          }}</nuxt-link>
+        </span>
+      </p>
     </div>
 
     <div class="-mx-3">
-    <author-songs-list
-      text="Autorské písně"
-      v-if="author.songs_originals.length"
-      :songs="author.songs_originals"
-    />
-    <author-songs-list
-      text="Překlady"
-      v-if="author.songs_translations.length"
-      :songs="author.songs_translations"
-    />
-    <author-songs-list
-      text="Interpretace písní"
-      v-if="author.songs_interpreted.length"
-      :songs="author.songs_interpreted"
-    />
+      <author-songs-list
+        text="Autorské písně"
+        v-if="author.songs_originals.length"
+        :songs="author.songs_originals"
+      />
+      <author-songs-list
+        text="Překlady"
+        v-if="author.songs_translations.length"
+        :songs="author.songs_translations"
+      />
+      <author-songs-list
+        text="Interpretace písní"
+        v-if="author.songs_interpreted.length"
+        :songs="author.songs_interpreted"
+      />
     </div>
 
     <!-- <div class="p-1 mb-3 mt-n2">

@@ -5,8 +5,8 @@
     @media="showMedia = true"
     :mediaAvailable="recordings.length"
   />
-  <div class="card card-lyrics" id="cardLyrics">
-    <div class="card-header">
+  <div>
+    <div>
       <div class="-mx-1">
         <BasicChip
           v-if="scores.length || otherExternals.length"
@@ -136,7 +136,7 @@
       </TopBox>
     </div>
     <div>
-      <div class="card-body py-2 overflow-hidden">
+      <div class="my-4 overflow-hidden">
         <div
           class="d-flex align-items-start justify-content-between flex-column-reverse flex-sm-row"
         >
@@ -155,7 +155,7 @@
               class="-ml-6 -mr-4 mb-3 lilypond-container"
             ></div>
             <span v-if="song_lyric.has_lyrics">
-              <BasicButton
+              <!-- <BasicButton
                 class="mb-2 ml-1"
                 text
                 v-if="
@@ -171,7 +171,7 @@
                 v-if="chordSharedStore.chordMode != 0"
                 @click="chordSharedStore.chordMode = 0"
                 >Skrýt akordy</BasicButton
-              >
+              > -->
               <div
                 v-if="
                   !$apollo.loading &&
@@ -203,7 +203,6 @@
 
       <BottomSheets v-model="showTools" title="Nástroje">
         <div
-          class="toolbox-item"
           v-if="chordSharedStore.nChordModes != 1"
           :class="{
             'hidden-toolbox-item': chordSharedStore.chordMode == 0,
@@ -215,7 +214,6 @@
         </div>
 
         <div
-          class="toolbox-item"
           v-if="chordSharedStore.nChordModes != 1"
           :class="{
             'hidden-toolbox-item': chordSharedStore.chordMode == 0,
@@ -226,11 +224,11 @@
           ></chord-sharp-flat>
         </div>
 
-        <div class="toolbox-item" v-if="chordSharedStore.nChordModes != 1">
+        <div v-if="chordSharedStore.nChordModes != 1">
           <chord-mode v-model="chordSharedStore.chordMode"></chord-mode>
         </div>
 
-        <div class="toolbox-item">
+        <div>
           <font-sizer v-model="chordSharedStore.fontSizePercent"></font-sizer>
         </div>
       </BottomSheets>

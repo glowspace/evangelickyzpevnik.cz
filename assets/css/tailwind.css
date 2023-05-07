@@ -35,6 +35,10 @@ body {
   background-color: rgba(0, 0, 0, 0);
 }
 
+strong {
+  @apply font-medium;
+}
+
 /* todo: delete the class below */
 .btn-secondary {
   display: inline-block;
