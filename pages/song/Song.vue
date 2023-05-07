@@ -220,7 +220,13 @@ export default {
   mounted() {
     if (!this.$apollo.loading) {
       if (this.song_lyric === null) {
-        this.$nuxt.error({ statusCode: 404 });
+        // this.$nuxt.error({ statusCode: 404 });
+        // https://nuxt.com/docs/getting-started/error-handling#createerror
+        throw createError({
+          statusCode: 404,
+          statusMessage: 'Page Not Found',
+          fatal: true,
+        });
       } else if (
         this.song_lyric &&
         window.location.pathname != this.song_lyric.public_route
@@ -321,7 +327,7 @@ span.song-part-tag {
     position: relative;
     background: white;
     z-index: 2;
-/*
+    /*
     // todo: refactor to be usable
     // was not working with ___ lines etc.. (see Abba Otce for example)
 
