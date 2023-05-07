@@ -1,5 +1,5 @@
 <template>
-  <TopBar :title="author.type_string" :back="previous || '/'" />
+  <TopBar :title="author ? author.type_string : ''" :back="previous || '/'" />
   <div class="container" v-if="$apollo.loading">
     <!-- <v-skeleton-loader type="heading" class="mt-4" /> -->
     <!-- <v-skeleton-loader type="text" class="mt-3 mb-3" max-width="100" /> -->
