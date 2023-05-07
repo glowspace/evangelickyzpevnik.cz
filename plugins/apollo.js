@@ -16,7 +16,9 @@ export default defineNuxtPlugin(nuxtApp => {
   const errorLink = onError((err) => {
     // nuxtApp.callHook('apollo:error', err)
     // https://www.npmjs.com/package/apollo-link-error
-    err.response.errors = undefined;
+    if (err.response) {
+      err.response.errors = undefined;
+    }
     // todo: add some error logging (and something else?)
   })
 
