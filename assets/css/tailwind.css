@@ -4,7 +4,7 @@
 
 /* @import './tm-lib'; */
 /* @import './tm-components'; */
-@import './song';
+/* @import './song'; */
 
 body {
   /* @apply p-7 bg-red-200; */
@@ -13,7 +13,8 @@ body {
   padding-bottom: 84px;
 }
 
-.menu-wrapper {
+.menu-wrapper,
+.bottom-bar-wrapper {
   max-width: 400px !important;
 }
 
@@ -34,16 +35,43 @@ body {
   background-color: rgba(0, 0, 0, 0);
 }
 
-.underline-links a {
-  text-decoration: underline;
+/* todo: delete the class below */
+.btn-secondary {
+  display: inline-block;
+  background-color: #ccc;
+  border: 1px solid gray;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+
+  &.chosen {
+    background-color: #aaa;
+  }
 }
 
-.underline-links a:hover {
-  text-decoration: none;
-}
+.basic-content {
+  a {
+    text-decoration: underline;
+  }
 
-.lilypond-container svg {
-  width: 100%;
-  max-width: 500px;
-  height: auto;
+  a:hover {
+    text-decoration: none;
+  }
+
+  h2,
+  h3,
+  h4 {
+    @apply mt-6;
+  }
+
+  p {
+    @apply my-3;
+  }
+
+  h2 {
+    @apply text-xl;
+  }
+
+  h3 {
+    @apply uppercase;
+  }
 }

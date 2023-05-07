@@ -1,7 +1,7 @@
 <template>
   <TopBar
-    :back="previous || '/'"
-    :title="song_lyric ? String(song_lyric?.song_number) : ''"
+    @back="previous ? $router.back() : navigateTo('/')"
+    :title="song_lyric ? String(song_lyric?.song_number) : 'načítám…'"
   ></TopBar>
   <song-loading v-if="$apollo.loading"></song-loading>
   <song-detail v-else-if="song_lyric" :song="song_lyric"></song-detail>
@@ -91,6 +91,7 @@ const FETCH_SONG_LYRIC = gql`
               authorship_type
             }
           }
+          has_lyrics
           lang
           lang_string
         }
@@ -242,11 +243,8 @@ export default {
 </script>
 
 <style lang="postcss">
-body {
-  --indent-space: 1.5em;
-}
-
 .song-part {
+  --indent-space: 1.5em;
   margin-left: var(--indent-space);
 }
 
@@ -292,7 +290,7 @@ span.song-part-tag {
   }
 
   &-base {
-    font-weight: bold;
+    font-weight: 500;
     margin-right: 0.4em;
   }
 

@@ -1,27 +1,27 @@
 <template>
-  <div class="song-tags p-0 mt-3">
+  <div>
     <div
-      class="d-inline-flex flex-row flex-wrap align-items-start mr-3"
+      class="tag-group"
       v-if="song.tags_liturgy_part.length || song.is_approved_for_liturgy"
     >
-      <nuxt-link
+      <!-- <nuxt-link
         to="/napoveda#schvaleno-cbk"
         class="tag tag-blue"
         v-if="song.is_approved_for_liturgy"
       >
         schváleno ČBK pro liturgii <i class="fas fa-check"></i
-      ></nuxt-link>
-      <nuxt-link
-        class="tag tag-blue"
+      ></nuxt-link> -->
+      <BasicChip
         v-for="tag in song.tags_liturgy_part"
         :key="tag.id"
         :to="'/?stitky=' + tag.id"
-        >{{ tag.name }}</nuxt-link
       >
+        {{ tag.name }}
+      </BasicChip>
     </div>
 
     <div
-      class="d-inline-flex flex-row flex-wrap align-items-start mr-3"
+      class="tag-group"
       v-if="
         song.tags_liturgy_period
           .concat(song.tags_saints)
@@ -29,49 +29,42 @@
           .concat(song.tags_generic).length
       "
     >
-      <nuxt-link
-        class="tag tag-red"
+      <BasicChip
         v-for="tag in song.tags_liturgy_period"
         :key="tag.id"
         :to="'/?stitky=' + tag.id"
-        >{{ tag.name }}</nuxt-link
       >
-      <nuxt-link
-        class="tag tag-green"
+        {{ tag.name }}
+      </BasicChip>
+      <BasicChip
         v-for="tag in song.tags_saints
           .concat(song.tags_sacred_occasion)
           .concat(song.tags_generic)"
         :key="tag.id"
         :to="'/?stitky=' + tag.id"
-        >{{ tag.name }}</nuxt-link
       >
+        {{ tag.name }}
+      </BasicChip>
     </div>
 
-    <div
-      class="d-inline-flex flex-row flex-wrap align-items-start"
-      v-if="publicSongbookRecords.length"
-    >
-      <nuxt-link
-        class="tag tag-yellow songbook-tag"
+    <div class="tag-group" v-if="publicSongbookRecords.length">
+      <BasicChip
         v-for="(sb, key) in publicSongbookRecords"
-        :key="'sb' + key"
+        :key="key"
+         class="songbook-chip"
         :to="'/?zpevniky=' + sb.pivot.songbook.id + '&razeni=2'"
       >
         <span class="songbook-name">{{ sb.pivot.songbook.name }}</span
         ><span class="songbook-number">{{ sb.pivot.number }}</span>
-      </nuxt-link>
+      </BasicChip>
     </div>
 
-    <div
-      class="d-inline-flex flex-row flex-wrap align-items-start"
-      v-if="bibleRefs"
-    >
-      <a
-        class="tag tag-blue"
+    <div class="tag-group" v-if="bibleRefs">
+      <BasicChip
         v-for="(reference, key) in bibleRefs"
         :key="'ref' + key"
         :href="`https://www.bibleserver.com/CEP/${reference}`"
-        >{{ reference }}</a
+        >{{ reference }}</BasicChip
       >
     </div>
   </div>
@@ -120,3 +113,25 @@ export default {
   },
 };
 </script>
+
+<style lang="postcss" scoped>
+.tag-group {
+  @apply inline-flex flex-row flex-wrap items-start mr-4;
+}
+
+.songbook-chip {
+  @apply !gap-0 p-0 overflow-hidden;
+}
+
+.songbook-name, .songbook-number {
+  @apply py-1.5;
+}
+
+.songbook-name {
+  @apply pl-3 pr-2.5;
+}
+
+.songbook-number {
+  @apply pr-3 pl-2.5 bg-primary-50;
+}
+</style>

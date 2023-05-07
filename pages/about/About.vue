@@ -1,6 +1,6 @@
 <template>
-  <TopBar title="O Evangelickém zpěvníku" back="/" />
-  <div class="cont">
+  <TopBar title="O Evangelickém zpěvníku" @back="navigateTo('/')" />
+  <div class="cont basic-content">
     <h2>Kdo za projektem stojí?</h2>
 
     <p>
@@ -55,21 +55,5 @@ export default {
 <style lang="postcss" scoped>
   .cont {
     @apply mx-6 my-4;
-  }
-
-  h2, h3, h4  {
-    @apply mt-6;
-  }
-
-  p {
-    @apply my-3
-  }
-
-  h2 {
-    @apply text-xl;
-  }
-
-  h3 {
-    @apply uppercase;
   }
 </style>

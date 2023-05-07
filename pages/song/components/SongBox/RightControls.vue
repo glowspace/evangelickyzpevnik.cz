@@ -1,6 +1,8 @@
 <template>
+  <!-- todo: put right controls somewhere in the design -->
   <div
-    class="align-self-end align-self-sm-start d-sm-flex flex-column pb-sm-0 mr-n3 position-relative"
+  class="align-self-end align-self-sm-start d-sm-flex flex-column pb-sm-0 mr-n3 position-relative"
+  v-if="false"
   >
     <a
       class="btn"

@@ -8,7 +8,7 @@
     ></div>
     <!-- side sheets dialogs -->
     <div
-      class="sheet group-[&.show]:translate-y-0 fixed left-0 bottom-0 right-0 z-50 h-4/5 transition-transform translate-y-full duration-[400ms] flex flex-col gap-2"
+      class="sheet group-[&.show]:translate-y-0 fixed left-0 bottom-0 right-0 z-50 h-2/3 transition-transform translate-y-full duration-[400ms] flex flex-col gap-2"
     >
       <div
         class="bg-surface-100 dark:bg-surfacedark-100 rounded-t-2xl h-full w-full flex flex-col"
@@ -16,7 +16,7 @@
       >
         <!-- header -->
         <div class="min-h-[56px] flex flex-row items-center gap-3 pl-6 pr-3 py-3">
-          <h3 class="flex flex-grow text-base tracking-[.009375em]">
+          <h3 class="flex flex-grow text-base tracking-[.009375em] font-medium">
             {{ title }}
           </h3>
           <BasicButton @click="show = false" icon="close" text icon-only />

@@ -2,14 +2,14 @@
   <span v-if="multiline">
     <span class="song-name">{{ song.name }}</span>
     <span
-      class="song-secondary-name text-secondary"
+      class="song-secondary-name text-secondary text-sm"
       v-if="song.secondary_name_1"
     >
       <br />
       {{ song.secondary_name_1 }}
     </span>
     <span
-      class="song-secondary-name text-secondary"
+      class="song-secondary-name text-secondary text-sm"
       v-if="song.secondary_name_2"
     >
       <br />

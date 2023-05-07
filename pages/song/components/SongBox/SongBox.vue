@@ -1,53 +1,70 @@
 <template>
-  <div class="row">
-    <div class="col-lg-9">
-      <div class="card card-lyrics" id="cardLyrics">
-        <div class="card-header">
-          <div class="-mx-1">
-            <BasicChip
-              v-if="scores.length || otherExternals.length"
-              :class="[{ active: topMode == 1 }]"
-              class="pl-2"
-              @click="topMode = topMode == 1 ? 0 : 1"
-            >
-              <BasicIcon :fill="topMode == 1">audio_file</BasicIcon>
-              <span v-if="scores.length && otherExternals.length"
-                >Noty, materiály</span
-              >
-              <span v-else-if="scores.length">Noty</span>
-              <span v-else>Materiály</span>
-            </BasicChip>
-            <BasicChip
-              v-if="renderTranslations"
-              class="pl-2"
-              :class="{ active: topMode == 2 }"
-              @click="topMode = topMode == 2 ? 0 : 2"
-            >
-              <BasicIcon>translate</BasicIcon>
-              <span>Překlady</span>
-            </BasicChip>
-            <BasicChip
-              v-if="hasArrangements"
-              class="pl-2"
-              :href="$config.public.regenschoriUrl + song_lyric.public_route"
-            >
-              <BasicIcon>edit_note</BasicIcon>
-              <span>Aranže</span>
-            </BasicChip>
-            <BasicChip
-              v-if="hasTags || song_lyric.songbook_records.length"
-              class="pl-2"
-              :class="{ active: topMode == 3 }"
-              @click="topMode = topMode == 3 ? 0 : 3"
-            >
-              <BasicIcon :fill="topMode == 3">sell</BasicIcon>
-              <span v-if="hasTags && song_lyric.songbook_records.length"
-                >Štítky, zpěvníky</span
-              >
-              <span v-else-if="hasTags">Štítky</span>
-              <span v-else>Zpěvníky</span>
-            </BasicChip>
-            <!-- <a
+  <BottomBar
+    class="-ml-5"
+    @tools="showTools = true"
+    @media="showMedia = true"
+    :mediaAvailable="recordings.length"
+  />
+  <div class="card card-lyrics" id="cardLyrics">
+    <div class="card-header">
+      <div class="-mx-1">
+        <BasicChip
+          v-if="scores.length || otherExternals.length"
+          :class="[{ active: topMode == 1 }]"
+          class="pl-2 font-medium"
+          @click="topMode = topMode == 1 ? 0 : 1"
+        >
+          <BasicIcon :fill="topMode == 1" class="text-primary"
+            >audio_file</BasicIcon
+          >
+          <span v-if="scores.length && otherExternals.length"
+            >Noty, materiály</span
+          >
+          <span v-else-if="scores.length">Noty</span>
+          <span v-else>Materiály</span>
+        </BasicChip>
+        <BasicChip
+          v-if="renderTranslations"
+          class="pl-2 font-medium"
+          :class="{ active: topMode == 2 }"
+          @click="topMode = topMode == 2 ? 0 : 2"
+        >
+          <BasicIcon class="text-primary">translate</BasicIcon>
+          <span>Překlady</span>
+        </BasicChip>
+        <BasicChip
+          v-if="hasArrangements"
+          class="pl-2 font-medium"
+          :href="$config.public.regenschoriUrl + song_lyric.public_route"
+        >
+          <BasicIcon class="text-primary">edit_note</BasicIcon>
+          <span>Aranže</span>
+        </BasicChip>
+        <BasicChip
+          v-if="
+            hasTags ||
+            song_lyric.songbook_records.filter(
+              (sb) => !sb.pivot.songbook.is_private
+            ).length
+          "
+          class="pl-2 font-medium"
+          :class="{ active: topMode == 3 }"
+          @click="topMode = topMode == 3 ? 0 : 3"
+        >
+          <BasicIcon :fill="topMode == 3" class="text-primary">sell</BasicIcon>
+          <span
+            v-if="
+              hasTags &&
+              song_lyric.songbook_records.filter(
+                (sb) => !sb.pivot.songbook.is_private
+              ).length
+            "
+            >Štítky, zpěvníky</span
+          >
+          <span v-else-if="hasTags">Štítky</span>
+          <span v-else>Zpěvníky</span>
+        </BasicChip>
+        <!-- <a
               class="btn float-right"
               title="Nahlásit"
               :href="
@@ -57,350 +74,241 @@
             >
               <i class="fas fa-exclamation-triangle p-0"></i>
             </a> -->
-          </div>
-
-          <!-- scores -->
-          <div v-show="topMode === 1">
-            <div class="overflow-auto toolbox toolbox-u">
-              <a
-                class="btn btn-secondary float-right fixed-top position-sticky cross"
-                @click="topMode = 0"
-              >
-                <i class="fas fa-times pr-0"></i>
-              </a>
-              <div class="row ml-0" v-if="!$apollo.loading">
-                <table class="table m-0">
-                  <tbody>
-                    <tr v-if="scores.length && otherExternals.length">
-                      <td colspan="3" class="py-2 font-weight-bold">Noty</td>
-                    </tr>
-                    <external
-                      v-for="(external, index) in scores"
-                      :key="index"
-                      :line="true"
-                      :index="index"
-                      :external="external"
-                      :song-name="song_lyric.name"
-                    ></external>
-                    <tr v-if="scores.length && otherExternals.length">
-                      <td colspan="3" class="pb-2 pt-4 font-weight-bold">
-                        Další materiály
-                      </td>
-                    </tr>
-                    <external
-                      v-for="(external, index) in otherExternals"
-                      :key="index"
-                      :line="true"
-                      :index="index"
-                      :external="external"
-                      :song-name="song_lyric.name"
-                    ></external>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-          <!-- translations -->
-          <div v-show="topMode === 2">
-            <div class="overflow-auto toolbox toolbox-u">
-              <a
-                class="btn btn-secondary float-right fixed-top position-sticky cross"
-                @click="topMode = 0"
-              >
-                <i class="fas fa-times pr-0"></i>
-              </a>
-              <div
-                class="row ml-0"
-                v-if="!$apollo.loading && renderTranslations"
-              >
-                <table class="table m-0">
-                  <tbody>
-                    <tr>
-                      <th></th>
-                      <th>Název</th>
-                      <th>Typ</th>
-                      <th>Autor (překladu)</th>
-                    </tr>
-                    <translation-line
-                      v-for="(
-                        translation, index
-                      ) in song_lyric.song.song_lyrics.filter(
-                        (lyric) => lyric.type == 0
-                      )"
-                      :translation="translation"
-                      :original_name="song_lyric.name"
-                      :key="index + '0'"
-                    >
-                    </translation-line>
-                    <translation-line
-                      v-for="(
-                        translation, index
-                      ) in song_lyric.song.song_lyrics.filter(
-                        (lyric) => lyric.type == 2
-                      )"
-                      :translation="translation"
-                      :original_name="song_lyric.name"
-                      :key="index + '1'"
-                    >
-                    </translation-line>
-                    <translation-line
-                      v-for="(
-                        translation, index
-                      ) in song_lyric.song.song_lyrics.filter(
-                        (lyric) => lyric.type == 1
-                      )"
-                      :translation="translation"
-                      :original_name="song_lyric.name"
-                      :key="index + '2'"
-                    >
-                    </translation-line>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-          <!-- tags -->
-          <div v-show="topMode === 3">
-            <div class="overflow-auto toolbox toolbox-u">
-              <a
-                class="btn btn-secondary float-right fixed-top position-sticky cross"
-                @click="topMode = 0"
-              >
-                <i class="fas fa-times pr-0"></i>
-              </a>
-              <div class="px-2 pb-1" v-if="!$apollo.loading">
-                <tags :song="song_lyric"></tags>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="card-body py-2 overflow-hidden">
-            <div
-              class="d-flex align-items-start justify-content-between flex-column-reverse flex-sm-row"
-            >
-              <div
-                id="song-lyrics"
-                :class="{
-                  'p-1': true,
-                  'flex-grow-1': true,
-                  'song-lyrics': true,
-                  'song-lyrics-extended': chordSharedStore.chordMode == 2,
-                }"
-              >
-                <div
-                  v-if="song_lyric.lilypond_svg"
-                  v-html="song_lyric.lilypond_svg"
-                  class="-ml-6 -mr-4 mb-3 lilypond-container"
-                ></div>
-                <span v-if="song_lyric.has_lyrics">
-                  <BasicButton
-                    class="mb-2"
-                    text
-                    v-if="
-                      chordSharedStore.nChordModes != 1 &&
-                      chordSharedStore.chordMode == 0
-                    "
-                    @click="chordSharedStore.chordMode = 2"
-                    >Zobrazit akordy</BasicButton
-                  >
-                  <BasicButton
-                    class="mb-2"
-                    text
-                    v-if="chordSharedStore.chordMode != 0"
-                    @click="chordSharedStore.chordMode = 0"
-                    >Skrýt akordy</BasicButton
-                  >
-                  <div
-                    v-if="
-                      !$apollo.loading &&
-                      song_lyric.capo > 0 &&
-                      chordSharedStore.chordMode != 0
-                    "
-                    class="mb-2"
-                  >
-                    <i>capo: {{ song_lyric.capo }}</i>
-                  </div>
-                  <!-- here goes the song lyrics -->
-                  <song-lyric-parts
-                    :song-id="song_lyric.id"
-                    :font-size-percent="chordSharedStore.fontSizePercent"
-                    @loaded="isScrollable(true)"
-                  ></song-lyric-parts>
-                </span>
-                <span
-                  v-else
-                  :style="{
-                    fontSize: chordSharedStore.fontSizePercent + '%',
-                  }"
-                  >Text písně připravujeme.</span
-                >
-              </div>
-              <right-controls :song_lyric="song_lyric"></right-controls>
-            </div>
-          </div>
-
-          <div
-            class="controls fixed-bottom position-sticky p-1 clearfix"
-            :class="{ 'card-footer': controlsDisplay }"
-          >
-            <div v-show="bottomMode == 1 && controlsDisplay">
-              <div class="overflow-auto toolbox">
-                <a
-                  class="btn btn-secondary float-right"
-                  @click="bottomMode = 0"
-                >
-                  <i class="fas fa-times pr-0"></i>
-                </a>
-                <div
-                  class="toolbox-item"
-                  v-if="chordSharedStore.nChordModes != 1"
-                  :class="{
-                    'hidden-toolbox-item': chordSharedStore.chordMode == 0,
-                  }"
-                >
-                  <transposition
-                    v-model="chordSharedStore.transposition"
-                  ></transposition>
-                </div>
-
-                <div
-                  class="toolbox-item"
-                  v-if="chordSharedStore.nChordModes != 1"
-                  :class="{
-                    'hidden-toolbox-item': chordSharedStore.chordMode == 0,
-                  }"
-                >
-                  <chord-sharp-flat
-                    v-model="chordSharedStore.useFlatScale"
-                  ></chord-sharp-flat>
-                </div>
-
-                <div
-                  class="toolbox-item"
-                  v-if="chordSharedStore.nChordModes != 1"
-                >
-                  <chord-mode v-model="chordSharedStore.chordMode"></chord-mode>
-                </div>
-
-                <div class="toolbox-item">
-                  <font-sizer
-                    v-model="chordSharedStore.fontSizePercent"
-                  ></font-sizer>
-                </div>
-              </div>
-            </div>
-            <!-- media -->
-            <div v-show="bottomMode == 2 && controlsDisplay">
-              <div class="overflow-auto media-card toolbox">
-                <a
-                  class="btn btn-secondary float-right fixed-top position-sticky cross"
-                  @click="bottomMode = 0"
-                >
-                  <i class="fas fa-times pr-0"></i>
-                </a>
-                <div
-                  class="row ml-0 pt-2"
-                  v-if="hasExternals && !$apollo.loading"
-                >
-                  <div
-                    class="col-md-6"
-                    v-for="(external, index) in recordings"
-                    :key="index"
-                  >
-                    <external
-                      :line="false"
-                      :index="index"
-                      :external="external"
-                      :song-name="song_lyric.name"
-                    ></external>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- control buttons -->
-            <div>
-              <a
-                class="btn btn-secondary"
-                :class="{ chosen: bottomMode === 1 }"
-                @click="bottomMode = bottomMode === 1 ? 0 : 1"
-              >
-                <i class="fas fa-sliders-h"></i>
-                <span class="d-none d-sm-inline">Nástroje</span>
-              </a>
-              <a
-                class="btn btn-secondary"
-                v-if="recordings.length"
-                :class="{ chosen: bottomMode == 2 }"
-                @click="bottomMode = bottomMode == 2 ? 0 : 2"
-              >
-                <i class="fas fa-headphones"></i>
-                <span class="d-none d-sm-inline">Nahrávky</span>
-              </a>
-              <div
-                class="d-inline-block btn-group m-0 float-right"
-                role="group"
-                :class="{ chosen: autoscroll }"
-                v-if="scrollable"
-              >
-                <a class="btn btn-secondary" @click="autoscroll = !autoscroll">
-                  <i
-                    class="fas"
-                    :class="[
-                      autoscroll
-                        ? 'pr-0 fa-stop-circle'
-                        : 'fa-arrow-circle-down',
-                    ]"
-                  ></i>
-                  <span class="d-none d-sm-inline" v-if="!autoscroll"
-                    >Rolovat</span
-                  > </a
-                ><a
-                  class="btn btn-secondary"
-                  v-if="autoscroll"
-                  @click="autoscrollNum--"
-                  :class="{ disabled: autoscrollNum == 1 }"
-                  >&minus;</a
-                ><a
-                  class="btn btn-secondary"
-                  v-if="autoscroll"
-                  @click="autoscrollNum++"
-                  :class="{ disabled: autoscrollNum == 20 }"
-                  >&plus;</a
-                >
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
-      <div class="p-1 mb-3 mt-n2">
-        <div class="px-3 py-2 d-inline-block">
-          Zpěvník ProScholy.cz
-          <img src="/img/logo.svg" width="20px" />
-          {{ new Date().getFullYear() }}
+
+      <!-- scores -->
+      <TopBox
+        :active="topMode === 1"
+        @close="topMode = 0"
+        title="Noty a materiály"
+      >
+        <table class="table mx-6 mb-6" v-if="!$apollo.loading">
+          <tbody>
+            <tr v-if="scores.length && otherExternals.length">
+              <td colspan="3" class="py-2 font-weight-bold">Noty</td>
+            </tr>
+            <external
+              v-for="(external, index) in scores"
+              :key="index"
+              :line="true"
+              :index="index"
+              :external="external"
+              :song-name="song_lyric.name"
+            ></external>
+            <tr v-if="scores.length && otherExternals.length">
+              <td colspan="3" class="pb-2 pt-4 font-weight-bold">
+                Další materiály
+              </td>
+            </tr>
+            <external
+              v-for="(external, index) in otherExternals"
+              :key="index"
+              :line="true"
+              :index="index"
+              :external="external"
+              :song-name="song_lyric.name"
+            ></external>
+          </tbody>
+        </table>
+      </TopBox>
+      <!-- translations -->
+      <TopBox
+        :active="topMode === 2"
+        @close="topMode = 0"
+        title="Seznam jazykových verzí"
+      >
+        <div class="px-3 pb-3">
+          <Translations
+            v-if="!$apollo.loading && renderTranslations"
+            :song_lyric="song_lyric"
+          />
         </div>
-        <div class="float-right">
-          <a
-            class="btn btn-secondary"
-            :href="
-              'https://proscholy.atlassian.net/servicedesk/customer/portal/1/group/1/create/19?customfield_10056=' +
-              encodeURIComponent($config.public.baseUrl + $route.fullPath)
-            "
-            >Nahlásit</a
-          >
-          <a
-            class="btn btn-secondary"
-            v-if="song_lyric"
-            :href="$config.public.adminUrl + '/song/' + song_lyric.id + '/edit'"
-            >Upravit</a
-          >
+      </TopBox>
+      <!-- tags -->
+      <TopBox
+        :active="topMode === 3"
+        @close="topMode = 0"
+        title="Štítky a zpěvníky"
+      >
+        <div class="px-5 pb-5" v-if="!$apollo.loading">
+          <tags :song="song_lyric"></tags>
         </div>
-      </div>
+      </TopBox>
     </div>
-    <div class="col-lg-3">
-      <!-- <widget-funding></widget-funding> -->
+    <div>
+      <div class="card-body py-2 overflow-hidden">
+        <div
+          class="d-flex align-items-start justify-content-between flex-column-reverse flex-sm-row"
+        >
+          <div
+            id="song-lyrics"
+            :class="{
+              'p-1': true,
+              'flex-grow-1': true,
+              'song-lyrics': true,
+              'song-lyrics-extended': chordSharedStore.chordMode == 2,
+            }"
+          >
+            <div
+              v-if="song_lyric.lilypond_svg"
+              v-html="song_lyric.lilypond_svg"
+              class="-ml-6 -mr-4 mb-3 lilypond-container"
+            ></div>
+            <span v-if="song_lyric.has_lyrics">
+              <BasicButton
+                class="mb-2 ml-1"
+                text
+                v-if="
+                  chordSharedStore.nChordModes != 1 &&
+                  chordSharedStore.chordMode == 0
+                "
+                @click="chordSharedStore.chordMode = 2"
+                >Zobrazit akordy</BasicButton
+              >
+              <BasicButton
+                class="mb-2 ml-1"
+                text
+                v-if="chordSharedStore.chordMode != 0"
+                @click="chordSharedStore.chordMode = 0"
+                >Skrýt akordy</BasicButton
+              >
+              <div
+                v-if="
+                  !$apollo.loading &&
+                  song_lyric.capo > 0 &&
+                  chordSharedStore.chordMode != 0
+                "
+                class="mb-2"
+              >
+                <i>capo: {{ song_lyric.capo }}</i>
+              </div>
+              <!-- here goes the song lyrics -->
+              <song-lyric-parts
+                :song-id="song_lyric.id"
+                :font-size-percent="chordSharedStore.fontSizePercent"
+                @loaded="isScrollable(true)"
+              ></song-lyric-parts>
+            </span>
+            <span
+              v-else
+              :style="{
+                fontSize: chordSharedStore.fontSizePercent + '%',
+              }"
+              >Text písně připravujeme.</span
+            >
+          </div>
+          <right-controls :song_lyric="song_lyric"></right-controls>
+        </div>
+      </div>
+
+      <BottomSheets v-model="showTools" title="Nástroje">
+        <div
+          class="toolbox-item"
+          v-if="chordSharedStore.nChordModes != 1"
+          :class="{
+            'hidden-toolbox-item': chordSharedStore.chordMode == 0,
+          }"
+        >
+          <transposition
+            v-model="chordSharedStore.transposition"
+          ></transposition>
+        </div>
+
+        <div
+          class="toolbox-item"
+          v-if="chordSharedStore.nChordModes != 1"
+          :class="{
+            'hidden-toolbox-item': chordSharedStore.chordMode == 0,
+          }"
+        >
+          <chord-sharp-flat
+            v-model="chordSharedStore.useFlatScale"
+          ></chord-sharp-flat>
+        </div>
+
+        <div class="toolbox-item" v-if="chordSharedStore.nChordModes != 1">
+          <chord-mode v-model="chordSharedStore.chordMode"></chord-mode>
+        </div>
+
+        <div class="toolbox-item">
+          <font-sizer v-model="chordSharedStore.fontSizePercent"></font-sizer>
+        </div>
+      </BottomSheets>
+
+      <BottomSheets v-model="showMedia" title="Nahrávky">
+        <div class="row ml-0 pt-2" v-if="hasExternals && !$apollo.loading">
+          <div
+            class="col-md-6"
+            v-for="(external, index) in recordings"
+            :key="index"
+          >
+            <external
+              :line="false"
+              :index="index"
+              :external="external"
+              :song-name="song_lyric.name"
+            ></external>
+          </div>
+        </div>
+      </BottomSheets>
+      <!-- control buttons -->
+      <!-- <div>
+          <div
+            class="d-inline-block btn-group m-0 float-right"
+            role="group"
+            :class="{ chosen: autoscroll }"
+            v-if="scrollable"
+          >
+            <a class="btn btn-secondary" @click="autoscroll = !autoscroll">
+              <i
+                class="fas"
+                :class="[
+                  autoscroll ? 'pr-0 fa-stop-circle' : 'fa-arrow-circle-down',
+                ]"
+              ></i>
+              <span class="d-none d-sm-inline" v-if="!autoscroll"
+                >Rolovat</span
+              > </a
+            ><a
+              class="btn btn-secondary"
+              v-if="autoscroll"
+              @click="autoscrollNum--"
+              :class="{ disabled: autoscrollNum == 1 }"
+              >&minus;</a
+            ><a
+              class="btn btn-secondary"
+              v-if="autoscroll"
+              @click="autoscrollNum++"
+              :class="{ disabled: autoscrollNum == 20 }"
+              >&plus;</a
+            >
+          </div>
+        </div> -->
     </div>
   </div>
+  <!-- <div class="p-1 mb-3 mt-n2">
+    <div class="px-3 py-2 d-inline-block">
+      Zpěvník ProScholy.cz
+      <img src="/img/logo.svg" width="20px" />
+      {{ new Date().getFullYear() }}
+    </div>
+    <div class="float-right">
+      <a
+        class="btn btn-secondary"
+        :href="
+          'https://proscholy.atlassian.net/servicedesk/customer/portal/1/group/1/create/19?customfield_10056=' +
+          encodeURIComponent($config.public.baseUrl + $route.fullPath)
+        "
+        >Nahlásit</a
+      >
+      <a
+        class="btn btn-secondary"
+        v-if="song_lyric"
+        :href="$config.public.adminUrl + '/song/' + song_lyric.id + '/edit'"
+        >Upravit</a
+      >
+    </div>
+  </div> -->
 </template>
 
 <script>
@@ -413,6 +321,9 @@ import ChordMode from './ChordMode';
 import ChordSharpFlat from './ChordSharpFlat';
 import RightControls from './RightControls';
 import Transposition from './Transposition';
+import Translations from './Translations';
+import TopBox from './TopBox';
+import BottomBar from './BottomBar';
 import SongLyricParts from '../Renderer/SongLyricParts';
 import { getFullName } from '~/components/SongName';
 import Tags from '../Tags';
@@ -433,6 +344,9 @@ export default {
     Transposition,
     SongLyricParts,
     Tags,
+    Translations,
+    TopBox,
+    BottomBar,
   },
 
   data() {
@@ -440,9 +354,11 @@ export default {
     // use v-model to bind data from every other component
     return {
       controlsDisplay: true,
-      bottomMode: 0,
+      // bottomMode: 0,
+      showTools: false,
+      showMedia: false,
       topMode: 0,
-      autoscroll: false,
+      autoscroll: false, // todo: autoscroll
       autoscrollNum: 10,
       scrolldelay: null,
       fullscreen: false,
@@ -557,13 +473,6 @@ export default {
   },
 
   methods: {
-    controlsToggle: function () {
-      if (process.client) {
-        this.controlsDisplay = !this.controlsDisplay;
-        document.querySelector('.navbar.fixed-top').classList.toggle('d-none');
-      }
-    },
-
     setScroll: function (num, condition) {
       clearInterval(this.scrolldelay);
       if (process.client && num > 0 && num < 21 && condition) {
@@ -592,7 +501,7 @@ export default {
         this.scrollable = false;
 
         if (initial === true) {
-          this.bottomMode = 1;
+          // this.bottomMode = 1;
         }
       } else {
         this.scrollable = true;
@@ -618,7 +527,7 @@ export default {
   mounted() {
     if (!this.song_lyric.has_lyrics) {
       if (this.recordings.length) {
-        this.bottomMode = 2;
+        // this.bottomMode = 2;
       }
 
       if (this.scores.length) {
@@ -638,3 +547,11 @@ export default {
   },
 };
 </script>
+
+<style lang="postcss" scoped>
+.lilypond-container svg {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+}
+</style>

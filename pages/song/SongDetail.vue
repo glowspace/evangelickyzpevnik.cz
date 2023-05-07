@@ -3,7 +3,7 @@
     <div class="mt-4 mb-3">
       <div>
         <h1 class="song-title"><song-name :song="song" /></h1>
-        <div class="mt-1 text-sm underline-links">
+        <div class="mt-1 text-sm basic-content">
           <song-author-label :song="song" />
           <song-info :song="song" />
         </div>

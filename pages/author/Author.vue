@@ -1,45 +1,46 @@
 <template>
-  <TopBar :title="author ? author.type_string : ''" :back="previous || '/'" />
+  <TopBar
+    :title="author ? author.type_string : 'načítám…'"
+    @back="previous ? $router.back() : navigateTo('/')"
+  />
   <div class="container" v-if="$apollo.loading">
     <!-- <v-skeleton-loader type="heading" class="mt-4" /> -->
     <!-- <v-skeleton-loader type="text" class="mt-3 mb-3" max-width="100" /> -->
     <!-- <author-songs-list-loading /> -->
-    načítání
   </div>
-  <div class="m-5 underline-links" v-else-if="author">
+  <div class="m-5" v-else-if="author">
     <h1 class="mb-3 text-2xl font-semibold">{{ author.name }}</h1>
 
-    <div class="card" v-if="author.description">
-      <div class="card-header p-1">
-        <div class="px-4 py-2 inline-block">
-          O {{ aboutStrings[author.type] }}
+    <div class="basic-content">
+      <div v-if="author.description">
+        <h2>O {{ aboutStrings[author.type] }}</h2>
+        <p>{{ author.description }}</p>
+      </div>
+
+      <div class="card" v-if="author.members.length">
+        <div class="card-body">
+          <span>Související autoři: </span>
+          <span v-for="(members, key) in author.members" :key="key">
+            <span v-if="key">, </span>
+            <nuxt-link :to="members.public_route">{{ members.name }}</nuxt-link>
+          </span>
         </div>
       </div>
-      <div class="card-body">{{ author.description }}</div>
-    </div>
 
-    <div class="card" v-if="author.members.length">
-      <div class="card-body">
-        <span>Související autoři: </span>
-        <span v-for="(members, key) in author.members" :key="key">
-          <span v-if="key">, </span>
-          <nuxt-link :to="members.public_route">{{ members.name }}</nuxt-link>
-        </span>
+      <div class="card" v-if="author.memberships.length">
+        <div class="card-body">
+          <span>Skupiny: </span>
+          <span v-for="(membership, key2) in author.memberships" :key="key2">
+            <span v-if="key2">, </span>
+            <nuxt-link :to="membership.public_route">{{
+              membership.name
+            }}</nuxt-link>
+          </span>
+        </div>
       </div>
     </div>
 
-    <div class="card" v-if="author.memberships.length">
-      <div class="card-body">
-        <span>Skupiny: </span>
-        <span v-for="(membership, key2) in author.memberships" :key="key2">
-          <span v-if="key2">, </span>
-          <nuxt-link :to="membership.public_route">{{
-            membership.name
-          }}</nuxt-link>
-        </span>
-      </div>
-    </div>
-
+    <div class="-mx-3">
     <author-songs-list
       text="Autorské písně"
       v-if="author.songs_originals.length"
@@ -55,8 +56,9 @@
       v-if="author.songs_interpreted.length"
       :songs="author.songs_interpreted"
     />
+    </div>
 
-    <div class="p-1 mb-3 mt-n2">
+    <!-- <div class="p-1 mb-3 mt-n2">
       <div class="px-4 py-2 inline-block">
         Evangelický zpěvník <img src="/img/logo.svg" width="20px" />
         {{ new Date().getFullYear() }}
@@ -77,7 +79,7 @@
           >Upravit</a
         >
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -120,6 +122,8 @@ const FETCH_AUTHOR = gql`
     name
     secondary_name_1
     secondary_name_2
+    lang
+    has_lyrics
     public_route
     authors_pivot {
       pivot {

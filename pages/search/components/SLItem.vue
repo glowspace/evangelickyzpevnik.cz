@@ -48,7 +48,7 @@
         >{{ song_lyric.lang.substring(0, 3) }}</span
       >
     </td>
-    <td class="w-24">
+    <td class="w-24" v-if="!hideIcons">
       <div class="icons">
         <!-- todo: replace with image and remove FA icons -->
         <BasicIcon
@@ -86,7 +86,7 @@
 </template>
 
 <script setup>
-const props = defineProps(['song_lyric', 'number']);
+const props = defineProps(['song_lyric', 'number', 'hideIcons']);
 </script>
 
 <style lang="postcss" scoped>
