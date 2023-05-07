@@ -3,7 +3,17 @@
     @back="previous ? $router.back() : navigateTo('/')"
     :title="song_lyric ? String(song_lyric?.song_number) : 'načítám…'"
   >
-    <BasicButton icon="more_vert" icon-only text />
+    <div class="kebab-wrapper">
+      <BasicButton
+        icon="more_vert"
+        class="kebab-opener"
+        icon-only
+        text
+        @click="kebabClicked"
+        @blur="kebabBlurred"
+      />
+      <Kebab v-if="song_lyric" :song_lyric="song_lyric" @click="kebabOpened = true" />
+    </div>
   </TopBar>
   <song-loading v-if="$apollo.loading"></song-loading>
   <song-detail v-else-if="song_lyric" :song="song_lyric"></song-detail>
@@ -13,6 +23,7 @@
 import gql from 'graphql-tag';
 import SongDetail from './SongDetail';
 import SongLoading from './SongLoading';
+import Kebab from './components/Kebab';
 import { getFullName } from '~/components/SongName';
 import Bowser from 'bowser';
 
@@ -145,11 +156,12 @@ const FETCH_SONG_LYRIC = gql`
 
 export default {
   name: 'Song',
-  components: { SongLoading, SongDetail },
+  components: { SongLoading, SongDetail, Kebab },
 
   data() {
     return {
       previous: '',
+      kebabOpened: false,
     };
   },
 
@@ -165,6 +177,18 @@ export default {
   },
 
   methods: {
+    kebabClicked(event) {
+      if (this.kebabOpened) {
+        event.currentTarget.blur();
+      } else {
+        this.kebabOpened = true;
+      }
+    },
+
+    kebabBlurred() {
+      this.kebabOpened = false;
+    },
+
     getTitle() {
       return (
         (this.song_lyric ? getFullName(this.song_lyric) : 'Píseň') +
