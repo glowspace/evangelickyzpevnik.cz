@@ -3,7 +3,7 @@
     <td
       :class="[
         translation.lang == 'cs' ? 'text-secondary/20' : 'text-secondary',
-        'text-right text-uppercase small align-middle pr-0',
+        'text-right uppercase small align-middle pr-0',
       ]"
       :title="translation.lang_string"
     >

@@ -12,7 +12,7 @@
         <tbody>
           <tr v-if="!results_loaded && !(authors && authors.length)">
             <td class="p-1">
-              <span class="p-2 pl-3 d-inline-block">Načítám...</span>
+              <span class="p-2 pl-4 inline-block">Načítám...</span>
             </td>
             <td class="p-1">
               <a
@@ -30,7 +30,7 @@
             <tr v-for="(author, index) in authors" :key="author.id">
               <td class="p-1 align-middle">
                 <nuxt-link
-                  class="p-2 pl-3 w-full d-inline-block"
+                  class="p-2 pl-4 w-full inline-block"
                   :to="author.public_route"
                   >{{ author.name }}</nuxt-link
                 >
@@ -40,7 +40,7 @@
           </template>
           <tr v-else-if="results_loaded">
             <td class="p-1" colspan="2">
-              <span class="px-3 py-2 d-inline-block"
+              <span class="px-4 py-2 inline-block"
                 >Žádný autor odpovídající zadaným kritériím nebyl nalezen.</span
               >
             </td>

@@ -2,52 +2,52 @@
   <div class="row">
     <div class="col-lg-9">
       <div class="card card-lyrics" id="cardLyrics">
-        <div class="card-header p-1">
-          <div>
-            <a
+        <div class="card-header">
+          <div class="-mx-1">
+            <BasicChip
               v-if="scores.length || otherExternals.length"
-              class="btn btn-secondary"
-              :class="[{ chosen: topMode == 1 }]"
+              :class="[{ active: topMode == 1 }]"
+              class="pl-2"
               @click="topMode = topMode == 1 ? 0 : 1"
             >
-              <i class="fas fa-file-alt"></i>
+              <BasicIcon :fill="topMode == 1">audio_file</BasicIcon>
               <span v-if="scores.length && otherExternals.length"
                 >Noty, materiály</span
               >
               <span v-else-if="scores.length">Noty</span>
               <span v-else>Materiály</span>
-            </a>
-            <a
+            </BasicChip>
+            <BasicChip
               v-if="renderTranslations"
-              class="btn btn-secondary"
-              :class="{ chosen: topMode == 2 }"
+              class="pl-2"
+              :class="{ active: topMode == 2 }"
               @click="topMode = topMode == 2 ? 0 : 2"
             >
-              <i class="fas fa-language"></i>
+              <BasicIcon>translate</BasicIcon>
               <span>Překlady</span>
-            </a>
-            <a
+            </BasicChip>
+            <BasicChip
               v-if="hasArrangements"
-              class="btn"
+              class="pl-2"
               :href="$config.public.regenschoriUrl + song_lyric.public_route"
             >
-              <i class="fas fa-edit"></i>
+              <BasicIcon>edit_note</BasicIcon>
               <span>Aranže</span>
-            </a>
-            <a
+            </BasicChip>
+            <BasicChip
               v-if="hasTags || song_lyric.songbook_records.length"
-              class="btn btn-secondary d-md-none"
-              :class="{ chosen: topMode == 3 }"
+              class="pl-2"
+              :class="{ active: topMode == 3 }"
               @click="topMode = topMode == 3 ? 0 : 3"
             >
-              <i class="fas fa-tags"></i>
+              <BasicIcon :fill="topMode == 3">sell</BasicIcon>
               <span v-if="hasTags && song_lyric.songbook_records.length"
                 >Štítky, zpěvníky</span
               >
               <span v-else-if="hasTags">Štítky</span>
               <span v-else>Zpěvníky</span>
-            </a>
-            <a
+            </BasicChip>
+            <!-- <a
               class="btn float-right"
               title="Nahlásit"
               :href="
@@ -56,7 +56,7 @@
               "
             >
               <i class="fas fa-exclamation-triangle p-0"></i>
-            </a>
+            </a> -->
           </div>
 
           <!-- scores -->
@@ -175,7 +175,7 @@
           </div>
         </div>
         <div>
-          <div class="card-body py-2 pl-3 overflow-hidden">
+          <div class="card-body py-2 overflow-hidden">
             <div
               class="d-flex align-items-start justify-content-between flex-column-reverse flex-sm-row"
             >
@@ -191,23 +191,25 @@
                 <div
                   v-if="song_lyric.lilypond_svg"
                   v-html="song_lyric.lilypond_svg"
-                  class="ml-n3 mr-n3 ml-md-3 mr-md-0 mb-3 lilypond-container"
+                  class="-ml-6 -mr-4 mb-3 lilypond-container"
                 ></div>
                 <span v-if="song_lyric.has_lyrics">
-                  <a
-                    class="btn btn-secondary bg-transparent p-0 mb-2"
+                  <BasicButton
+                    class="mb-2"
+                    text
                     v-if="
                       chordSharedStore.nChordModes != 1 &&
                       chordSharedStore.chordMode == 0
                     "
                     @click="chordSharedStore.chordMode = 2"
-                    >Zobrazit akordy</a
+                    >Zobrazit akordy</BasicButton
                   >
-                  <a
-                    class="btn btn-secondary bg-transparent p-0 mb-2"
+                  <BasicButton
+                    class="mb-2"
+                    text
                     v-if="chordSharedStore.chordMode != 0"
                     @click="chordSharedStore.chordMode = 0"
-                    >Skrýt akordy</a
+                    >Skrýt akordy</BasicButton
                   >
                   <div
                     v-if="

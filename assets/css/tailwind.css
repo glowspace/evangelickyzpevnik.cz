@@ -2,8 +2,9 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-/* @import './tm-lib';
-@import './tm-components'; */
+/* @import './tm-lib'; */
+/* @import './tm-components'; */
+@import './song';
 
 body {
   /* @apply p-7 bg-red-200; */
@@ -31,4 +32,18 @@ body {
   pointer-events: auto;
   content: '';
   background-color: rgba(0, 0, 0, 0);
+}
+
+.underline-links a {
+  text-decoration: underline;
+}
+
+.underline-links a:hover {
+  text-decoration: none;
+}
+
+.lilypond-container svg {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
 }

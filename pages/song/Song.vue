@@ -240,3 +240,118 @@ export default {
   },
 };
 </script>
+
+<style lang="postcss">
+body {
+  --indent-space: 1.5em;
+}
+
+.song-part {
+  margin-left: var(--indent-space);
+}
+
+.song-line {
+  position: relative;
+}
+
+.song-line--comment {
+  color: #767676;
+  font-style: italic;
+  font-weight: 300;
+}
+
+span.song-part-tag {
+  min-width: var(--indent-space);
+  margin-left: calc(var(--indent-space) * -1);
+  display: inline-block;
+}
+
+.song-lyrics:not(.song-lyrics-extended) .song-part-hidden {
+  display: none;
+}
+
+.song-lyrics:not(.song-lyrics-extended) .song-part-hidden-text {
+  margin-bottom: 1em;
+
+  .song-line:not(:first-child) > *:not(.song-part-tag),
+  .song-line:first-child .chord {
+    display: none;
+  }
+}
+
+.chord {
+  position: relative;
+  display: inline-block;
+
+  &-sign {
+    display: flex;
+    justify-content: flex-start;
+    transition: 100ms;
+    margin-bottom: -0.4em;
+    color: #1d6dab;
+  }
+
+  &-base {
+    font-weight: bold;
+    margin-right: 0.4em;
+  }
+
+  &-variant {
+    position: relative;
+    left: -0.4em;
+  }
+
+  &-extension {
+    font-size: 0.8em;
+    position: relative;
+    left: -0.4em;
+  }
+
+  &-bass {
+    color: #6b78af;
+    margin-right: 0.4em;
+    margin-left: -0.35em;
+  }
+
+  &-right-bracket {
+    margin-left: -0.4em;
+    margin-right: 0.4em;
+  }
+
+  &-text {
+    display: inline-block;
+    position: relative;
+    background: white;
+    z-index: 2;
+/*
+    // todo: refactor to be usable
+    // was not working with ___ lines etc.. (see Abba Otce for example)
+
+    // &:not(.chord-text-spaced):after {
+    //      font-weight: bold;
+    //     content: "-";
+    //     position: absolute;
+    //     user-select: none;
+    // }*/
+  }
+
+  /*// &-text-spaced {
+  // margin-right: 0.5em;
+  // }*/
+
+  &-line {
+    display: block;
+    position: relative;
+    width: calc(100% - 0.6em);
+    height: 1px;
+    border-bottom: 1px solid #b9b9b9;
+    top: -0.5em;
+    right: -0.5em;
+    user-select: none;
+  }
+}
+
+.song-part-inline .chord-text {
+  display: none;
+}
+</style>

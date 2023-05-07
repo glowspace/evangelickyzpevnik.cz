@@ -2,7 +2,7 @@
   <span>
     <span
       v-if="song.lang && song.lang !== 'cs'"
-      class="text-uppercase text-secondary ml-3"
+      class="uppercase text-secondary ml-3"
       :title="song.lang_string"
       >{{ song.lang }}</span
     >

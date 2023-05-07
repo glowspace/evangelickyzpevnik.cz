@@ -1,19 +1,17 @@
 <template>
+  <TopBar :title="author.type_string" :back="previous || '/'" />
   <div class="container" v-if="$apollo.loading">
     <!-- <v-skeleton-loader type="heading" class="mt-4" /> -->
     <!-- <v-skeleton-loader type="text" class="mt-3 mb-3" max-width="100" /> -->
-    <author-songs-list-loading />
+    <!-- <author-songs-list-loading /> -->
     načítání
   </div>
-  <div class="container" v-else-if="author">
-    <div class="mb-3">
-      <h1 class="mb-0">{{ author.name }}</h1>
-      <span class="text-secondary pl-1">{{ author.type_string }}</span>
-    </div>
+  <div class="m-5 underline-links" v-else-if="author">
+    <h1 class="mb-3 text-2xl font-semibold">{{ author.name }}</h1>
 
     <div class="card" v-if="author.description">
       <div class="card-header p-1">
-        <div class="px-3 py-2 d-inline-block">
+        <div class="px-4 py-2 inline-block">
           O {{ aboutStrings[author.type] }}
         </div>
       </div>
@@ -22,9 +20,9 @@
 
     <div class="card" v-if="author.members.length">
       <div class="card-body">
-        <span>Související autoři:</span>
+        <span>Související autoři: </span>
         <span v-for="(members, key) in author.members" :key="key">
-          <span v-if="key">,</span>
+          <span v-if="key">, </span>
           <nuxt-link :to="members.public_route">{{ members.name }}</nuxt-link>
         </span>
       </div>
@@ -32,9 +30,9 @@
 
     <div class="card" v-if="author.memberships.length">
       <div class="card-body">
-        <span>Skupiny:</span>
+        <span>Skupiny: </span>
         <span v-for="(membership, key2) in author.memberships" :key="key2">
-          <span v-if="key2">,</span>
+          <span v-if="key2">, </span>
           <nuxt-link :to="membership.public_route">{{
             membership.name
           }}</nuxt-link>
@@ -59,7 +57,7 @@
     />
 
     <div class="p-1 mb-3 mt-n2">
-      <div class="px-3 py-2 d-inline-block">
+      <div class="px-4 py-2 inline-block">
         Evangelický zpěvník <img src="/img/logo.svg" width="20px" />
         {{ new Date().getFullYear() }}
       </div>
@@ -163,6 +161,13 @@ export default {
     return generateHead(this.getTitle(), this.getDescription());
   },
 
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      // access to component public instance via `vm`
+      vm.previous = from.fullPath;
+    });
+  },
+
   data() {
     return {
       aboutStrings: [
@@ -179,6 +184,7 @@ export default {
         'této kapely',
         'tohoto sboru',
       ],
+      previous: '',
     };
   },
 
