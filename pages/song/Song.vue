@@ -3,16 +3,15 @@
     @back="previous ? $router.back() : navigateTo('/')"
     :title="song_lyric ? String(song_lyric?.song_number) : 'načítám…'"
   >
-    <div class="kebab-wrapper">
+    <div class="kebab-wrapper" @focusout="kebabWrapperBlurred">
       <BasicButton
         icon="more_vert"
         class="kebab-opener"
         icon-only
         text
         @click="kebabClicked"
-        @blur="kebabBlurred"
       />
-      <Kebab v-if="song_lyric" :song_lyric="song_lyric" @click="kebabOpened = true" />
+      <Kebab v-if="song_lyric" :song_lyric="song_lyric" :opened="kebabOpened" />
     </div>
   </TopBar>
   <song-loading v-if="$apollo.loading"></song-loading>
@@ -177,16 +176,14 @@ export default {
   },
 
   methods: {
-    kebabClicked(event) {
-      if (this.kebabOpened) {
-        event.currentTarget.blur();
-      } else {
-        this.kebabOpened = true;
-      }
+    kebabClicked() {
+      this.kebabOpened = !this.kebabOpened;
     },
 
-    kebabBlurred() {
-      this.kebabOpened = false;
+    kebabWrapperBlurred(event) {
+      if (!event.currentTarget.contains(event.relatedTarget)) {
+        this.kebabOpened = false;
+      }
     },
 
     getTitle() {

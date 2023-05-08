@@ -2,6 +2,7 @@
   <ul
     role="dropdownmenu"
     class="kebab-menu opacity-0 invisible absolute top-[3.1rem] z-30 transition duration-400 ease-in-out left-0 md:left-auto md:right-0 min-w-[200px] inline-flex flex-col py-2 rounded bg-surface-50 dark:bg-surfacedark-200 shadow-md dark:shadow-gray-50/10"
+    :class="{ opened }"
   >
     <li class="relative">
       <a
@@ -24,8 +25,12 @@
   </ul>
 </template>
 
+<script setup>
+const props = defineProps(['opened']);
+</script>
+
 <style lang="postcss">
-.kebab-wrapper:focus-within .kebab-menu {
+.opened.kebab-menu {
   @apply !opacity-100 !visible;
 }
 </style>
