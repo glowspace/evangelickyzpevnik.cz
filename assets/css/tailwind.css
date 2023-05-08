@@ -18,6 +18,11 @@ body {
   max-width: 400px !important;
 }
 
+.bottom-sheets-container {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
 .stretched-link {
   position: static;
   will-change: initial;
