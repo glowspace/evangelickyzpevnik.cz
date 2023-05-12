@@ -1,31 +1,17 @@
 # Portál hudba.e-cirkev.cz
 
->  Projekt vzniká pod záštitou České církve evangelické (e-cirkev.cz) ve spolupráci s komunitou Glow Space.
+> Projekt vzniká pod záštitou České církve evangelické (e-cirkev.cz) ve spolupráci s komunitou Glow Space.
 
 Logo ČCE je jejím duševním vlastnictvím a nevztahuje se na něj open-source licence, pod kterou je zdrojový kód aplikace zveřejněný.
 
-Rozsáhlejší dokumentace vývoje je dostupná v Confluence komunity Glow Space na adrese: 
+Rozsáhlejší dokumentace vývoje je dostupná v Confluence komunity Glow Space na adrese: (TODO)
 
 ## Prostředí pro vývoj
-1. Zkopírovat .env.example do .env
-2. yarn install
-3. yarn start
 
-Server se spustí na adrese localhost:3000.
+1. `cp .env.example .env` (nebo `copy .env.example .env`)
+2. `yarn install`
+3. `yarn dev`
 
-```bash
-# install dependencies
-$ yarn install
+Vývojový server se spustí na adrese `http://localhost:3000`.
 
-# serve with hot reload at localhost:3000
-$ yarn dev
-
-# build for production and launch server
-$ yarn build
-$ yarn start
-
-# generate static project
-$ yarn generate
-```
-
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+Produkční build lze vytvořit pomocí `yarn build`. Náhled produkčního serveru se spouští příkazem `yarn preview`.

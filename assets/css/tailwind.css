@@ -1,0 +1,86 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* @import './tm-lib'; */
+/* @import './tm-components'; */
+/* @import './song'; */
+
+body {
+  /* @apply p-7 bg-red-200; */
+  max-width: 400px;
+  @apply mx-auto border-x-2;
+  padding-bottom: 84px;
+}
+
+.menu-wrapper,
+.bottom-bar-wrapper {
+  max-width: 400px !important;
+}
+
+.bottom-sheets-container {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.stretched-link {
+  position: static;
+  will-change: initial;
+}
+
+.stretched-link::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  pointer-events: auto;
+  content: '';
+  background-color: rgba(0, 0, 0, 0);
+}
+
+strong {
+  @apply font-medium;
+}
+
+/* todo: delete the class below */
+.btn-secondary {
+  display: inline-block;
+  background-color: #ccc;
+  border: 1px solid gray;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+
+  &.chosen {
+    background-color: #aaa;
+  }
+}
+
+.basic-content {
+  a {
+    text-decoration: underline;
+  }
+
+  a:hover {
+    text-decoration: none;
+  }
+
+  h2,
+  h3,
+  h4 {
+    @apply mt-6;
+  }
+
+  p {
+    @apply my-3;
+  }
+
+  h2 {
+    @apply text-xl;
+  }
+
+  h3 {
+    @apply uppercase;
+  }
+}

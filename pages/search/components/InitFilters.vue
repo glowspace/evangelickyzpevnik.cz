@@ -1,94 +1,91 @@
 <template>
-    <div :class="[{'opacity-1': !$apollo.loading}, 'song-tags song-tags--init-filters']">
-        <a
-            v-show="randomTags.length"
-            class="tag tag--filter-icon px-1"
-            @click="$emit('input', null);"
-        ><i class="fas fa-filter text-white"></i></a>
-        <client-only>
-            <span>
-                <a
-                    class="tag border-0"
-                    v-for="tag in randomTags"
-                    :key="'tag-' + tag.id"
-                    @click="selectTag(tag)"
-                    >{{ tag.name }}</a
-                >
-            </span>
-        </client-only>
-    </div>
+  <div :class="[{ 'opacity-100': randomTags.length }, 'flex flex-row flex-wrap items-center opacity-0 h-10 overflow-hidden ml-6 mr-4']">
+    <BasicButton
+      icon="filter_alt"
+      icon-fill
+      icon-only
+      compact
+      text
+      @click="$emit('update:modelValue', {})"
+    />
+    <client-only>
+      <BasicChip
+        v-for="tag in randomTags"
+        :key="tag.id"
+        @click="selectTag(tag)"
+        >{{ tag.name }}</BasicChip
+      >
+    </client-only>
+  </div>
 </template>
 
 <script>
-import gql from 'graphql-tag';
-import Vue from 'vue'
-import fetchFiltersQuery from './fetchFiltersQuery.graphql';
+import { fetchFiltersQuery } from './fetchFiltersQuery.graphql';
 
 export default {
-    props: ['selected-tags'],
+  props: ['modelValue'],
 
-    data() {
-        return {
-            selected_tags: {}
-        };
+  data() {
+    return {
+      selected_tags: {},
+    };
+  },
+
+  apollo: {
+    $prefetch: false,
+    tags_generic: {
+      query: fetchFiltersQuery,
+    },
+    tags_liturgy_part: {
+      query: fetchFiltersQuery,
+    },
+    tags_liturgy_period: {
+      query: fetchFiltersQuery,
+    },
+    tags_saints: {
+      query: fetchFiltersQuery,
+    },
+    tags_sacred_occasion: {
+      query: fetchFiltersQuery,
+    },
+  },
+
+  computed: {
+    usefulTags() {
+      // do not include regenschori tag types
+      return [
+        ...this.tags_generic.filter((t) => t.song_lyrics_count !== 0),
+        ...this.tags_liturgy_part.filter((t) => t.song_lyrics_count !== 0),
+        ...this.tags_liturgy_period.filter((t) => t.song_lyrics_count !== 0),
+        ...this.tags_saints.filter((t) => t.song_lyrics_count !== 0),
+        ...this.tags_sacred_occasion.filter((t) => t.song_lyrics_count !== 0),
+      ];
     },
 
-    apollo: {
-        $prefetch: false,
-        tags_generic: {
-            query: fetchFiltersQuery
-        },
-        tags_liturgy_part: {
-            query: fetchFiltersQuery
-        },
-        tags_liturgy_period: {
-            query: fetchFiltersQuery
-        },
-        tags_saints: {
-            query: fetchFiltersQuery
-        },
-        tags_sacred_occasion: {
-            query: fetchFiltersQuery
-        }
+    randomTags() {
+      if (process.client && this.$apollo.loading === false) {
+        return this.shuffleArray(this.usefulTags).slice(0, 10);
+      } else {
+        return [];
+      }
+    },
+  },
+
+  methods: {
+    selectTag(tag) {
+      this.selected_tags[tag.id] = true;
+
+      // notify the parent that sth has changed
+      this.$emit('update:modelValue', this.selected_tags);
     },
 
-    computed: {
-        usefulTags() {
-            // do not include regenschori tag types
-            return [
-                ...this.tags_generic.filter(t => t.song_lyrics_count !== 0),
-                ...this.tags_liturgy_part.filter(t => t.song_lyrics_count !== 0),
-                ...this.tags_liturgy_period.filter(t => t.song_lyrics_count !== 0),
-                ...this.tags_saints.filter(t => t.song_lyrics_count !== 0),
-                ...this.tags_sacred_occasion.filter(t => t.song_lyrics_count !== 0)
-            ];
-        },
-
-        randomTags() {
-            if (process.client && this.$apollo.loading === false) {
-                return this.shuffleArray(this.usefulTags).slice(0, 10);
-            } else {
-                return [];
-            }
-        }
+    shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
     },
-
-    methods: {
-        selectTag(tag) {
-            Vue.set(this.selected_tags, tag.id, true);
-
-            // notify the parent that sth has changed
-            this.$emit('update:selected-tags', this.selected_tags);
-            this.$emit('input', null);
-        },
-
-        shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
-    }
+  },
 };
 </script>

@@ -1,0 +1,6 @@
+{
+  "files.associations": {
+    "*.css": "tailwindcss",
+  },
+  "editor.codeLens": false
+}
