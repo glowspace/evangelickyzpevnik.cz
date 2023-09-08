@@ -93,6 +93,8 @@ const FETCH_SONG_LYRIC = gql`
         song_lyrics {
           id
           name
+          secondary_name_1
+          secondary_name_2
           public_route
           type
           authors_pivot {

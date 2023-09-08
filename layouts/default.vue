@@ -58,7 +58,12 @@ useHead({
     },
     {
       rel: 'stylesheet',
-      href: 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200',
+      href: 'https://fonts.googleapis.com/css2?family=Amiri&display=swap',
+    },
+    {
+      rel: 'stylesheet',
+      // href: 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200', // the font file would be too big
+      href: 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@30,400,0..1,0',
     },
     {
       rel: 'stylesheet',

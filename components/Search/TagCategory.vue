@@ -16,7 +16,7 @@
         text
       ></BasicButton>
     </div>
-    <div :class="{ 'whitespace-nowrap overflow-hidden': isClosed }">
+    <div :class="{ 'whitespace-nowrap overflow-hidden opacity-60': isClosed }">
       <BasicChip
         :class="[{ 'active': isSelectedTag(tag) }, 'tag-' + color]"
         v-for="tag in tagsInCategory.filter((t) => t.song_lyrics_count !== 0)"

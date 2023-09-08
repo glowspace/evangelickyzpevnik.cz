@@ -1,5 +1,5 @@
 <template>
-  <tr>
+  <tr :class="{ 'bg-surface-200': active }">
     <!-- <td class="p-1 align-middle text-right w-min">
       <nuxt-link
         class="p-2 pl-3 w-full d-flex justify-content-between text-secondary"
@@ -10,7 +10,7 @@
     </td> -->
     <td class="p-1" :colspan="song_lyric.lang != 'cs' ? 1 : 2">
       <nuxt-link class="p-2 w-full inline-block" :to="song_lyric.public_route">
-        <song-name :song="song_lyric" :multiline="true" />
+        <song-name :song="song_lyric" :multiline="true" :active="active" />
       </nuxt-link>
     </td>
     <!-- <td class="p-1 align-middle" :colspan="song_lyric.lang != 'cs' ? 1 : 2">
@@ -86,12 +86,17 @@
 </template>
 
 <script setup>
-const props = defineProps(['song_lyric', 'number', 'hideIcons']);
+const props = defineProps(['song_lyric', 'number', 'hideIcons', 'active']);
 </script>
 
 <style lang="postcss" scoped>
-tr:hover {
- @apply bg-surface-50;
+tr:hover,
+tr:focus-within {
+  @apply bg-surface-50;
+}
+
+tr:active {
+  @apply bg-surface-200;
 }
 
 td {

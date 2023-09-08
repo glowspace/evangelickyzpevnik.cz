@@ -546,7 +546,7 @@ export default {
 };
 </script>
 
-<style lang="postcss" scoped>
+<style lang="postcss">
 .lilypond-container svg {
   width: 100%;
   max-width: 500px;

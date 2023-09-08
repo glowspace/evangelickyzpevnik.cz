@@ -15,7 +15,7 @@
       >
         <!-- header -->
         <div
-          class="min-h-[56px] flex flex-row items-center gap-3 pl-6 pr-3 py-3"
+          class="min-h-[56px] flex flex-row items-center gap-3 pl-6 pr-3 py-3 flex-shrink-0"
         >
           <h3 class="flex flex-grow text-base tracking-[.009375em] font-medium">
             {{ title }}

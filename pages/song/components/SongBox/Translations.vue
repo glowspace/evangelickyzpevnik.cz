@@ -11,6 +11,7 @@
         :song_lyric="song_lyric"
         :key="song_lyric.id"
         :hideIcons="true"
+        :active="song_lyric.id === props.song_lyric.id"
       ></SLItem>
       <tr>
         <th
@@ -18,11 +19,7 @@
           class="pt-5 text-error-600"
           v-if="filterLyrics(1).length"
         >
-          {{
-            filterLyrics(1).length == 1
-              ? 'Překlad'
-              : 'Překlady'
-          }}
+          {{ filterLyrics(1).length == 1 ? 'Překlad' : 'Překlady' }}
         </th>
       </tr>
       <SLItem
@@ -30,6 +27,7 @@
         :song_lyric="song_lyric"
         :key="song_lyric.id"
         :hideIcons="true"
+        :active="song_lyric.id === props.song_lyric.id"
       ></SLItem>
       <tr>
         <th
@@ -49,6 +47,7 @@
         :song_lyric="song_lyric"
         :key="song_lyric.id"
         :hideIcons="true"
+        :active="song_lyric.id === props.song_lyric.id"
       ></SLItem>
     </tbody>
   </table>
@@ -66,5 +65,9 @@ function filterLyrics(type) {
 <style lang="postcss" scoped>
 th {
   @apply font-medium text-left px-3 pb-2;
+}
+
+tr.active {
+  @apply bg-surface-100;
 }
 </style>
