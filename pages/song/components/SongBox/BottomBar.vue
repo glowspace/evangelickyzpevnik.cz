@@ -25,16 +25,12 @@
 </style>
 
 <script>
-// import NoSleep from 'nosleep.js';
-
 export default {
   props: ['mediaAvailable'],
 
   data() {
     return {
       fullscreen: false,
-      // nosleep: false,
-      // noSleeper: process.client ? new NoSleep() : null,
     };
   },
 
@@ -66,16 +62,6 @@ export default {
         }
       }
     },
-
-    // toggleNosleep() {
-    //   this.nosleep = !this.nosleep;
-
-    //   if (this.nosleep) {
-    //     this.noSleeper.enable();
-    //   } else {
-    //     this.noSleeper.disable();
-    //   }
-    // },
 
     fullscreenChanged() {
       if (process.client) {

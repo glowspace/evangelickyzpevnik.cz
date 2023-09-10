@@ -6,31 +6,42 @@
   >
     <li class="relative">
       <a
-        href="/"
-        class="min-h-[3rem] flex flex-row items-center gap-4 py-2 px-3 hover-icon hover:bg-primary-100 dark:hover:bg-secondary-700 hover:bg-opacity-30 dark:hover:bg-opacity-30"
+        class="kebab-item"
+        :href="
+          'https://proscholy.atlassian.net/servicedesk/customer/portal/1/group/1/create/19?customfield_10056=' +
+          encodeURIComponent(siteUrl + $route.fullPath)
+        "
       >
-        <span class="material-symbols-outlined">settings</span>
-        Edit
+        <BasicIcon>report</BasicIcon>
+        Nahlásit
       </a>
     </li>
     <li class="relative">
       <a
-        href="#"
-        class="min-h-[3rem] flex flex-row items-center gap-4 py-2 px-3 hover-icon hover:bg-primary-100 dark:hover:bg-secondary-700 hover:bg-opacity-30 dark:hover:bg-opacity-30"
+        class="kebab-item"
+        title="Upravit píseň"
+        :href="[
+          song_lyric ? adminUrl + '/song/' + song_lyric.id + '/edit' : '',
+        ]"
       >
-        <span class="material-symbols-outlined">delete</span>
-        Delete
+        <BasicIcon>edit</BasicIcon>
+        Upravit
       </a>
     </li>
   </ul>
 </template>
 
 <script setup>
-const props = defineProps(['opened']);
+const { siteUrl, adminUrl } = useRuntimeConfig()?.public;
+const props = defineProps(['opened', 'song_lyric']);
 </script>
 
-<style lang="postcss">
+<style lang="postcss" scoped>
 .opened.kebab-menu {
   @apply !opacity-100 !visible;
+}
+
+.kebab-item {
+  @apply min-h-[3rem] flex flex-row items-center gap-4 py-2 px-3 hover:bg-primary-100 dark:hover:bg-secondary-700 hover:bg-opacity-30 dark:hover:bg-opacity-30;
 }
 </style>

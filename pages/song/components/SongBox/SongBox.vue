@@ -197,7 +197,6 @@
               >Text písně připravujeme.</span
             >
           </div>
-          <right-controls :song_lyric="song_lyric"></right-controls>
         </div>
       </div>
 
@@ -231,6 +230,8 @@
         <div>
           <font-sizer v-model="chordSharedStore.fontSizePercent"></font-sizer>
         </div>
+
+        <no-sleep />
       </BottomSheets>
 
       <BottomSheets v-model="showMedia" title="Nahrávky">
@@ -317,11 +318,11 @@ const { throttle } = lodash;
 import FontSizer from './FontSizer';
 import ChordMode from './ChordMode';
 import ChordSharpFlat from './ChordSharpFlat';
-import RightControls from './RightControls';
 import Transposition from './Transposition';
 import Translations from './Translations';
 import TopBox from './TopBox';
 import BottomBar from './BottomBar';
+import NoSleep from './NoSleep';
 import SongLyricParts from '../Renderer/SongLyricParts';
 import { getFullName } from '~/components/SongName';
 import Tags from '../Tags';
@@ -338,13 +339,13 @@ export default {
     FontSizer,
     ChordMode,
     ChordSharpFlat,
-    RightControls,
     Transposition,
     SongLyricParts,
     Tags,
     Translations,
     TopBox,
     BottomBar,
+    NoSleep,
   },
 
   data() {
