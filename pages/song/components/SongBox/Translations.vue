@@ -14,27 +14,7 @@
         :active="song_lyric.id === props.song_lyric.id"
       ></SLItem>
       <tr>
-        <th
-          colspan="2"
-          class="pt-5 text-error-600"
-          v-if="filterLyrics(1).length"
-        >
-          {{ filterLyrics(1).length == 1 ? 'Překlad' : 'Překlady' }}
-        </th>
-      </tr>
-      <SLItem
-        v-for="song_lyric in filterLyrics(1)"
-        :song_lyric="song_lyric"
-        :key="song_lyric.id"
-        :hideIcons="true"
-        :active="song_lyric.id === props.song_lyric.id"
-      ></SLItem>
-      <tr>
-        <th
-          colspan="2"
-          class="pt-5 text-greendark"
-          v-if="filterLyrics(2).length"
-        >
+        <th colspan="2" class="text-greendark" v-if="filterLyrics(2).length">
           {{
             filterLyrics(2).length == 1
               ? 'Autorizovaný překlad'
@@ -44,6 +24,18 @@
       </tr>
       <SLItem
         v-for="song_lyric in filterLyrics(2)"
+        :song_lyric="song_lyric"
+        :key="song_lyric.id"
+        :hideIcons="true"
+        :active="song_lyric.id === props.song_lyric.id"
+      ></SLItem>
+      <tr>
+        <th colspan="2" class="text-error-600" v-if="filterLyrics(1).length">
+          {{ filterLyrics(1).length == 1 ? 'Překlad' : 'Překlady' }}
+        </th>
+      </tr>
+      <SLItem
+        v-for="song_lyric in filterLyrics(1)"
         :song_lyric="song_lyric"
         :key="song_lyric.id"
         :hideIcons="true"
@@ -64,7 +56,11 @@ function filterLyrics(type) {
 
 <style lang="postcss" scoped>
 th {
-  @apply font-medium text-left px-3 pb-2;
+  @apply font-medium text-left px-3 pb-2 pt-5;
+}
+
+tr:first-child th {
+  @apply pt-0;
 }
 
 tr.active {
