@@ -1,39 +1,35 @@
 <template>
-  <a
-    class="btn btn-secondary nosleep"
-    :title="[
-      !nosleep
-        ? 'Blokovat zhasínání displeje'
-        : 'Přestat blokovat zhasínání displeje',
-    ]"
-    @click="toggleNosleep"
-    ><i class="fa-sun" :class="[nosleep ? 'far' : 'fas']"></i
-  ></a>
-  <a class="btn btn-secondary nosleep-caption" @click="toggleNosleep">{{
-    !nosleep
-      ? 'zhasínání&nbsp;displeje není&nbsp;blokováno'
-      : 'zhasínání&nbsp;displeje je&nbsp;blokováno'
-  }}</a>
+  <ToolboxContainer>
+    <div>Blokovat zhasínání displeje</div>
+    <BasicSwitch id="nosleep-switch" v-model="nsComp" />
+  </ToolboxContainer>
 </template>
 
 <script setup>
+import ToolboxContainer from './ToolboxContainer.vue';
+
 import NoSleep from 'nosleep.js';
-const nosleep = ref(false);
-const noSleeper = ref(null);
+const nsRef = ref(false);
+const nsObject = ref(null);
 
 if (process.client) {
-  noSleeper.value = new NoSleep();
+  nsObject.value = new NoSleep();
 }
 
-function toggleNosleep() {
-  nosleep.value = !nosleep.value;
+const nsComp = computed({
+  get() {
+    return nsRef.value;
+  },
+  set(value) {
+    nsRef.value = value;
 
-  if (nosleep.value) {
-    noSleeper.value.enable();
-  } else {
-    noSleeper.value.disable();
-  }
-}
+    if (value) {
+      nsObject.value.enable();
+    } else {
+      nsObject.value.disable();
+    }
+  },
+});
 </script>
 
 <style lang="postcss" scoped></style>

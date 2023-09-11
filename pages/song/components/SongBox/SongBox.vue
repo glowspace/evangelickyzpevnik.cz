@@ -204,7 +204,7 @@
         <div
           v-if="chordSharedStore.nChordModes != 1"
           :class="{
-            'hidden-toolbox-item': chordSharedStore.chordMode == 0,
+            'opacity-40 pointer-events-none': chordSharedStore.chordMode == 0,
           }"
         >
           <transposition
@@ -215,7 +215,7 @@
         <div
           v-if="chordSharedStore.nChordModes != 1"
           :class="{
-            'hidden-toolbox-item': chordSharedStore.chordMode == 0,
+            'opacity-40 pointer-events-none': chordSharedStore.chordMode == 0,
           }"
         >
           <chord-sharp-flat

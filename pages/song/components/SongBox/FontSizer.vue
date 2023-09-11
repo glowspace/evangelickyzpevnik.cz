@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <ToolboxContainer>
     <div>Velikost písma</div>
-    <BasicButtonGroup class="mr-2 mb-2">
+    <BasicButtonGroup>
       <BasicButtonGroupItem centered @click="fontSizePercent -= 10">
         <BasicIcon>remove</BasicIcon>
       </BasicButtonGroupItem>
@@ -12,10 +12,12 @@
         <BasicIcon>add</BasicIcon>
       </BasicButtonGroupItem>
     </BasicButtonGroup>
-  </div>
+  </ToolboxContainer>
 </template>
 
 <script setup>
+import ToolboxContainer from './ToolboxContainer.vue';
+
 const props = defineProps(['modelValue']);
 const emit = defineEmits(['update:modelValue']);
 const refreshHandler = ref(null);

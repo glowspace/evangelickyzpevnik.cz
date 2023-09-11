@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <ToolboxContainer>
     <div>Transpozice</div>
-    <BasicButtonGroup class="mb-4">
+    <BasicButtonGroup>
       <BasicButtonGroupItem centered @click="transpose(-1)">
         <BasicIcon>remove</BasicIcon>
       </BasicButtonGroupItem>
@@ -12,10 +12,12 @@
         <BasicIcon>add</BasicIcon>
       </BasicButtonGroupItem>
     </BasicButtonGroup>
-  </div>
+  </ToolboxContainer>
 </template>
 
 <script setup>
+import ToolboxContainer from './ToolboxContainer.vue';
+
 const props = defineProps(['modelValue']);
 const emit = defineEmits(['update:modelValue']);
 

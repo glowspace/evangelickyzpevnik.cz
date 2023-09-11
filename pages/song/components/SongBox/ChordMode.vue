@@ -1,26 +1,24 @@
 <template>
-  <div>
-    <div>Akordy</div>
-    <div class="btn-group m-0 bg-light" role="group">
-      <a
-        class="btn btn-secondary"
-        :class="{ chosen: chordMode === 0 }"
-        @click="chordMode = 0"
-        ><i class="far fa-eye-slash"></i
-      ></a>
-      <a
-        class="btn btn-secondary"
-        :class="{ chosen: chordMode === 2 }"
-        @click="chordMode = 2"
-        ><i class="far fa-eye"></i
-      ></a>
-    </div>
-  </div>
+  <ToolboxContainer>
+    <div>Zobrazit akordy</div>
+    <BasicSwitch v-model="showChords" id="chordmode-switch" />
+  </ToolboxContainer>
 </template>
 
 <script setup>
+import ToolboxContainer from './ToolboxContainer.vue';
+
 const props = defineProps(['modelValue']);
 const emit = defineEmits(['update:modelValue']);
+
+const showChords = computed({
+  get() {
+    return chordMode.value == 2;
+  },
+  set(value) {
+    chordMode.value = value ? 2 : 0;
+  },
+});
 
 const chordMode = computed({
   get() {

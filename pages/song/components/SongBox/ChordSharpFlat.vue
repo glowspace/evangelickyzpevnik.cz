@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <ToolboxContainer>
     <div>Posuvky</div>
-    <BasicButtonGroup class="mb-4">
+    <BasicButtonGroup>
       <BasicButtonGroupItem centered @click="useFlatScale = false" :class="{ active: !useFlatScale }">
         <span class="text-lg w-8">#</span>
       </BasicButtonGroupItem>
@@ -9,10 +9,12 @@
         <span class="text-lg w-8">♭</span>
       </BasicButtonGroupItem>
     </BasicButtonGroup>
-  </div>
+  </ToolboxContainer>
 </template>
 
 <script setup>
+import ToolboxContainer from './ToolboxContainer.vue';
+
 const props = defineProps(['modelValue']);
 const emit = defineEmits(['update:modelValue']);
 
