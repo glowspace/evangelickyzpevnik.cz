@@ -16,6 +16,14 @@ const props = defineProps({ centered: Boolean });
 
 .segmented-item.centered {
   @apply pl-4 pr-4;
+
+  &:first-child {
+    @apply pr-3;
+  }
+
+  &:last-child {
+    @apply pl-3;
+  }
 }
 
 .segmented-item[disabled] {

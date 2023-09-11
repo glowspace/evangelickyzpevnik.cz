@@ -25,7 +25,7 @@
 
 <style lang="postcss" scoped>
 .menu-wrapper {
-  @apply w-full md:max-w-[412px] text-sm flex flex-row space-x-2 items-center justify-center fixed bottom-0;
+  @apply w-full md:max-w-[412px] text-sm flex flex-row space-x-2 items-center justify-center fixed bottom-0 shadow;
 }
 
 .menu {

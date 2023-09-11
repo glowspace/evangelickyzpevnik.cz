@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full h-16 flex flex-row items-center justify-between gap-1.5 bg-surface-200 dark:bg-surfacedark-100 px-1 sticky top-0 z-10"
+    class="w-full h-16 flex flex-row items-center justify-between gap-1.5 bg-surface-200 dark:bg-surfacedark-100 px-1 sticky top-0 z-10 shadow"
   >
     <BasicButton icon="arrow_back" icon-only text @click="emit('back')" />
     <component
