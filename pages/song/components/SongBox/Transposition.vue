@@ -1,13 +1,17 @@
 <template>
   <div>
     <div>Transpozice</div>
-    <div class="btn-group m-0" role="group">
-      <a class="btn btn-secondary" @click="transpose(-1)">-</a>
-      <a class="btn btn-secondary bg-light transpose-window" @click="reset()">{{
-        value
-      }}</a>
-      <a class="btn btn-secondary" @click="transpose(1)">+</a>
-    </div>
+    <BasicButtonGroup class="mb-4">
+      <BasicButtonGroupItem centered @click="transpose(-1)">
+        <BasicIcon>remove</BasicIcon>
+      </BasicButtonGroupItem>
+      <BasicButtonGroupItem centered @click="reset()" class="w-14">
+        {{ value.toString().replace('-', '&minus;') }}
+      </BasicButtonGroupItem>
+      <BasicButtonGroupItem centered @click="transpose(1)">
+        <BasicIcon>add</BasicIcon>
+      </BasicButtonGroupItem>
+    </BasicButtonGroup>
   </div>
 </template>
 
