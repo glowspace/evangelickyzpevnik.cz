@@ -75,7 +75,7 @@
       class="btn btn-secondary search-report bg-transparent"
       title="Nahlásit"
       :href="
-        'https://proscholy.atlassian.net/servicedesk/customer/portal/1/group/6/create/20?customfield_10056=' +
+        'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/6/create/20?customfield_10056=' +
         encodeURIComponent($config.public.siteUrl + $route.fullPath)
       "
     >

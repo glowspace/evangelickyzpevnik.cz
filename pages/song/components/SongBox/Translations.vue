@@ -56,7 +56,7 @@ function filterLyrics(type) {
 
 <style lang="postcss" scoped>
 th {
-  @apply font-medium text-left px-3 pb-2 pt-5;
+  @apply font-custom-medium text-left px-3 pb-2 pt-5;
 }
 
 tr:first-child th {

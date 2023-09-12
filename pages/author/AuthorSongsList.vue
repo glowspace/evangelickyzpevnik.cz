@@ -2,7 +2,7 @@
   <table class="table m-0 w-full">
     <tbody>
       <tr>
-        <th colspan="2" class="text-left px-3 pb-2 pt-5 font-medium">
+        <th colspan="2" class="text-left px-3 pb-2 pt-5 font-custom-medium">
           {{ text }}
         </th>
       </tr>

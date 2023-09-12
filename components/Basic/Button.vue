@@ -51,7 +51,7 @@ const btnType = computed(() => {
 <style lang="postcss" scoped>
 .btn {
   @apply inline-flex flex-row items-center justify-center gap-x-2 py-2.5 px-6 rounded-[6.25rem]
-  text-sm tracking-[.00714em] font-medium transition;
+  text-sm tracking-[.00714em] font-custom-medium transition;
 }
 
 .btn.primary {
@@ -66,7 +66,7 @@ const btnType = computed(() => {
 }
 
 .icon-only {
-  @apply !inline-flex !items-center justify-center w-12 h-12 gap-x-2 py-2.5 px-6 rounded-[6.25rem] text-sm tracking-[.00714em] text-center font-medium dark:text-primary-200;
+  @apply !inline-flex !items-center justify-center w-12 h-12 gap-x-2 py-2.5 px-6 rounded-[6.25rem] text-sm tracking-[.00714em] text-center font-custom-medium dark:text-primary-200;
   @apply hover:bg-primary/10 focus:bg-primary/10 dark:hover:bg-surfacedark-300 dark:focus:bg-surfacedark-400;
 }
 

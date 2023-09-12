@@ -8,7 +8,7 @@
       <a
         class="kebab-item"
         :href="
-          'https://proscholy.atlassian.net/servicedesk/customer/portal/1/group/1/create/19?customfield_10056=' +
+          'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/1/create/19?customfield_10056=' +
           encodeURIComponent(siteUrl + $route.fullPath)
         "
       >

@@ -4,7 +4,7 @@
     v-show="active"
   >
     <div class="min-h-[56px] flex flex-row items-center gap-3 pl-6 pr-3 py-2">
-      <h3 class="flex flex-grow text-base tracking-[.009375em] font-medium">
+      <h3 class="flex flex-grow text-base tracking-[.009375em] font-custom-medium">
         {{ title }}
       </h3>
       <BasicButton @click="emit('close')" icon="close" text icon-only />

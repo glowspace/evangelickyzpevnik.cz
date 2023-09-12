@@ -15,6 +15,6 @@ img {
 }
 
 h1 {
-  @apply font-bold text-2xl ml-3;
+  @apply font-custom-bold text-2xl ml-3;
 }
 </style>

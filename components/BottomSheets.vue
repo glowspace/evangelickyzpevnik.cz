@@ -17,7 +17,7 @@
         <div
           class="min-h-[56px] flex flex-row items-center gap-3 pl-6 pr-3 pb-2 pt-2.5 flex-shrink-0 shadow bg-surface-300"
         >
-          <h3 class="flex flex-grow text-base tracking-[.009375em] font-medium">
+          <h3 class="flex flex-grow text-base tracking-[.009375em] font-custom-medium">
             {{ title }}
           </h3>
           <BasicButton @click="show = false" icon="close" text icon-only />

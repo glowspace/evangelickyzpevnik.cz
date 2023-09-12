@@ -37,7 +37,7 @@ const value = computed({
 
 <style lang="postcss" scoped>
 .button {
-  @apply relative !inline-flex !items-center justify-center w-12 h-12 gap-x-2 py-2.5 px-6 rounded-[6.25rem] text-sm tracking-[.00714em] text-center font-medium dark:text-primary-200;
+  @apply relative !inline-flex !items-center justify-center w-12 h-12 gap-x-2 py-2.5 px-6 rounded-[6.25rem] text-sm tracking-[.00714em] text-center font-custom-medium dark:text-primary-200;
 }
 
 .clickable {

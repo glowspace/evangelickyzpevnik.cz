@@ -20,7 +20,7 @@
       <div class="text-center text-white mt-3 mb-5">
         <a
           :href="
-            'https://proscholy.atlassian.net/servicedesk/customer/portal/1/group/6/create/20?customfield_10056=' +
+            'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/6/create/20?customfield_10056=' +
             encodeURIComponent($config.public.siteUrl + $route.fullPath) +
             '&summary=Chyba%20webu%20(' +
             error.statusCode +

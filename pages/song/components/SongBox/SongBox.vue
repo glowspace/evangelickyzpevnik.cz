@@ -11,7 +11,7 @@
         <BasicChip
           v-if="scores.length || otherExternals.length"
           :class="[{ active: topMode == 1 }]"
-          class="pl-2 font-medium"
+          class="pl-2 font-custom-medium"
           @click="topMode = topMode == 1 ? 0 : 1"
         >
           <BasicIcon :fill="topMode == 1" class="text-primary"
@@ -25,7 +25,7 @@
         </BasicChip>
         <BasicChip
           v-if="renderTranslations"
-          class="pl-2 font-medium"
+          class="pl-2 font-custom-medium"
           :class="{ active: topMode == 2 }"
           @click="topMode = topMode == 2 ? 0 : 2"
         >
@@ -34,7 +34,7 @@
         </BasicChip>
         <BasicChip
           v-if="hasArrangements"
-          class="pl-2 font-medium"
+          class="pl-2 font-custom-medium"
           :href="$config.public.regenschoriUrl + song_lyric.public_route"
         >
           <BasicIcon class="text-primary">edit_note</BasicIcon>
@@ -47,7 +47,7 @@
               (sb) => !sb.pivot.songbook.is_private
             ).length
           "
-          class="pl-2 font-medium"
+          class="pl-2 font-custom-medium"
           :class="{ active: topMode == 3 }"
           @click="topMode = topMode == 3 ? 0 : 3"
         >
@@ -68,7 +68,7 @@
               class="btn float-right"
               title="Nahlásit"
               :href="
-                'https://proscholy.atlassian.net/servicedesk/customer/portal/1/group/1/create/19?customfield_10056=' +
+                'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/1/create/19?customfield_10056=' +
                 encodeURIComponent($config.public.baseUrl + $route.fullPath)
               "
             >
@@ -295,7 +295,7 @@
       <a
         class="btn btn-secondary"
         :href="
-          'https://proscholy.atlassian.net/servicedesk/customer/portal/1/group/1/create/19?customfield_10056=' +
+          'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/1/create/19?customfield_10056=' +
           encodeURIComponent($config.public.baseUrl + $route.fullPath)
         "
         >Nahlásit</a

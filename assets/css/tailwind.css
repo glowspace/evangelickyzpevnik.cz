@@ -45,7 +45,7 @@ body {
 }
 
 strong {
-  @apply font-medium;
+  @apply font-custom-medium;
 }
 
 /* todo: delete the class below */

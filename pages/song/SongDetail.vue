@@ -40,6 +40,6 @@ export default {
 
 <style lang="postcss" scoped>
 .song-title {
-  @apply text-2xl font-medium;
+  @apply text-2xl font-custom-medium;
 }
 </style>

@@ -286,7 +286,7 @@ export default {
 .song-line--comment {
   color: #767676;
   font-style: italic;
-  font-weight: 300;
+  @apply font-custom-light;
 }
 
 span.song-part-tag {
@@ -321,7 +321,7 @@ span.song-part-tag {
   }
 
   &-base {
-    font-weight: 500;
+    @apply font-custom-medium;
     margin-right: 0.4em;
   }
 
