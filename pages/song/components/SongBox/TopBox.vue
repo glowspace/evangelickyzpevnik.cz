@@ -7,7 +7,7 @@
       <h3 class="flex flex-grow text-base tracking-[.009375em] font-custom-medium">
         {{ title }}
       </h3>
-      <BasicButton @click="emit('close')" iconName="close" text icon-only />
+      <BasicButton @click="emit('close')" icon-name="close" text icon-only />
     </div>
     <slot />
   </div>
