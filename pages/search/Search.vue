@@ -35,7 +35,7 @@
       <BasicButton
         v-if="init"
         @click="init = false"
-        icon="add"
+        iconName="add"
         class="text-primary -ml-3"
         text
         >Zobrazit všechy písně</BasicButton

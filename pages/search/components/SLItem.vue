@@ -53,33 +53,35 @@
         <!-- todo: replace with image and remove FA icons -->
         <BasicIcon
           v-if="song_lyric.has_chords"
-          fa="fas fa-guitar text-primary text-lg -mt-px"
+          name="fas fa-guitar"
+          type="fa"
+          class="text-primary text-lg -mt-px"
           title="Tato píseň má přidané akordy."
-        ></BasicIcon>
+        />
         <BasicIcon
           v-else-if="song_lyric.has_lyrics"
+          name="subject"
           title="U této písně je zaznamenán text (bez akordů)."
-          >subject</BasicIcon
-        >
-        <BasicIcon v-else class="text-secondary/20">subject</BasicIcon>
+        />
+        <BasicIcon v-else name="subject" class="text-secondary/20" />
 
         <BasicIcon
           v-if="song_lyric.scores.length"
+          name="audio_file"
           title="U této písně je k dispozici soubor s notami."
           class="text-error-500"
           fill
-          >audio_file</BasicIcon
-        >
-        <BasicIcon v-else class="text-secondary/20" fill>audio_file</BasicIcon>
+        />
+        <BasicIcon v-else name="audio_file" class="text-secondary/20" fill />
 
         <BasicIcon
           v-if="song_lyric.recordings.length"
+          name="headphones"
           title="U této písně je k dispozici nahrávka."
           class="text-green"
           fill
-          >headphones</BasicIcon
-        >
-        <BasicIcon v-else class="text-secondary/20" fill>headphones</BasicIcon>
+        />
+        <BasicIcon v-else name="headphones" class="text-secondary/20" fill />
       </div>
     </td>
   </tr>

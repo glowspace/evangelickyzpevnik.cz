@@ -3,13 +3,13 @@
     <div>Velikost písma</div>
     <BasicButtonGroup>
       <BasicButtonGroupItem centered @click="fontSizePercent -= 10">
-        <BasicIcon>remove</BasicIcon>
+        <BasicIcon name="remove" />
       </BasicButtonGroupItem>
       <BasicButtonGroupItem centered @click="fontSizePercent = 100" class="w-14">
         {{ ((fontSizePercent - 100) / 10).toString().replace('-', '&minus;') }}
       </BasicButtonGroupItem>
       <BasicButtonGroupItem centered @click="fontSizePercent += 10">
-        <BasicIcon>add</BasicIcon>
+        <BasicIcon name="add" />
       </BasicButtonGroupItem>
     </BasicButtonGroup>
   </ToolboxContainer>

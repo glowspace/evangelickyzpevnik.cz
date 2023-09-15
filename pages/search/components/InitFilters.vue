@@ -1,7 +1,7 @@
 <template>
   <div :class="[{ 'opacity-100': randomTags.length }, 'flex flex-row flex-wrap items-center opacity-0 h-10 overflow-hidden ml-6 mr-4']">
     <BasicButton
-      icon="filter_alt"
+      iconName="filter_alt"
       icon-fill
       icon-only
       compact

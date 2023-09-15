@@ -12,7 +12,7 @@
           encodeURIComponent(siteUrl + $route.fullPath)
         "
       >
-        <BasicIcon>report</BasicIcon>
+        <BasicIcon name="report" />
         Nahlásit
       </a>
     </li>
@@ -24,7 +24,7 @@
           song_lyric ? adminUrl + '/song/' + song_lyric.id + '/edit' : '',
         ]"
       >
-        <BasicIcon>edit</BasicIcon>
+        <BasicIcon name="edit" />
         Upravit
       </a>
     </li>

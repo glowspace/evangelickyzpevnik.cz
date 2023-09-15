@@ -10,7 +10,7 @@
       <BasicButton
         :class="['stretched-link']"
         @click="isClosed = !isClosed"
-        :icon="isClosed ? 'expand_more' : 'expand_less'"
+        :iconName="isClosed ? 'expand_more' : 'expand_less'"
         icon-only
         compact
         text

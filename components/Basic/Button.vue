@@ -15,7 +15,7 @@
       props.class,
     ]"
   >
-    <BasicIcon v-if="icon" :fill="iconFill">{{ icon }}</BasicIcon>
+    <BasicIcon v-if="iconName" :name="iconName" :type="iconType" :fill="iconFill" />
     <slot />
   </component>
 </template>
@@ -27,12 +27,13 @@ const props = defineProps({
   eventId: String,
   href: String,
   to: String,
-  icon: String,
   class: String,
   text: Boolean,
-  iconFill: Boolean,
   compact: Boolean,
+  iconName: String,
+  iconFill: Boolean,
   iconOnly: Boolean,
+  iconType: String,
 });
 
 function clicked() {

@@ -1,10 +1,10 @@
 <template>
   <div class="bottom-bar-wrapper">
     <div class="flex flex-row gap-2 items-center">
-      <BasicButton icon="tune" icon-only text @click="$emit('tools')" />
-      <BasicButton v-if="mediaAvailable" icon="headphones" icon-fill icon-only text @click="$emit('media')" />
+      <BasicButton iconName="tune" icon-only text @click="$emit('tools')" />
+      <BasicButton v-if="mediaAvailable" iconName="headphones" icon-fill icon-only text @click="$emit('media')" />
       <BasicButton
-        :icon="fullscreen ? 'fullscreen_exit' : 'fullscreen'"
+        :iconName="fullscreen ? 'fullscreen_exit' : 'fullscreen'"
         icon-only
         text
         @click="toggleFullscreen"
@@ -13,7 +13,7 @@
     <button
       class="flex justify-center items-center w-14 h-14 rounded-2xl bg-primary-150 dark:bg-primary-700 hover:shadow-md"
     >
-      <BasicIcon>arrow_downward</BasicIcon>
+      <BasicIcon name="arrow_downward" />
     </button>
   </div>
 </template>

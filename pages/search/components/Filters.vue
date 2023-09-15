@@ -18,14 +18,14 @@
         :class="{ active: !localShowAuthors }"
         @click="localShowAuthors = false"
       >
-        <BasicIcon>music_note</BasicIcon>
+        <BasicIcon name="music_note" />
         písně
       </BasicButtonGroupItem>
       <BasicButtonGroupItem
         :class="{ active: localShowAuthors }"
         @click="localShowAuthors = true"
       >
-        <BasicIcon :fill="localShowAuthors">person</BasicIcon>
+        <BasicIcon name="person" :fill="localShowAuthors" />
         autoři
       </BasicButtonGroupItem>
     </BasicButtonGroup>
@@ -43,7 +43,7 @@
           localDescending = false;
         "
       >
-        <BasicIcon>shuffle</BasicIcon>
+        <BasicIcon name="shuffle" />
         náhodně
       </BasicButtonGroupItem>
       <BasicButtonGroupItem
@@ -66,7 +66,7 @@
           }
         "
       >
-        <BasicIcon>sort_by_alpha</BasicIcon>
+        <BasicIcon name="sort_by_alpha" />
         {{ localSort == 1 ? (!localDescending ? 'A–Z' : 'Z–A') : 'A–Z' }}
       </BasicButtonGroupItem>
       <BasicButtonGroupItem
@@ -89,7 +89,7 @@
           }
         "
       >
-        <BasicIcon>pin</BasicIcon>
+        <BasicIcon name="pin" />
         {{ localSort == 2 ? (!localDescending ? '1–9' : '9–1') : '1–9' }}
       </BasicButtonGroupItem>
       <BasicButtonGroupItem
@@ -97,7 +97,7 @@
         class="!px-2"
         :class="{ active: searchString }"
       >
-        <BasicIcon>search</BasicIcon>
+        <BasicIcon name="search" />
       </BasicButtonGroupItem>
     </BasicButtonGroup>
     <div v-if="!localShowAuthors" class="mb-3">
@@ -246,7 +246,7 @@ export default {
       },
       set(val) {
         this.$emit('update:selected-tags', val);
-      }
+      },
     },
     selected_songbooks: {
       get() {
@@ -254,7 +254,7 @@ export default {
       },
       set(val) {
         this.$emit('update:selected-songbooks', val);
-      }
+      },
     },
     selected_languages: {
       get() {
@@ -262,7 +262,7 @@ export default {
       },
       set(val) {
         this.$emit('update:selected-languages', val);
-      }
+      },
     },
   },
 

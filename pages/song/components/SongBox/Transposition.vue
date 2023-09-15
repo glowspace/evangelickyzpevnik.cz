@@ -3,13 +3,13 @@
     <div>Transpozice</div>
     <BasicButtonGroup>
       <BasicButtonGroupItem centered @click="transpose(-1)">
-        <BasicIcon>remove</BasicIcon>
+        <BasicIcon name="remove" />
       </BasicButtonGroupItem>
       <BasicButtonGroupItem centered @click="reset()" class="w-14">
         {{ value.toString().replace('-', '&minus;') }}
       </BasicButtonGroupItem>
       <BasicButtonGroupItem centered @click="transpose(1)">
-        <BasicIcon>add</BasicIcon>
+        <BasicIcon name="add" />
       </BasicButtonGroupItem>
     </BasicButtonGroup>
   </ToolboxContainer>

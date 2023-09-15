@@ -20,7 +20,7 @@
           <h3 class="flex flex-grow text-base tracking-[.009375em] font-custom-medium">
             {{ title }}
           </h3>
-          <BasicButton @click="show = false" icon="close" text icon-only />
+          <BasicButton @click="show = false" iconName="close" text icon-only />
         </div>
         <!-- body -->
         <div class="relative text-left px-6 py-6 overflow-y-scroll">

@@ -1,11 +1,11 @@
 <template>
-  <i v-if="fa" :class="fa"></i>
+  <i v-if="type == 'fa'" :class="name"></i>
   <span
     v-else
     class="material-symbols-outlined"
     :class="[{ 'icon-fill': fill }, props.class]"
   >
-    <slot />
+    {{ name }}
   </span>
 </template>
 
@@ -14,6 +14,8 @@ const props = defineProps({
   fill: Boolean,
   fa: String,
   class: String,
+  name: String,
+  type: String,
 });
 </script>
 

@@ -5,7 +5,7 @@
   >
     <div class="kebab-wrapper" @focusout="kebabWrapperBlurred">
       <BasicButton
-        icon="more_vert"
+        iconName="more_vert"
         class="kebab-opener"
         icon-only
         text

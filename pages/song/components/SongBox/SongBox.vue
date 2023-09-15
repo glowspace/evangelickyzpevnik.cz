@@ -14,9 +14,11 @@
           class="pl-2 font-custom-medium"
           @click="topMode = topMode == 1 ? 0 : 1"
         >
-          <BasicIcon :fill="topMode == 1" class="text-primary"
-            >audio_file</BasicIcon
-          >
+          <BasicIcon
+            name="audio_file"
+            :fill="topMode == 1"
+            class="text-primary"
+          />
           <span v-if="scores.length && otherExternals.length"
             >Noty, materiály</span
           >
@@ -29,7 +31,7 @@
           :class="{ active: topMode == 2 }"
           @click="topMode = topMode == 2 ? 0 : 2"
         >
-          <BasicIcon class="text-primary">translate</BasicIcon>
+          <BasicIcon name="translate" class="text-primary" />
           <span>Překlady</span>
         </BasicChip>
         <BasicChip
@@ -37,7 +39,7 @@
           class="pl-2 font-custom-medium"
           :href="$config.public.regenschoriUrl + song_lyric.public_route"
         >
-          <BasicIcon class="text-primary">edit_note</BasicIcon>
+          <BasicIcon name="edit_note" class="text-primary" />
           <span>Aranže</span>
         </BasicChip>
         <BasicChip
@@ -51,7 +53,7 @@
           :class="{ active: topMode == 3 }"
           @click="topMode = topMode == 3 ? 0 : 3"
         >
-          <BasicIcon :fill="topMode == 3" class="text-primary">sell</BasicIcon>
+          <BasicIcon name="sell" :fill="topMode == 3" class="text-primary" />
           <span
             v-if="
               hasTags &&
