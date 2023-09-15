@@ -63,11 +63,7 @@ strong {
 
 .basic-content {
   a {
-    text-decoration: underline;
-  }
-
-  a:hover {
-    text-decoration: none;
+    @apply underline hover:no-underline;
   }
 
   h2,

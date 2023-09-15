@@ -1,8 +1,8 @@
 <template>
   <BottomBar
     class="-ml-5"
-    @tools="showTools = true"
-    @media="showMedia = true"
+    @tools="showTools = true;"
+    @media="loadMedia = true; showMedia = true;"
     :mediaAvailable="recordings.length"
   />
   <div>
@@ -235,19 +235,16 @@
       </BottomSheets>
 
       <BottomSheets v-model="showMedia" title="Nahrávky">
-        <div class="row ml-0 pt-2" v-if="hasExternals && !$apollo.loading">
-          <div
-            class="col-md-6"
+        <div v-if="hasExternals && loadMedia && !$apollo.loading" class="-m-6">
+          <external
             v-for="(external, index) in recordings"
             :key="index"
-          >
-            <external
-              :line="false"
-              :index="index"
-              :external="external"
-              :song-name="song_lyric.name"
-            ></external>
-          </div>
+            :line="false"
+            :index="index"
+            :external="external"
+            :song-name="song_lyric.name"
+            class="m-6"
+          ></external>
         </div>
       </BottomSheets>
       <!-- control buttons -->
@@ -356,6 +353,7 @@ export default {
       // bottomMode: 0,
       showTools: false,
       showMedia: false,
+      loadMedia: false, // prevents loading iframes when user doesn't want them
       topMode: 0,
       autoscroll: false, // todo: autoscroll
       autoscrollNum: 10,

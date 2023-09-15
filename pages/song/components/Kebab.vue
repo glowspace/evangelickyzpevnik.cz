@@ -12,7 +12,7 @@
           encodeURIComponent(siteUrl + $route.fullPath)
         "
       >
-        <BasicIcon name="report" />
+        <BasicIcon name="warning" />
         Nahlásit
       </a>
     </li>

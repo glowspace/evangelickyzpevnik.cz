@@ -55,7 +55,7 @@
           v-if="song_lyric.has_chords"
           name="fas fa-guitar"
           type="fa"
-          class="text-primary text-lg -mt-px"
+          class="text-primary"
           title="Tato píseň má přidané akordy."
         />
         <BasicIcon

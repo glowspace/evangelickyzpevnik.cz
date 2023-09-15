@@ -12,7 +12,6 @@
         /*'!pr-8': icon*/
         compact,
       },
-      props.class,
     ]"
   >
     <BasicIcon
@@ -27,12 +26,11 @@
 
 <script setup>
 import { NuxtLink } from '#components';
-// const props = defineProps(['eventId', 'href', 'to', 'icon', 'text', 'class']);
+
 const props = defineProps({
   eventId: String,
   href: String,
   to: String,
-  class: String,
   type: String,
   compact: Boolean,
   iconName: String,
@@ -42,7 +40,7 @@ const props = defineProps({
 });
 
 function clicked() {
-  // here we can do some logging
+  // here we can do some logging (with eventId)
 }
 
 const btnType = computed(() => {

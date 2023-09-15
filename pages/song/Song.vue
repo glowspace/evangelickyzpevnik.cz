@@ -168,6 +168,7 @@ export default {
   beforeRouteEnter(to, from, next) {
     next((vm) => {
       // access to component public instance via `vm`
+      // todo: fix for navigating between songs (or authors)
       vm.previous = from.fullPath;
     });
   },
