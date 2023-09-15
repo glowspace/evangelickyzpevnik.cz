@@ -1,35 +1,41 @@
 <template>
-  <tr v-if="line">
-    <td class="p-0 align-middle">
-      <a
-        class="p-2 w-full d-inline-flex align-items-center"
-        :href="mediaLink"
-        target="_blank"
-        @click="openPreview($event)"
-      >
-        <span><i :class="[typeClass, 'pl-1 pr-3']"></i></span>
-        <span class="pr-3 w-full">{{ displayName }}</span>
-        <span><i :class="[previewClass, 'pl-0 pr-0']"></i></span>
-      </a>
-    </td>
-    <td class="p-0 align-middle">
-      <a v-if="downloadUrl" :href="downloadUrl" title="Stáhnout" class="p-2"
-        ><i class="fas fa-download p-0"></i
-      ></a>
-    </td>
-    <td class="p-2 pl-md-5 align-middle">
-      <span v-for="(author, authorIndex) in external.authors" :key="author.id">
-        <span v-if="authorIndex">,</span>
-        <nuxt-link :to="author.public_route" class="text-secondary">{{
-          author.name
-        }}</nuxt-link>
-      </span>
-    </td>
-  </tr>
-  <div
-    v-else
-    class="shadow-md bg-primary-150 rounded-lg overflow-hidden"
-  >
+  <div v-if="line" class="flex flex-row line">
+    <a
+      class="py-3 pl-6 flex flex-row items-center min-w-0"
+      :href="mediaLink"
+      target="_blank"
+      @click="openPreview($event)"
+    >
+      <div class="w-6 mr-4 text-center flex-shrink-0 text-gray-600">
+        <BasicIcon :name="typeClass" type="fa" />
+      </div>
+      <div class="min-w-0">
+        <div class="pr-3 w-full">{{ displayName }}</div>
+        <div class="text-secondary text-sm truncate">
+          {{ external.authors.map((a) => a.name).join(', ') }}
+        </div>
+      </div>
+    </a>
+    <div
+      class="flex-shrink-0 flex-grow flex flex-row items-center justify-end pr-3"
+    >
+      <Kebab
+        :items="[
+          { label: 'Otevřít', href: mediaLink, icon: 'visibility' },
+          ...(external.is_uploaded
+            ? [{ label: 'Stáhnout', href: downloadUrl, icon: 'download' }]
+            : []),
+          ...external.authors.map((a) => ({
+            label: a.name,
+            to: a.public_route,
+            icon: 'person',
+          })),
+        ]"
+        button-class="text-gray-600"
+      />
+    </div>
+  </div>
+  <div v-else class="shadow-md bg-primary-150 rounded-lg overflow-hidden">
     <div class="flex flex-row items-center gap-1 p-1">
       <BasicButton
         :icon-name="typeClass"
@@ -38,7 +44,7 @@
         :href="mediaLink"
       />
       <span v-for="(author, authorIndex) in external.authors" :key="author.id">
-        <span v-if="authorIndex">,</span>
+        <span v-if="authorIndex">, </span>
         <BasicLink :to="author.public_route">{{ author.name }}</BasicLink>
       </span>
       <span class="flex flex-grow justify-end">
@@ -115,10 +121,24 @@
   </div>
 </template>
 
+<style lang="postcss" scoped>
+.line:hover,
+.line:focus-within {
+  @apply bg-surface-50;
+}
+
+.line:active {
+  @apply bg-surface-200;
+}
+</style>
+
 <script>
 import Bowser from 'bowser';
+import Kebab from '~/components/Kebab';
 
 export default {
+  components: { Kebab },
+
   props: {
     line: Boolean,
     index: Number,

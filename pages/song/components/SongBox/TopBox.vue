@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full rounded-2xl border border-gray-300 dark:border-gray-700 relative overflow-hidden my-2"
+    class="w-full rounded-2xl border border-gray-300 dark:border-gray-700 relative my-2"
     v-show="active"
   >
     <div class="min-h-[56px] flex flex-row items-center gap-3 pl-6 pr-3 py-2">

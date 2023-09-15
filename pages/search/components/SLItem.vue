@@ -8,8 +8,8 @@
         <span>{{ number }}</span>
       </nuxt-link>
     </td> -->
-    <td class="p-1" :colspan="song_lyric.lang != 'cs' ? 1 : 2">
-      <nuxt-link class="p-2 w-full inline-block" :to="song_lyric.public_route">
+    <td :colspan="song_lyric.lang != 'cs' ? 1 : 2">
+      <nuxt-link class="p-3 block" :to="song_lyric.public_route">
         <song-name :song="song_lyric" :multiline="true" :active="active" />
       </nuxt-link>
     </td>
@@ -49,8 +49,7 @@
       >
     </td>
     <td class="w-24" v-if="!hideIcons">
-      <div class="icons">
-        <!-- todo: replace with image and remove FA icons -->
+      <nuxt-link class="icons" :to="song_lyric.public_route" tabindex="-1">
         <BasicIcon
           v-if="song_lyric.has_chords"
           name="fas fa-guitar"
@@ -82,7 +81,7 @@
           fill
         />
         <BasicIcon v-else name="headphones" class="text-secondary/20" fill />
-      </div>
+      </nuxt-link>
     </td>
   </tr>
 </template>

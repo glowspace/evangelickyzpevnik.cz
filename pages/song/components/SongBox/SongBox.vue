@@ -1,8 +1,11 @@
 <template>
   <BottomBar
     class="-ml-5"
-    @tools="showTools = true;"
-    @media="loadMedia = true; showMedia = true;"
+    @tools="showTools = true"
+    @media="
+      loadMedia = true;
+      showMedia = true;
+    "
     :mediaAvailable="recordings.length"
   />
   <div>
@@ -84,34 +87,36 @@
         @close="topMode = 0"
         title="Noty a materiály"
       >
-        <table class="table mx-6 mb-6" v-if="!$apollo.loading">
-          <tbody>
-            <tr v-if="scores.length && otherExternals.length">
-              <td colspan="3" class="py-2 font-weight-bold">Noty</td>
-            </tr>
-            <external
-              v-for="(external, index) in scores"
-              :key="index"
-              :line="true"
-              :index="index"
-              :external="external"
-              :song-name="song_lyric.name"
-            ></external>
-            <tr v-if="scores.length && otherExternals.length">
-              <td colspan="3" class="pb-2 pt-4 font-weight-bold">
-                Další materiály
-              </td>
-            </tr>
-            <external
-              v-for="(external, index) in otherExternals"
-              :key="index"
-              :line="true"
-              :index="index"
-              :external="external"
-              :song-name="song_lyric.name"
-            ></external>
-          </tbody>
-        </table>
+        <div class="mb-3" v-if="!$apollo.loading">
+          <div
+            v-if="scores.length && otherExternals.length"
+            class="px-6 py-2 font-custom-medium text-primary"
+          >
+            Noty
+          </div>
+          <external
+            v-for="(external, index) in scores"
+            :key="index"
+            :line="true"
+            :index="index"
+            :external="external"
+            :song-name="song_lyric.name"
+          ></external>
+          <div
+            v-if="scores.length && otherExternals.length"
+            class="px-6 pb-2 pt-5 font-custom-medium text-greendark"
+          >
+            Další materiály
+          </div>
+          <external
+            v-for="(external, index) in otherExternals"
+            :key="index"
+            :line="true"
+            :index="index"
+            :external="external"
+            :song-name="song_lyric.name"
+          ></external>
+        </div>
       </TopBox>
       <!-- translations -->
       <TopBox
