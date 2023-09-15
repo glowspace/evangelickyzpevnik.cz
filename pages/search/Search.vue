@@ -37,7 +37,6 @@
         @click="init = false"
         icon-name="add"
         class="text-primary -ml-3"
-        text
         >Zobrazit všechy písně</BasicButton
       >
     </div>

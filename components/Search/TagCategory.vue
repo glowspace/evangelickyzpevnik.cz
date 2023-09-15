@@ -13,7 +13,6 @@
         :icon-name="isClosed ? 'expand_more' : 'expand_less'"
         icon-only
         compact
-        text
       ></BasicButton>
     </div>
     <div :class="{ 'whitespace-nowrap overflow-hidden opacity-60': isClosed }">

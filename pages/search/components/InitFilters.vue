@@ -5,7 +5,6 @@
       icon-fill
       icon-only
       compact
-      text
       @click="$emit('update:modelValue', {})"
     />
     <client-only>

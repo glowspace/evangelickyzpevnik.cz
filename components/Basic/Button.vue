@@ -15,7 +15,12 @@
       props.class,
     ]"
   >
-    <BasicIcon v-if="iconName" :name="iconName" :type="iconType" :fill="iconFill" />
+    <BasicIcon
+      v-if="iconName"
+      :name="iconName"
+      :type="iconType"
+      :fill="iconFill"
+    />
     <slot />
   </component>
 </template>
@@ -28,7 +33,7 @@ const props = defineProps({
   href: String,
   to: String,
   class: String,
-  text: Boolean,
+  type: String,
   compact: Boolean,
   iconName: String,
   iconFill: Boolean,
@@ -41,11 +46,7 @@ function clicked() {
 }
 
 const btnType = computed(() => {
-  if (props.text) {
-    return 'text';
-  } else {
-    return 'primary';
-  }
+  return props.type || 'text';
 });
 </script>
 

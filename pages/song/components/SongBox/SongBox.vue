@@ -159,7 +159,6 @@
             <span v-if="song_lyric.has_lyrics">
               <!-- <BasicButton
                 class="mb-2 ml-1"
-                text
                 v-if="
                   chordSharedStore.nChordModes != 1 &&
                   chordSharedStore.chordMode == 0
@@ -169,7 +168,6 @@
               >
               <BasicButton
                 class="mb-2 ml-1"
-                text
                 v-if="chordSharedStore.chordMode != 0"
                 @click="chordSharedStore.chordMode = 0"
                 >Skrýt akordy</BasicButton

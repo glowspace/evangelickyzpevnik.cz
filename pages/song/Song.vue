@@ -8,7 +8,6 @@
         icon-name="more_vert"
         class="kebab-opener"
         icon-only
-        text
         @click="kebabClicked"
       />
       <Kebab v-if="song_lyric" :song_lyric="song_lyric" :opened="kebabOpened" />

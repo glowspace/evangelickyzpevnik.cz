@@ -1,12 +1,11 @@
 <template>
   <div class="bottom-bar-wrapper">
     <div class="flex flex-row gap-2 items-center">
-      <BasicButton icon-name="tune" icon-only text @click="$emit('tools')" />
-      <BasicButton v-if="mediaAvailable" icon-name="headphones" icon-fill icon-only text @click="$emit('media')" />
+      <BasicButton icon-name="tune" icon-only @click="$emit('tools')" />
+      <BasicButton v-if="mediaAvailable" icon-name="headphones" icon-fill icon-only @click="$emit('media')" />
       <BasicButton
         :icon-name="fullscreen ? 'fullscreen_exit' : 'fullscreen'"
         icon-only
-        text
         @click="toggleFullscreen"
       />
     </div>
