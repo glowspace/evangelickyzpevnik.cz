@@ -2,18 +2,16 @@
   <div class="bottom-bar-wrapper">
     <div class="flex flex-row gap-2 items-center">
       <BasicButton icon-name="tune" icon-only @click="$emit('tools')" />
-      <BasicButton v-if="mediaAvailable" icon-name="headphones" icon-fill icon-only @click="$emit('media')" />
       <BasicButton
-        :icon-name="fullscreen ? 'fullscreen_exit' : 'fullscreen'"
+        v-if="mediaAvailable"
+        icon-name="headphones"
+        icon-fill
         icon-only
-        @click="toggleFullscreen"
+        @click="$emit('media')"
       />
+      <Fullscreen />
     </div>
-    <button
-      class="flex justify-center items-center w-14 h-14 rounded-2xl bg-primary-150 dark:bg-primary-700 hover:shadow-md"
-    >
-      <BasicIcon name="arrow_downward" />
-    </button>
+    <Autoscroll :scrollable="scrollable" />
   </div>
 </template>
 
@@ -23,64 +21,8 @@
 }
 </style>
 
-<script>
-export default {
-  props: ['mediaAvailable'],
-
-  data() {
-    return {
-      fullscreen: false,
-    };
-  },
-
-  methods: {
-    toggleFullscreen() {
-      if (process.client) {
-        var element = document.documentElement;
-        var isFullscreen =
-          document.webkitIsFullScreen || document.mozFullScreen || false;
-        element.requestFullScreen =
-          element.requestFullScreen ||
-          element.webkitRequestFullScreen ||
-          element.mozRequestFullScreen ||
-          function () {
-            return false;
-          };
-        document.cancelFullScreen =
-          document.cancelFullScreen ||
-          document.webkitCancelFullScreen ||
-          document.mozCancelFullScreen ||
-          function () {
-            return false;
-          };
-
-        if (isFullscreen) {
-          document.cancelFullScreen();
-        } else {
-          element.requestFullScreen();
-        }
-      }
-    },
-
-    fullscreenChanged() {
-      if (process.client) {
-        this.fullscreen =
-          document.webkitIsFullScreen || document.mozFullScreen || false;
-      }
-    },
-  },
-
-  mounted() {
-    if (process.client) {
-      document.addEventListener('fullscreenchange', this.fullscreenChanged);
-      document.addEventListener('mozfullscreenchange', this.fullscreenChanged);
-      document.addEventListener(
-        'webkitfullscreenchange',
-        this.fullscreenChanged
-      );
-      document.addEventListener('msfullscreenchange', this.fullscreenChanged);
-      this.fullscreenChanged();
-    }
-  },
-};
+<script setup>
+import Autoscroll from './Autoscroll';
+import Fullscreen from './Fullscreen';
+const props = defineProps(['mediaAvailable', 'scrollable']);
 </script>

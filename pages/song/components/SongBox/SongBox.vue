@@ -6,6 +6,7 @@
       loadMedia = true;
       showMedia = true;
     "
+    :scrollable="scrollable"
     :mediaAvailable="recordings.length"
   />
   <div>
@@ -69,16 +70,6 @@
           <span v-else-if="hasTags">Štítky</span>
           <span v-else>Zpěvníky</span>
         </BasicChip>
-        <!-- <a
-              class="btn float-right"
-              title="Nahlásit"
-              :href="
-                'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/1/create/19?customfield_10056=' +
-                encodeURIComponent($config.public.baseUrl + $route.fullPath)
-              "
-            >
-              <i class="fas fa-exclamation-triangle p-0"></i>
-            </a> -->
       </div>
 
       <!-- scores -->
@@ -191,7 +182,7 @@
               <song-lyric-parts
                 :song-id="song_lyric.id"
                 :font-size-percent="chordSharedStore.fontSizePercent"
-                @loaded="isScrollable(true)"
+                @loaded="checkScrollability(true)"
               ></song-lyric-parts>
             </span>
             <span
@@ -252,39 +243,6 @@
           ></external>
         </div>
       </BottomSheets>
-      <!-- control buttons -->
-      <!-- <div>
-          <div
-            class="d-inline-block btn-group m-0 float-right"
-            role="group"
-            :class="{ chosen: autoscroll }"
-            v-if="scrollable"
-          >
-            <a class="btn btn-secondary" @click="autoscroll = !autoscroll">
-              <i
-                class="fas"
-                :class="[
-                  autoscroll ? 'pr-0 fa-stop-circle' : 'fa-arrow-circle-down',
-                ]"
-              ></i>
-              <span class="d-none d-sm-inline" v-if="!autoscroll"
-                >Rolovat</span
-              > </a
-            ><a
-              class="btn btn-secondary"
-              v-if="autoscroll"
-              @click="autoscrollNum--"
-              :class="{ disabled: autoscrollNum == 1 }"
-              >&minus;</a
-            ><a
-              class="btn btn-secondary"
-              v-if="autoscroll"
-              @click="autoscrollNum++"
-              :class="{ disabled: autoscrollNum == 20 }"
-              >&plus;</a
-            >
-          </div>
-        </div> -->
     </div>
   </div>
   <!-- <div class="p-1 mb-3 mt-n2">
@@ -360,27 +318,9 @@ export default {
       showMedia: false,
       loadMedia: false, // prevents loading iframes when user doesn't want them
       topMode: 0,
-      autoscroll: false, // todo: autoscroll
-      autoscrollNum: 10,
-      scrolldelay: null,
-      fullscreen: false,
-      selectedScoreIndex: 0,
       scrollable: true,
       chordSharedStore: store,
     };
-  },
-
-  watch: {
-    autoscroll: function () {
-      this.setScroll(this.autoscrollNum, this.autoscroll);
-    },
-    autoscrollNum: function () {
-      this.setScroll(this.autoscrollNum, this.autoscroll);
-    },
-  },
-
-  destroyed() {
-    this.setScroll(this.autoscrollNum, false);
   },
 
   computed: {
@@ -475,63 +415,26 @@ export default {
   },
 
   methods: {
-    setScroll: function (num, condition) {
-      clearInterval(this.scrolldelay);
-      if (process.client && num > 0 && num < 21 && condition) {
-        this.scrolldelay = setInterval(
-          function () {
-            window.scrollBy(0, 1);
-            if (
-              window.innerHeight + window.scrollY >=
-              document.body.scrollHeight
-            ) {
-              // we're at the bottom of the page
-              this.autoscroll = false;
-            }
-          }.bind(this),
-          (21 - num) * 10
-        );
-      }
-    },
-
-    isScrollable: throttle(function isScrollableTh(initial) {
-      if (
-        process.client &&
-        document.body.scrollHeight == document.body.clientHeight
-      ) {
+    checkScrollability: throttle(function checkScrollabilityTh(initial) {
+      if (process.client && window.innerHeight >= document.body.scrollHeight) {
         // the page isn't scrollable
         this.scrollable = false;
 
         if (initial === true) {
-          // this.bottomMode = 1;
+          // this is the initial check (it was previously used to open toolbox)
         }
       } else {
         this.scrollable = true;
       }
-    }, 100),
 
-    keyUp: function (e) {
-      if (e.key == '+') {
-        if (this.autoscroll && this.autoscrollNum < 20) {
-          this.autoscrollNum++;
-        }
-        this.autoscroll = true;
-      } else if (e.key == 'Escape') {
-        this.autoscroll = false;
-      } else if (e.key == '-' && this.autoscrollNum > 1) {
-        this.autoscrollNum--;
-      }
-    },
+      console.log('check scrollability', this.scrollable);
+    }, 100),
 
     getFullName: getFullName,
   },
 
   mounted() {
     if (!this.song_lyric.has_lyrics) {
-      if (this.recordings.length) {
-        // this.bottomMode = 2;
-      }
-
       if (this.scores.length) {
         this.topMode = 1;
       } else if (this.renderTranslations) {
@@ -540,9 +443,8 @@ export default {
 
       this.scrollable = false;
     } else {
-      window.addEventListener('resize', this.isScrollable);
-      this.isScrollable(true);
-      window.addEventListener('keyup', this.keyUp);
+      window.addEventListener('resize', this.checkScrollability);
+      this.checkScrollability(true);
     }
 
     this.chordSharedStore.transposition = 0;

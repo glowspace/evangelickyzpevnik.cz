@@ -4,6 +4,7 @@
     :to="to"
     :href="href"
     @click="clicked"
+    :disabled="disabled"
     :class="[
       'btn',
       btnType,
@@ -33,6 +34,7 @@ const props = defineProps({
   to: String,
   type: String,
   compact: Boolean,
+  disabled: Boolean,
   iconName: String,
   iconFill: Boolean,
   iconOnly: Boolean,
@@ -63,6 +65,10 @@ const btnType = computed(() => {
 .btn.text {
   @apply hover:bg-primary/10
   dark:text-primary-200 dark:hover:bg-surfacedark-200;
+}
+
+.btn:disabled {
+  @apply pointer-events-none opacity-30;
 }
 
 .icon-only {
