@@ -2,7 +2,25 @@
   <TopBar
     :title="author ? author.type_string : 'načítám…'"
     @back="previous ? $router.back() : navigateTo('/')"
-  />
+  >
+    <Kebab
+      v-if="author"
+      :items="[
+        {
+          label: 'Nahlásit',
+          icon: 'warning',
+          href:
+            'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/1/create/21?customfield_10056=' +
+            encodeURIComponent($config.public.siteUrl + $route.fullPath),
+        },
+        {
+          label: 'Upravit',
+          icon: 'edit',
+          href: $config.public.adminUrl + '/author/' + author.id + '/edit',
+        },
+      ]"
+    />
+  </TopBar>
   <div class="container" v-if="$apollo.loading">
     <!-- <v-skeleton-loader type="heading" class="mt-4" /> -->
     <!-- <v-skeleton-loader type="text" class="mt-3 mb-3" max-width="100" /> -->
@@ -38,17 +56,20 @@
 
     <div class="-mx-3">
       <author-songs-list
-        text="Autorské písně"
+        heading-text="Autorské písně"
+        heading-class="text-primary"
         v-if="author.songs_originals.length"
         :songs="author.songs_originals"
       />
       <author-songs-list
-        text="Překlady"
+        heading-text="Překlady"
+        heading-class="text-greendark"
         v-if="author.songs_translations.length"
         :songs="author.songs_translations"
       />
       <author-songs-list
-        text="Interpretace písní"
+        heading-text="Interpretace písní"
+        heading-class="text-error-600"
         v-if="author.songs_interpreted.length"
         :songs="author.songs_interpreted"
       />

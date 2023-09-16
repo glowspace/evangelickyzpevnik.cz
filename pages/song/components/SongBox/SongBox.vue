@@ -426,8 +426,6 @@ export default {
       } else {
         this.scrollable = true;
       }
-
-      console.log('check scrollability', this.scrollable);
     }, 100),
 
     getFullName: getFullName,

@@ -8,24 +8,24 @@
             :height="4"
             :class="[results_loaded ? '' : 'opacity-1', 'custom-progress-bar']"
         ></v-progress-linear> -->
+    <LoaderLinear :class="[{ 'opacity-0': results_loaded }, 'transition-opacity']" />
     <table class="table m-0 w-full">
       <tbody>
         <tr v-if="!results_loaded && !(song_lyrics && song_lyrics.length)">
-          <!-- <tr v-if="true"> -->
           <td class="pl-8 pr-3 w-16">
-            <BasicSpinner />
+            <LoaderCircular />
           </td>
           <td class="py-2">Načítám…</td>
-          <td class="p-1" colspan="5">
-            <!-- <a
-                class="btn btn-secondary float-right"
-                :href="
-                  'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/6/create/20?customfield_10056=' +
-                  encodeURIComponent($config.public.siteUrl + $route.fullPath)
-                "
-              >
-                Nahlásit
-              </a> -->
+          <td class="p-1 text-right pr-8" colspan="5">
+            <BasicButton
+              :href="
+                'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/6/create/20?customfield_10056=' +
+                encodeURIComponent($config.public.siteUrl + $route.fullPath)
+              "
+              type="outlined"
+            >
+              Nahlásit
+            </BasicButton>
           </td>
         </tr>
         <template v-else-if="song_lyrics && song_lyrics.length">
@@ -50,13 +50,13 @@
             <span class="px-3 py-2 inline-block"
               >Žádná píseň odpovídající zadaným kritériím nebyla nalezena.</span
             >
-            <!-- todo: song form -->
-            <!-- <a
-                class="btn btn-secondary float-right"
-                :href="'https://forms.gle/AYXXxkWtDHQQ13856'"
-              >
-                Přidat píseň
-              </a> -->
+            <BasicButton
+              :href="'https://forms.gle/AYXXxkWtDHQQ13856'"
+              type="outlined"
+              class="mx-3 float-right"
+            >
+              Přidat píseň
+            </BasicButton>
           </td>
         </tr>
       </tbody>
@@ -67,7 +67,7 @@
         v-if="enable_more && results_loaded"
         @click="loadMore"
       >
-        <BasicSpinner v-if="caniuseObserver" class="mr-3" />
+        <LoaderCircular v-if="caniuseObserver" class="mr-3" />
         {{ caniuseObserver ? 'Načítám' : 'Načíst' }} další výsledky (celkem
         {{ song_lyrics_paginated.paginatorInfo.total }})
       </div>

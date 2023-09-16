@@ -31,9 +31,8 @@
       v-model="selected_tags"
       @update:modelValue="init = false"
     ></InitFilters>
-    <div class="text-center mt-1">
+    <div class="text-center mt-1" v-if="init">
       <BasicButton
-        v-if="init"
         @click="init = false"
         icon-name="add"
         class="text-primary -ml-3"

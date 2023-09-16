@@ -17,7 +17,7 @@
       :disabled="autoscrollNum == 20"
     />
     <button
-      class="flex justify-center items-center w-14 h-14 rounded-2xl ml-1 bg-primary-150 dark:bg-primary-700 hover:bg-primary-200"
+      class="fab flex justify-center items-center w-14 h-14 rounded-2xl ml-1 bg-primary-150 dark:bg-primary-700 hover:bg-primary-200"
       @click="autoscroll = !autoscroll"
       :disabled="!scrollable"
     >
@@ -98,7 +98,7 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-button:disabled {
+.fab:disabled {
   @apply pointer-events-none opacity-80 bg-gray-100 text-gray-600;
 }
 </style>
