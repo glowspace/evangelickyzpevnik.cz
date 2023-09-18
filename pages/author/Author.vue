@@ -39,7 +39,9 @@
         <strong>Související autoři: </strong>
         <span v-for="(members, key) in author.members" :key="key">
           <span v-if="key">, </span>
-          <nuxt-link :to="members.public_route">{{ members.name }}</nuxt-link>
+          <BasicClickable :to="members.public_route">{{
+            members.name
+          }}</BasicClickable>
         </span>
       </p>
 
@@ -47,27 +49,27 @@
         <strong>Skupiny: </strong>
         <span v-for="(membership, key2) in author.memberships" :key="key2">
           <span v-if="key2">, </span>
-          <nuxt-link :to="membership.public_route">{{
+          <BasicClickable :to="membership.public_route">{{
             membership.name
-          }}</nuxt-link>
+          }}</BasicClickable>
         </span>
       </p>
     </div>
 
     <div class="-mx-3">
-      <author-songs-list
+      <AuthorSongsList
         heading-text="Autorské písně"
         heading-class="text-primary"
         v-if="author.songs_originals.length"
         :songs="author.songs_originals"
       />
-      <author-songs-list
+      <AuthorSongsList
         heading-text="Překlady"
         heading-class="text-greendark"
         v-if="author.songs_translations.length"
         :songs="author.songs_translations"
       />
-      <author-songs-list
+      <AuthorSongsList
         heading-text="Interpretace písní"
         heading-class="text-error-600"
         v-if="author.songs_interpreted.length"

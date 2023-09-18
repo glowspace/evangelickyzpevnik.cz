@@ -1,7 +1,7 @@
 <template>
-  <button :class="{ 'segmented-item': true, centered }" :disabled="disabled">
+  <BasicClickable :class="{ 'segmented-item': true, centered }" :disabled="disabled">
     <slot />
-  </button>
+  </BasicClickable>
 </template>
 
 <script setup>

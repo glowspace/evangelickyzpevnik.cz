@@ -1,24 +1,24 @@
 <template>
   <div class="menu-wrapper" v-if="$route.name != 'song'">
     <div class="menu">
-      <nuxt-link to="/" class="link group" @click="store.showDashboard = true">
+      <BasicClickable to="/" class="link group" @click="store.showDashboard = true">
         <div class="icon-wrapper" :class="{ active: ($route.name == 'index' && store.showDashboard) }">
           <span class="material-symbols-outlined">home</span>
         </div>
         <p class="label">Nástěnka</p>
-      </nuxt-link>
-      <nuxt-link to="/" class="link group" @click="store.showDashboard = false">
+      </BasicClickable>
+      <BasicClickable to="/" class="link group" @click="store.showDashboard = false">
         <div class="icon-wrapper" :class="{ active: ($route.name == 'index' && !store.showDashboard) }">
           <span class="material-symbols-outlined">search</span>
         </div>
         <p class="label">Hledání</p>
-      </nuxt-link>
-      <nuxt-link to="/o-zpevniku" class="link group">
+      </BasicClickable>
+      <BasicClickable to="/o-zpevniku" class="link group">
         <div class="icon-wrapper" :class="{ active: $route.name == 'about' }">
           <span class="material-symbols-outlined">info</span>
         </div>
         <p class="label">O zpěvníku</p>
-      </nuxt-link>
+      </BasicClickable>
     </div>
   </div>
 </template>

@@ -1,16 +1,14 @@
 <template>
-  <component
-    :is="to ? NuxtLink : href ? 'a' : 'button'"
+  <BasicClickable
     :to="to"
     :href="href"
     class="chip"
   >
     <slot />
-  </component>
+  </BasicClickable>
 </template>
 
 <script setup>
-import { NuxtLink } from '#components';
 const props = defineProps({
   href: String,
   to: String,

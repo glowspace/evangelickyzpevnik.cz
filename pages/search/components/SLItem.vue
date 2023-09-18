@@ -9,9 +9,9 @@
       </nuxt-link>
     </td> -->
     <td :colspan="song_lyric.lang != 'cs' ? 1 : 2">
-      <nuxt-link class="p-3 block" :to="song_lyric.public_route">
+      <BasicClickable class="p-3 block" :to="song_lyric.public_route">
         <song-name :song="song_lyric" :multiline="true" :active="active" />
-      </nuxt-link>
+      </BasicClickable>
     </td>
     <!-- <td class="p-1 align-middle" :colspan="song_lyric.lang != 'cs' ? 1 : 2">
       <span
@@ -49,7 +49,7 @@
       >
     </td>
     <td class="w-24" v-if="!hideIcons">
-      <nuxt-link class="icons" :to="song_lyric.public_route" tabindex="-1">
+      <BasicClickable class="icons" :to="song_lyric.public_route" tabindex="-1">
         <BasicIcon
           v-if="song_lyric.has_chords"
           name="fas fa-guitar"
@@ -81,7 +81,7 @@
           fill
         />
         <BasicIcon v-else name="headphones" class="text-secondary/20" fill />
-      </nuxt-link>
+      </BasicClickable>
     </td>
   </tr>
 </template>

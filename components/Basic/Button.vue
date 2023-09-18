@@ -1,9 +1,8 @@
 <template>
-  <component
-    :is="to ? NuxtLink : href ? 'a' : 'button'"
+  <BasicClickable
     :to="to"
     :href="href"
-    @click="clicked"
+    :event-id="eventId"
     :disabled="disabled"
     :class="[
       'btn',
@@ -22,12 +21,10 @@
       :fill="iconFill"
     />
     <slot />
-  </component>
+  </BasicClickable>
 </template>
 
 <script setup>
-import { NuxtLink } from '#components';
-
 const props = defineProps({
   eventId: String,
   href: String,
@@ -40,10 +37,6 @@ const props = defineProps({
   iconOnly: Boolean,
   iconType: String,
 });
-
-function clicked() {
-  // here we can do some logging (with eventId)
-}
 
 const btnType = computed(() => {
   return props.type || 'text';

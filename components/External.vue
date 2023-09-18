@@ -1,6 +1,6 @@
 <template>
   <div v-if="line" class="flex flex-row line">
-    <a
+    <BasicClickable
       class="py-3 pl-6 flex flex-row items-center min-w-0"
       :href="mediaLink"
       target="_blank"
@@ -15,7 +15,7 @@
           {{ external.authors.map((a) => a.name).join(', ') }}
         </div>
       </div>
-    </a>
+    </BasicClickable>
     <div
       class="flex-shrink-0 flex-grow flex flex-row items-center justify-end pr-3"
     >

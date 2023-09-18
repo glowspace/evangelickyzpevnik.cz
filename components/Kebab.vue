@@ -12,18 +12,16 @@
       :class="{ opened: kebabOpened }"
     >
       <li v-for="(item, key) in items" :key="key" class="relative">
-        <component :is="item.to ? NuxtLink : item.href ? 'a' : 'button'" class="kebab-item" :href="item.href" :to="item.to" :target="item.target">
+        <BasicClickable class="kebab-item" :href="item.href" :to="item.to" :target="item.target">
           <BasicIcon :name="item.icon" />
           {{ item.label }}
-        </component>
+        </BasicClickable>
       </li>
     </ul>
   </div>
 </template>
 
 <script setup>
-import { NuxtLink } from '#components';
-
 const props = defineProps(['items', 'buttonClass']);
 const kebabOpened = ref(false);
 

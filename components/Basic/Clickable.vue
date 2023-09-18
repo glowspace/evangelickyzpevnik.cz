@@ -1,13 +1,11 @@
 <template>
-  <BasicClickable
+  <component
     :is="to ? NuxtLink : href ? 'a' : 'button'"
     :to="to"
     :href="href"
-    :event-id="eventId"
-    class="link"
-  >
-    <slot />
-  </BasicClickable>
+    :target="target"
+    @click="clicked"
+  ><slot /></component>
 </template>
 
 <script setup>
@@ -17,11 +15,10 @@ const props = defineProps({
   eventId: String,
   href: String,
   to: String,
+  target: String,
 });
-</script>
 
-<style lang="postcss" scoped>
-.link {
-  @apply underline hover:no-underline;
+function clicked() {
+  // here we can do some logging (with eventId)
 }
-</style>
+</script>

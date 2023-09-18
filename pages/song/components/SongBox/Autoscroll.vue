@@ -16,13 +16,13 @@
       @click="autoscrollNum++"
       :disabled="autoscrollNum == 20"
     />
-    <button
+    <BasicClickable
       class="fab flex justify-center items-center w-14 h-14 rounded-2xl ml-1 bg-primary-150 dark:bg-primary-700 hover:bg-primary-200"
       @click="autoscroll = !autoscroll"
       :disabled="!scrollable"
     >
       <BasicIcon :name="autoscroll ? 'stop' : 'arrow_downward'" fill />
-    </button>
+    </BasicClickable>
   </div>
 </template>
 
