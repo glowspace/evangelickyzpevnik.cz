@@ -1,54 +1,62 @@
 <template>
   <!-- todo: refactor so that it does not need client-only wrapper -->
-  <client-only>
-    <div class="authors-list">
-      <!-- <v-progress-linear
-            indeterminate
-            color="bg-main-blue"
-            :height="4"
-            :class="[results_loaded ? '' : 'opacity-1', 'custom-progress-bar']"
-        ></v-progress-linear> -->
-      <table class="table m-0">
-        <tbody>
-          <tr v-if="!results_loaded && !(authors && authors.length)">
-            <td class="p-1">
-              <span class="p-2 pl-4 inline-block">Načítám...</span>
+  <!-- <client-only> -->
+  <div>
+    <LoaderLinear
+      :class="[{ 'opacity-0': results_loaded }, 'transition-opacity']"
+    />
+    <table class="w-full">
+      <tbody>
+        <tr v-if="!results_loaded && !(authors && authors.length)">
+          <td class="pl-8 pr-3">
+            <LoaderCircular />
+          </td>
+          <td>Načítám…</td>
+          <td class="p-2 text-right pr-7">
+            <BasicButton
+              :href="
+                'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/6/create/20?customfield_10056=' +
+                encodeURIComponent($config.public.siteUrl + $route.fullPath)
+              "
+              type="outlined"
+            >
+              Nahlásit
+            </BasicButton>
+          </td>
+        </tr>
+        <template v-else-if="authors && authors.length">
+          <tr v-for="author in authors" :key="author.id">
+            <td>
+              <BasicClickable class="px-5 py-3 block" :to="author.public_route">
+                {{ author.name }}
+              </BasicClickable>
             </td>
-            <td class="p-1">
-              <a
-                class="btn btn-secondary float-right"
-                :href="
-                  'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/6/create/20?customfield_10056=' +
-                  encodeURIComponent($config.public.siteUrl + $route.fullPath)
-                "
+            <td>
+              <BasicClickable
+                class="pr-6 py-3 block text-right text-secondary"
+                :to="author.public_route"
+                tabindex="-1"
               >
-                Nahlásit
-              </a>
+                {{ author.type_string }}
+              </BasicClickable>
             </td>
           </tr>
-          <template v-else-if="authors && authors.length">
-            <tr v-for="(author, index) in authors" :key="author.id">
-              <td class="p-1 align-middle">
-                <nuxt-link
-                  class="p-2 pl-4 w-full inline-block"
-                  :to="author.public_route"
-                  >{{ author.name }}</nuxt-link
-                >
-              </td>
-              <td class="p-1 align-middle">{{ author.type_string }}</td>
-            </tr>
-          </template>
-          <tr v-else-if="results_loaded">
-            <td class="p-1" colspan="2">
-              <span class="px-4 py-2 inline-block"
-                >Žádný autor odpovídající zadaným kritériím nebyl nalezen.</span
-              >
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </client-only>
+        </template>
+        <tr v-else>
+          <td class="px-8 py-4" colspan="2">
+            <span v-if="searchString"
+              >Žádný autor odpovídající zadaným kritériím nebyl nalezen.</span
+            >
+            <span v-else
+              >Začněte psát do vyhledávacího pole nahoře a&nbsp;seznam autorů se
+              zobrazí…</span
+            >
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- </client-only> -->
 </template>
 
 <script>
@@ -100,3 +108,14 @@ export default {
   },
 };
 </script>
+
+<style lang="postcss" scoped>
+tr:hover,
+tr:focus-within {
+  @apply bg-surface-50;
+}
+
+tr:active {
+  @apply bg-surface-200;
+}
+</style>

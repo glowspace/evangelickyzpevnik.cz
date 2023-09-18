@@ -1,22 +1,18 @@
 <template>
   <!-- todo: refactor so that it does not need client-only wrapper -->
   <!-- <client-only> -->
-  <div class="songs-list mb-4">
-    <!-- <v-progress-linear
-            indeterminate
-            color="bg-main-blue"
-            :height="4"
-            :class="[results_loaded ? '' : 'opacity-1', 'custom-progress-bar']"
-        ></v-progress-linear> -->
-    <LoaderLinear :class="[{ 'opacity-0': results_loaded }, 'transition-opacity']" />
-    <table class="table m-0 w-full">
+  <div class="mb-1">
+    <LoaderLinear
+      :class="[{ 'opacity-0': results_loaded }, 'transition-opacity']"
+    />
+    <table class="w-full">
       <tbody>
         <tr v-if="!results_loaded && !(song_lyrics && song_lyrics.length)">
-          <td class="pl-8 pr-3 w-16">
+          <td class="pl-8 pr-3">
             <LoaderCircular />
           </td>
-          <td class="py-2">Načítám…</td>
-          <td class="p-1 text-right pr-8" colspan="5">
+          <td>Načítám…</td>
+          <td class="p-2 text-right pr-7">
             <BasicButton
               :href="
                 'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/6/create/20?customfield_10056=' +
@@ -61,12 +57,8 @@
         </tr>
       </tbody>
     </table>
-    <div class="text-center my-2">
-      <div
-        class="inline-flex items-center uppercase text-sm"
-        v-if="enable_more && results_loaded"
-        @click="loadMore"
-      >
+    <div class="text-center my-2" v-if="enable_more && results_loaded">
+      <div class="inline-flex items-center uppercase text-sm" @click="loadMore">
         <LoaderCircular v-if="caniuseObserver" class="mr-3" />
         {{ caniuseObserver ? 'Načítám' : 'Načíst' }} další výsledky (celkem
         {{ song_lyrics_paginated.paginatorInfo.total }})

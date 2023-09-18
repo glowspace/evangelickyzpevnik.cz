@@ -1,6 +1,6 @@
 <template>
   <div
-    class="linear-loader relative overflow-hidden w-full h-1 flex bg-gray-100 dark:bg-gray-700"
+    class="linear-loader relative overflow-hidden w-full h-1 flex bg-gray-100 dark:bg-gray-700 min-h-[theme(spacing.1)]"
   >
     <!-- slow -->
     <div

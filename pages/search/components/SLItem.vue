@@ -34,19 +34,14 @@
       </span>
     </td> -->
     <td
-      class="text-right pr-3 uppercase text-sm"
       v-if="song_lyric.lang != 'cs'"
+      :class="[
+        'text-right pr-3 uppercase text-sm',
+        { 'text-secondary/20': !song_lyric.has_lyrics },
+      ]"
+      :title="song_lyric.lang_string"
     >
-      <span
-        :class="[
-          {
-            'text-secondary/20': !song_lyric.has_lyrics,
-          },
-          'pr-sm-0 pr-1',
-        ]"
-        :title="song_lyric.lang_string"
-        >{{ song_lyric.lang.substring(0, 3) }}</span
-      >
+      {{ song_lyric.lang.substring(0, 3) }}
     </td>
     <td class="w-24" v-if="!hideIcons">
       <BasicClickable class="icons" :to="song_lyric.public_route" tabindex="-1">
@@ -98,10 +93,6 @@ tr:focus-within {
 
 tr:active {
   @apply bg-surface-200;
-}
-
-td {
-  @apply align-middle;
 }
 
 .icons {

@@ -18,7 +18,7 @@
       />
       <input
         type="search"
-        placeholder="Hledat píseň podle názvu, čísla nebo textu…"
+        :placeholder="searchSongs ? 'Hledat píseň podle názvu, čísla nebo textu…' : 'Hledat autora podle jména'"
         class="bg-transparent py-2 pl-1 pr-4 ring-0 focus:outline-none grow"
         v-model="value"
         @keyup.enter="emit('enter')"
@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-const props = defineProps(['modelValue', 'onDashboard']);
+const props = defineProps(['modelValue', 'onDashboard', 'searchSongs']);
 const emit = defineEmits(['update:modelValue', 'enter', 'back', 'focus']);
 
 const value = computed({

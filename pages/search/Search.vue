@@ -4,7 +4,8 @@
     <StickyContainer :onDashboard="init">
       <SearchBox
         v-model="search_string"
-        :onDashboard="init"
+        :on-dashboard="init"
+        :search-songs="!showAuthors"
         @enter="inputEnter"
         @focus="init = false"
         @back="

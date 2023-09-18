@@ -48,6 +48,10 @@ strong {
   @apply font-custom-medium;
 }
 
+th, td {
+  @apply align-middle;
+}
+
 /* todo: delete the class below */
 .btn-secondary {
   display: inline-block;
