@@ -3,7 +3,7 @@
     <div class="flex flex-row gap-2 items-center">
       <BasicBadge :small="showToolsBadge"><BasicButton @click="$emit('tools')" icon-name="tune" icon-only /></BasicBadge>
       <BasicButton
-        v-if="mediaAvailable"
+        :disabled="!mediaAvailable"
         icon-name="headphones"
         icon-fill
         icon-only

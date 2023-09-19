@@ -13,7 +13,31 @@
           resetState(true);
         "
       />
-      <FilterRow v-if="!init">
+      <FilterRow
+        v-if="!init"
+        v-model:selected-songbooks="selected_songbooks"
+        v-model:selected-tags="selected_tags"
+        v-model:selected-languages="selected_languages"
+        v-model:show-authors="showAuthors"
+        v-model:sort="sort"
+        v-model:descending="descending"
+        :search-string="search_string"
+        @input="updateHistoryState"
+      >
+        <template #row>
+          <Filters
+            :is-filter-row="true"
+            v-model:selected-songbooks="selected_songbooks"
+            v-model:selected-tags="selected_tags"
+            v-model:selected-languages="selected_languages"
+            v-model:show-authors="showAuthors"
+            v-model:sort="sort"
+            v-model:descending="descending"
+            :search-string="search_string"
+            @refresh-seed="refreshSeed"
+            @input="updateHistoryState"
+          ></Filters>
+        </template>
         <Filters
           v-model:selected-songbooks="selected_songbooks"
           v-model:selected-tags="selected_tags"

@@ -1,8 +1,8 @@
 <template>
-  <div class="relative">
+  <div class="relative mt-4">
     <div
       :class="[
-        'mt-2 flex flex-wrap items-center justify-between',
+        'flex flex-wrap items-center justify-between',
         { relative: !isClosed },
       ]"
     >
