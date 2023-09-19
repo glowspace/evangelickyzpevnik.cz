@@ -6,7 +6,7 @@
         { relative: !isClosed },
       ]"
     >
-      <span>{{ heading }}</span>
+      <BasicBadge :small="categoryContainsSelected" badge-class="!top-1 !-right-2">{{ heading }}</BasicBadge>
       <BasicButton
         :class="['stretched-link']"
         @click="isClosed = !isClosed"

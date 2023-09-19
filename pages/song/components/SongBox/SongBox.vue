@@ -7,7 +7,8 @@
       showMedia = true;
     "
     :scrollable="scrollable"
-    :mediaAvailable="recordings.length"
+    :media-available="recordings.length"
+    :show-tools-badge="chordSharedStore.transposition"
   />
   <div>
     <div>

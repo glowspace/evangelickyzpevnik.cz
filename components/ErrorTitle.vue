@@ -1,3 +1,7 @@
+<template>
+  <span></span>
+</template>
+
 <script setup>
 const props = defineProps(['error']);
 const { siteName, titleSeparator } = useRuntimeConfig()?.public;

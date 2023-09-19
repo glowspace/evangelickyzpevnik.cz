@@ -1,7 +1,7 @@
 <template>
   <div class="bottom-bar-wrapper">
     <div class="flex flex-row gap-2 items-center">
-      <BasicButton icon-name="tune" icon-only @click="$emit('tools')" />
+      <BasicBadge :small="showToolsBadge"><BasicButton @click="$emit('tools')" icon-name="tune" icon-only /></BasicBadge>
       <BasicButton
         v-if="mediaAvailable"
         icon-name="headphones"
@@ -24,5 +24,5 @@
 <script setup>
 import Autoscroll from './Autoscroll';
 import Fullscreen from './Fullscreen';
-const props = defineProps(['mediaAvailable', 'scrollable']);
+const props = defineProps(['mediaAvailable', 'scrollable', 'showToolsBadge']);
 </script>
