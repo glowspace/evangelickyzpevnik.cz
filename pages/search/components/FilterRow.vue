@@ -5,7 +5,7 @@
       <div class="flex flex-row items-center overflow-auto whitespace-nowrap">
         <slot name="row" />
         <!-- <BasicChip v-for="filter in ">{{  }}</BasicChip> -->
-        <BasicChip class="chip-add" @click="showFilters = true"><BasicIcon name="add" class="-mx-1 text-lg" />přidat filtr</BasicChip>
+        <BasicChip class="chip-add hover:!bg-surface-200" @click="showFilters = true"><BasicIcon name="add" class="-mx-1 text-lg" />přidat filtr</BasicChip>
       </div>
     </div>
     <BottomSheets v-model="showFilters" title="Filtrovat">
