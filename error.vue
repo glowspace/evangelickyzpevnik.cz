@@ -1,61 +1,45 @@
 <template>
-  <div class="container">
-    <div class="error">
-      <h1>Error {{ error.statusCode }}</h1>
-      <p v-if="error.statusCode === 404">
-        Stránka nebyla nalezena. <br />Zkuste použít vyhledávání.
-      </p>
-      <p v-else>
-        Ajajaj, někde se stala chyba.<br />
-        Zkuste použít vyhledávání.
-      </p>
-      <div class="text-center text-white">
-        <nuxt-link
-          to="/"
-          class="btn btn-outline-light display-all-songs font-weight-bold"
-        >
-          <i class="fas fa-search pr-1"></i> VYHLEDÁVÁNÍ
-        </nuxt-link>
-      </div>
-      <div class="text-center text-white mt-3 mb-5">
-        <a
-          :href="
-            'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/6/create/20?customfield_10056=' +
-            encodeURIComponent($config.public.siteUrl + $route.fullPath) +
-            '&summary=Chyba%20webu%20(' +
-            error.statusCode +
-            ')'
-          "
-          class="btn btn-outline-light display-all-songs font-weight-bold"
-        >
-          <i class="fas fa-exclamation-triangle pr-1"></i> NAHLÁSIT
-        </a>
+  <NuxtLayout>
+    <ErrorTitle :error="error" />
+    <TopBar
+      @back="previous ? $router.back() : navigateTo('/')"
+      :title="'Chyba ' + error.statusCode"
+      is-h1
+    />
+    <div>
+      <div class="shadow bg-surface-100 mx-6 my-12 px-6 py-4">
+        <p class="mb-3">
+          <span v-if="error.statusCode === 404">
+            Stránka nebyla nalezena. <br />Zkuste použít vyhledávání.
+          </span>
+          <span v-else>
+            Ajajaj, někde se stala chyba.<br />
+            Zkuste použít vyhledávání.
+          </span>
+        </p>
+        <div class="-m-1">
+          <BasicButton icon-name="search" type="primary" class="m-1" to="/"
+            >Hledat</BasicButton
+          >
+          <BasicButton
+            icon-name="warning"
+            type="outlined"
+            class="m-1"
+            :href="
+              'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/6/create/20?customfield_10056=' +
+              encodeURIComponent($config.public.siteUrl + $route.fullPath) +
+              '&summary=Chyba%20webu%20(' +
+              error.statusCode +
+              ')'
+            "
+            >Nahlásit</BasicButton
+          >
+        </div>
       </div>
     </div>
-  </div>
+  </NuxtLayout>
 </template>
 
-<script>
-export default {
-  props: ['error'],
-
-  head() {
-    return generateHead(this.getTitle(), this.getDescription());
-  },
-
-  methods: {
-    getTitle() {
-      return (
-        'Error ' +
-        this.error.statusCode +
-        this.$config.public.titleSeparator +
-        this.$config.public.siteName
-      );
-    },
-
-    getDescription() {
-      return '';
-    },
-  },
-};
+<script setup>
+const props = defineProps(['error']);
 </script>

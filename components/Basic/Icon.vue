@@ -1,5 +1,6 @@
 <template>
   <i v-if="type == 'fa'" :class="[name, 'text-xl -mt-px']"></i>
+  <img v-else-if="type == 'img'" :src="'/img/' + name" class="w-7" />
   <span
     v-else
     class="material-symbols-outlined"

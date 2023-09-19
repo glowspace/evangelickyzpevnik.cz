@@ -3,19 +3,19 @@
     <div class="menu">
       <BasicClickable to="/" class="link group" @click="store.showDashboard = true">
         <div class="icon-wrapper" :class="{ active: ($route.name == 'index' && store.showDashboard) }">
-          <span class="material-symbols-outlined">home</span>
+          <BasicIcon name="home" />
         </div>
         <p class="label">Nástěnka</p>
       </BasicClickable>
       <BasicClickable to="/" class="link group" @click="store.showDashboard = false">
         <div class="icon-wrapper" :class="{ active: ($route.name == 'index' && !store.showDashboard) }">
-          <span class="material-symbols-outlined">search</span>
+          <BasicIcon name="search" />
         </div>
         <p class="label">Hledání</p>
       </BasicClickable>
       <BasicClickable to="/o-zpevniku" class="link group">
         <div class="icon-wrapper" :class="{ active: $route.name == 'about' }">
-          <span class="material-symbols-outlined">info</span>
+          <BasicIcon name="info" />
         </div>
         <p class="label">O zpěvníku</p>
       </BasicClickable>
