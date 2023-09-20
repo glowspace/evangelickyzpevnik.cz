@@ -1,6 +1,6 @@
 <template>
   <template v-if="isFilterRow">
-    <template v-if="!$apollo.loading && tags_generic">
+    <template v-if="true || !$apollo.loading">
       <FilterRowItem v-if="localShowAuthors" @click="localShowAuthors = false">
         autoři
       </FilterRowItem>
@@ -18,8 +18,14 @@
         <span v-else>1–9</span>
       </FilterRowItem>
       <template
+        v-if="/* this ensures that no *array of tags* is null */
+          tags_liturgy_part &&
+          tags_liturgy_period &&
+          tags_sacred_occasion &&
+          tags_generic &&
+          tags_saints
+        "
         v-for="tag in [
-          // these spread operators might cause an error if some of the queries don't load (therefore the variables would be null)
           ...tags_liturgy_part,
           ...tags_liturgy_period,
           ...tags_sacred_occasion,

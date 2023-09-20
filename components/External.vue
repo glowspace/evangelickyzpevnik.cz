@@ -19,20 +19,7 @@
     <div
       class="flex-shrink-0 flex-grow flex flex-row items-center justify-end pr-3"
     >
-      <Kebab
-        :items="[
-          { label: 'Otevřít', href: mediaLink, icon: 'visibility' },
-          ...(external.is_uploaded
-            ? [{ label: 'Stáhnout', href: downloadUrl, icon: 'download' }]
-            : []),
-          ...external.authors.map((a) => ({
-            label: a.name,
-            to: a.public_route,
-            icon: 'person',
-          })),
-        ]"
-        button-class="text-gray-600"
-      />
+      <Kebab :items="kebabMenuItems" button-class="text-gray-600" />
     </div>
   </div>
   <div v-else class="shadow-md bg-primary-150 rounded-lg overflow-hidden">
@@ -305,6 +292,30 @@ export default {
         'file/png',
         'file/gif',
       ].includes(this.external.media_type);
+    },
+
+    kebabMenuItems() {
+      const menu = [
+        { label: 'Otevřít', href: this.mediaLink, icon: 'visibility' },
+      ];
+
+      if (this.external.is_uploaded) {
+        menu.push({
+          label: 'Stáhnout',
+          href: this.downloadUrl,
+          icon: 'download',
+        });
+      }
+
+      menu.concat(
+        this.external.authors.map((a) => ({
+          label: a.name,
+          to: a.public_route,
+          icon: 'person',
+        }))
+      );
+
+      return menu;
     },
   },
 
