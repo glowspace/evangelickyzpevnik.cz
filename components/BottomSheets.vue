@@ -8,16 +8,18 @@
     ></div>
     <!-- side sheets dialogs -->
     <div
-      class="sheet group-[&.show]:translate-y-0 fixed left-0 bottom-0 right-0 z-50 h-2/3 translate-y-full flex flex-col gap-2"
+      class="sheet pointer-events-none group-[&.show]:translate-y-0 fixed left-0 md:left-[97px] bottom-0 right-0 z-50 h-2/3 translate-y-full flex flex-col gap-2"
     >
       <div
-        class="bottom-sheets-container bg-surface-100 dark:bg-surfacedark-100 rounded-t-2xl h-full w-full flex flex-col overflow-hidden"
+        class="bottom-sheets-container pointer-events-auto custom-container bg-surface-100 dark:bg-surfacedark-100 rounded-t-2xl h-full w-full flex flex-col overflow-hidden"
       >
         <!-- header -->
         <div
           class="min-h-[56px] flex flex-row items-center gap-3 pl-6 pr-3 pb-2 pt-2.5 flex-shrink-0 shadow bg-surface-300"
         >
-          <h3 class="flex flex-grow text-base tracking-[.009375em] font-custom-medium">
+          <h3
+            class="flex flex-grow text-base tracking-[.009375em] font-custom-medium"
+          >
             {{ title }}
           </h3>
           <BasicButton @click="show = false" icon-name="close" icon-only />

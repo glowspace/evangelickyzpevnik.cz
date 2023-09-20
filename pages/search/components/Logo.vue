@@ -1,9 +1,7 @@
 <template>
-  <div class="custom-container">
-    <div class="logo">
-      <img src="/img/logo.svg" alt="logo" />
-      <h1>Evangelický zpěvník</h1>
-    </div>
+  <div class="logo">
+    <img src="/img/logo.svg" alt="logo" />
+    <h1>Evangelický zpěvník</h1>
   </div>
 </template>
 

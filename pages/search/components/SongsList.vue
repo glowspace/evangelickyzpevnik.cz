@@ -27,8 +27,10 @@
         <template v-else-if="song_lyrics && song_lyrics.length">
           <template v-for="song_lyric in song_lyrics" :key="song_lyric.id">
             <SLItem
+              :is-search="true"
               :song_lyric="song_lyric"
               :number="getSongNumber(song_lyric)"
+              :special-number="getSongNumber(song_lyric, true)"
             />
           </template>
           <tr v-if="results_loaded">
@@ -241,18 +243,32 @@ export default {
       }
     },
 
-    getSongNumber(song_lyric) {
+    getSongNumber(song_lyric, onlySpecial = false) {
+      const rec = this.getSongbookRecordForNumber(song_lyric);
+
+      if (onlySpecial) {
+        return rec ? rec.pivot.number : '';
+      }
+
+      if (rec) {
+        return rec.pivot.songbook.shortcut + ' ' + rec.pivot.number;
+      }
+
+      return song_lyric.song_number;
+    },
+
+    getSongbookRecordForNumber(song_lyric) {
       if (this.preferred_songbook_id !== null) {
         let rec = song_lyric.songbook_records.find(
           (record) => record.pivot.songbook.id === this.preferred_songbook_id
         );
 
-        if (rec) {
-          return rec.pivot.songbook.shortcut + ' ' + rec.pivot.number;
+        if (rec && rec.pivot.number && rec.pivot.songbook.shortcut) {
+          return rec;
         }
       }
 
-      return song_lyric.song_number;
+      return null;
     },
   },
 

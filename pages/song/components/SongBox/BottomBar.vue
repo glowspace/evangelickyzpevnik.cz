@@ -21,8 +21,9 @@
 
 <style lang="postcss" scoped>
 .bottom-bar-wrapper {
-  @apply fixed bottom-0 z-10 w-full bg-surface-200 dark:bg-surfacedark-200
+  @apply fixed bottom-0 z-10 bg-surface-200 dark:bg-surfacedark-200
   shadow md:shadow-none md:border-t border-primary-150;
+  width: calc(100% - 97px);
 }
 
 .bottom-bar {

@@ -22,6 +22,6 @@ const props = defineProps({
 
 <style lang="postcss" scoped>
 .link {
-  @apply underline hover:no-underline;
+  @apply hover:underline no-underline;
 }
 </style>

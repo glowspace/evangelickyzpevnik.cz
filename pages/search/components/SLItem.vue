@@ -1,49 +1,58 @@
 <template>
   <tr :class="{ 'bg-surface-200': active }">
-    <!-- <td class="p-1 align-middle text-right w-min">
-      <nuxt-link
-        class="p-2 pl-3 w-full d-flex justify-content-between text-secondary"
+    <td
+      v-if="isSearch"
+      class="hidden md:table-cell text-secondary text-right w-16 text-sm"
+    >
+      <BasicClickable
+        class="pl-7 p-3"
+        tabindex="-1"
         :to="song_lyric.public_route"
       >
-        <span>{{ number }}</span>
-      </nuxt-link>
-    </td> -->
-    <td :colspan="song_lyric.lang != 'cs' ? 1 : 2">
-      <BasicClickable class="p-3 block" :to="song_lyric.public_route">
+        {{ number }}
+      </BasicClickable>
+    </td>
+    <td>
+      <BasicClickable
+        class="p-3 block"
+        :class="{ 'md:pl-8': false }"
+        :to="song_lyric.public_route"
+      >
+        <span v-if="specialNumber" :class="{ 'md:hidden': isSearch }"
+          >{{ specialNumber }}.
+        </span>
         <song-name :song="song_lyric" :multiline="true" :active="active" />
       </BasicClickable>
     </td>
-    <!-- <td class="p-1 align-middle" :colspan="song_lyric.lang != 'cs' ? 1 : 2">
+    <td v-if="isSearch" class="hidden md:table-cell text-secondary">
       <span
         v-for="(ap, authorIndex) in song_lyric.authors_pivot"
         :key="authorIndex"
       >
-        <span v-if="authorIndex">,</span>
-        <nuxt-link
+        <span v-if="authorIndex">, </span>
+        <BasicLink
           :to="ap.pivot.author.public_route"
           :title="
             song_lyric.type
-              ? { GENERIC: '', LYRICS: 'text', MUSIC: 'hudba' }['LYRICS']
-              : { GENERIC: '', LYRICS: 'text', MUSIC: 'hudba' }[
-                  ap.pivot.authorship_type
-                ]
+              ? authorshipTypes['LYRICS']
+              : authorshipTypes[ap.pivot.authorship_type]
           "
-          class="text-secondary"
-          >{{ ap.pivot.author.name }}</nuxt-link
         >
+          {{ ap.pivot.author.name }}
+        </BasicLink>
       </span>
-    </td> -->
+    </td>
     <td
-      v-if="song_lyric.lang != 'cs'"
       :class="[
         'text-right pr-3 uppercase text-sm',
         { 'text-secondary/20': !song_lyric.has_lyrics },
+        { 'md:pr-6': isSearch },
       ]"
       :title="song_lyric.lang_string"
     >
-      {{ song_lyric.lang.substring(0, 3) }}
+      {{ song_lyric.lang != 'cs' ? song_lyric.lang.substring(0, 3) : '' }}
     </td>
-    <td class="w-24" v-if="!hideIcons">
+    <td class="w-24" :class="{ 'md:pr-6': isSearch }" v-if="!hideIcons">
       <BasicClickable class="icons" :to="song_lyric.public_route" tabindex="-1">
         <BasicIcon
           v-if="song_lyric.has_chords"
@@ -82,7 +91,15 @@
 </template>
 
 <script setup>
-const props = defineProps(['song_lyric', 'number', 'hideIcons', 'active']);
+const props = defineProps([
+  'song_lyric',
+  'number',
+  'specialNumber',
+  'hideIcons',
+  'active',
+  'isSearch',
+]);
+const authorshipTypes = { GENERIC: '', LYRICS: 'text', MUSIC: 'hudba' };
 </script>
 
 <style lang="postcss" scoped>

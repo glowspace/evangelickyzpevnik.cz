@@ -1,32 +1,24 @@
 <template>
-  <div>
-    <Logo v-if="init" />
-    <StickyContainer :onDashboard="init">
-      <SearchBox
-        v-model="search_string"
-        :on-dashboard="init"
-        :search-songs="!showAuthors"
-        @enter="inputEnter"
-        @focus="init = false"
-        @back="
-          init = true;
-          resetState(true);
-        "
-      />
-      <FilterRow
-        v-if="!init"
-        v-model:selected-songbooks="selected_songbooks"
-        v-model:selected-tags="selected_tags"
-        v-model:selected-languages="selected_languages"
-        v-model:show-authors="showAuthors"
-        v-model:sort="sort"
-        v-model:descending="descending"
-        :search-string="search_string"
-        @input="updateHistoryState"
-      >
-        <template #row>
-          <Filters
-            :is-filter-row="true"
+  <div class="flex flex-row">
+    <div :class="{ 'md:w-3/5 xl:w-2/3': !init }" class="w-full">
+      <div :class="{ 'custom-container': init }">
+        <Logo v-if="init" />
+      </div>
+      <StickyContainer :onDashboard="init">
+        <div :class="{ 'custom-container': init }">
+          <SearchBox
+            v-model="search_string"
+            :on-dashboard="init"
+            :search-songs="!showAuthors"
+            @enter="inputEnter"
+            @focus="init = false"
+            @back="
+              init = true;
+              resetState(true);
+            "
+          />
+          <FilterRow
+            v-if="!init"
             v-model:selected-songbooks="selected_songbooks"
             v-model:selected-tags="selected_tags"
             v-model:selected-languages="selected_languages"
@@ -34,10 +26,94 @@
             v-model:sort="sort"
             v-model:descending="descending"
             :search-string="search_string"
-            @refresh-seed="refreshSeed"
             @input="updateHistoryState"
-          ></Filters>
-        </template>
+          >
+            <template #row>
+              <Filters
+                :is-filter-row="true"
+                v-model:selected-songbooks="selected_songbooks"
+                v-model:selected-tags="selected_tags"
+                v-model:selected-languages="selected_languages"
+                v-model:show-authors="showAuthors"
+                v-model:sort="sort"
+                v-model:descending="descending"
+                :search-string="search_string"
+                @refresh-seed="refreshSeed"
+                @input="updateHistoryState"
+              ></Filters>
+            </template>
+            <Filters
+              v-model:selected-songbooks="selected_songbooks"
+              v-model:selected-tags="selected_tags"
+              v-model:selected-languages="selected_languages"
+              v-model:show-authors="showAuthors"
+              v-model:sort="sort"
+              v-model:descending="descending"
+              :search-string="search_string"
+              @refresh-seed="refreshSeed"
+              @input="updateHistoryState"
+            ></Filters>
+          </FilterRow>
+        </div>
+      </StickyContainer>
+      <div :class="{ 'custom-container': init }">
+        <InitFilters
+          v-if="init"
+          v-model="selected_tags"
+          @update:modelValue="init = false"
+        ></InitFilters>
+        <div class="text-center mt-1" v-if="init">
+          <BasicButton
+            @click="init = false"
+            icon-name="add"
+            class="text-primary -ml-3"
+            >Zobrazit všechy písně</BasicButton
+          >
+        </div>
+      </div>
+      <!-- todo: news -->
+      <!-- <div class="row justify-content-center text-center pt-4" v-show="init">
+      <div class="col-lg-8 search-column">
+        <News><div class="news-opener" @click="init = false"></div></News>
+      </div>
+      <div class="col-lg-4 search-balance"></div>
+      </div> -->
+      <div v-show="!init">
+        <!-- <News v-show="!filters_active && !search_string" /> -->
+        <SongsList
+          v-if="!showAuthors"
+          :search-string="search_string"
+          :selected-tags="selected_tags"
+          :selected-songbooks="selected_songbooks"
+          :selected-languages="selected_languages"
+          :sort="parseInt(sort)"
+          :descending="descending"
+          :seed="parseInt(seed)"
+          @query-loaded="queryLoaded"
+        ></SongsList>
+        <AuthorsList
+          v-else
+          :search-string="search_string"
+          @query-loaded="queryLoaded"
+        ></AuthorsList>
+      </div>
+
+      <!-- todo: app links -->
+      <!-- <app-links v-if="init" /> -->
+      <!-- todo: report bug -->
+      <!-- <a
+      class="btn btn-secondary search-report bg-transparent"
+      title="Nahlásit"
+      :href="
+        'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/6/create/20?customfield_10056=' +
+        encodeURIComponent($config.public.siteUrl + $route.fullPath)
+      "
+      >
+        <i class="fas fa-exclamation-triangle p-0"></i>
+      </a> -->
+    </div>
+    <div v-if="!init" class="hidden md:block sticky top-0 flex-grow-0 w-2/5 xl:w-1/3 p-8 h-screen overflow-auto border-l border-primary-150">
+      <div>
         <Filters
           v-model:selected-songbooks="selected_songbooks"
           v-model:selected-tags="selected_tags"
@@ -49,61 +125,8 @@
           @refresh-seed="refreshSeed"
           @input="updateHistoryState"
         ></Filters>
-      </FilterRow>
-    </StickyContainer>
-    <InitFilters
-      v-if="init"
-      v-model="selected_tags"
-      @update:modelValue="init = false"
-    ></InitFilters>
-    <div class="text-center mt-1" v-if="init">
-      <BasicButton
-        @click="init = false"
-        icon-name="add"
-        class="text-primary -ml-3"
-        >Zobrazit všechy písně</BasicButton
-      >
-    </div>
-    <!-- todo: news -->
-    <!-- <div class="row justify-content-center text-center pt-4" v-show="init">
-      <div class="col-lg-8 search-column">
-        <News><div class="news-opener" @click="init = false"></div></News>
       </div>
-      <div class="col-lg-4 search-balance"></div>
-    </div> -->
-    <div v-show="!init">
-      <!-- <News v-show="!filters_active && !search_string" /> -->
-      <SongsList
-        v-if="!showAuthors"
-        :search-string="search_string"
-        :selected-tags="selected_tags"
-        :selected-songbooks="selected_songbooks"
-        :selected-languages="selected_languages"
-        :sort="parseInt(sort)"
-        :descending="descending"
-        :seed="parseInt(seed)"
-        @query-loaded="queryLoaded"
-      ></SongsList>
-      <AuthorsList
-        v-else
-        :search-string="search_string"
-        @query-loaded="queryLoaded"
-      ></AuthorsList>
     </div>
-
-    <!-- todo: app links -->
-    <!-- <app-links v-if="init" /> -->
-    <!-- todo: report bug -->
-    <!-- <a
-      class="btn btn-secondary search-report bg-transparent"
-      title="Nahlásit"
-      :href="
-        'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/6/create/20?customfield_10056=' +
-        encodeURIComponent($config.public.siteUrl + $route.fullPath)
-      "
-    >
-      <i class="fas fa-exclamation-triangle p-0"></i>
-    </a> -->
   </div>
 </template>
 
