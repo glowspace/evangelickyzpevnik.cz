@@ -8,7 +8,7 @@
     "
     :scrollable="scrollable"
     :media-available="recordings.length"
-    :show-tools-badge="chordSharedStore.transposition"
+    :show-tools-badge="!!chordSharedStore.transposition"
   />
   <div>
     <div>

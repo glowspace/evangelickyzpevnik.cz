@@ -8,8 +8,8 @@
     <table class="w-full">
       <tbody>
         <tr v-if="!results_loaded && !(song_lyrics && song_lyrics.length)">
-          <td class="pl-8 pr-3">
-            <LoaderCircular />
+          <td class="pl-8 pr-3 w-5">
+            <LoaderCircular size="5" />
           </td>
           <td>Načítám…</td>
           <td class="p-2 text-right pr-7">

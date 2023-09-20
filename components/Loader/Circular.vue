@@ -30,6 +30,7 @@ const props = defineProps(['size']);
 <style lang="postcss" scoped>
 .circular-loader {
   animation: rotate 2s linear infinite;
+  z-index: -1;
 }
 .circular-loader .path {
   stroke-dasharray: 1, 200;

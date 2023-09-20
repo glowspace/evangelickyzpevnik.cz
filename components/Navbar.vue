@@ -25,11 +25,11 @@
 
 <style lang="postcss" scoped>
 .menu-wrapper {
-  @apply w-full md:max-w-[412px] text-sm flex flex-row space-x-2 items-center justify-center fixed bottom-0 shadow;
+  @apply w-full text-sm flex flex-row space-x-2 items-center justify-center fixed bottom-0 shadow;
 }
 
 .menu {
-  @apply flex flex-row justify-center gap-2 w-full md:w-[412px] bg-surface-200 dark:bg-surfacedark-200;
+  @apply flex flex-row justify-center gap-2 w-full bg-surface-200 dark:bg-surfacedark-200;
 }
 
 .link {

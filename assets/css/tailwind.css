@@ -7,13 +7,12 @@
 /* @import './song'; */
 
 body {
-  /* @apply p-7 bg-red-200; */
-  max-width: 400px;
+  /* max-width: 400px; */
   @apply mx-auto border-x-2;
   padding-bottom: 84px;
 }
 
-.menu-wrapper,
+/* .menu-wrapper,
 .bottom-bar-wrapper {
   max-width: 400px !important;
 }
@@ -21,7 +20,7 @@ body {
 .bottom-sheets-container {
   max-width: 400px;
   margin: 0 auto;
-}
+} */
 
 .stretched-link {
   position: static;
@@ -50,19 +49,6 @@ strong {
 
 th, td {
   @apply align-middle;
-}
-
-/* todo: delete the class below */
-.btn-secondary {
-  display: inline-block;
-  background-color: #ccc;
-  border: 1px solid gray;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-
-  &.chosen {
-    background-color: #aaa;
-  }
 }
 
 .basic-content {
