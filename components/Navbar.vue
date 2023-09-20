@@ -1,14 +1,31 @@
 <template>
-  <div class="menu-wrapper" v-if="$route.name != 'song'">
+  <div
+    class="menu-wrapper"
+    :class="[{ hidden: $route.name == 'song' }, 'md:flex']"
+  >
     <div class="menu">
-      <BasicClickable to="/" class="link group" @click="store.showDashboard = true">
-        <div class="icon-wrapper" :class="{ active: ($route.name == 'index' && store.showDashboard) }">
+      <BasicClickable
+        to="/"
+        class="link group"
+        @click="store.showDashboard = true"
+      >
+        <div
+          class="icon-wrapper"
+          :class="{ active: $route.name == 'index' && store.showDashboard }"
+        >
           <BasicIcon name="home" />
         </div>
         <p class="label">Nástěnka</p>
       </BasicClickable>
-      <BasicClickable to="/" class="link group" @click="store.showDashboard = false">
-        <div class="icon-wrapper" :class="{ active: ($route.name == 'index' && !store.showDashboard) }">
+      <BasicClickable
+        to="/"
+        class="link group"
+        @click="store.showDashboard = false"
+      >
+        <div
+          class="icon-wrapper"
+          :class="{ active: $route.name == 'index' && !store.showDashboard }"
+        >
           <BasicIcon name="search" />
         </div>
         <p class="label">Hledání</p>
@@ -25,15 +42,20 @@
 
 <style lang="postcss" scoped>
 .menu-wrapper {
-  @apply w-full text-sm flex flex-row space-x-2 items-center justify-center fixed bottom-0 shadow;
+  @apply w-full text-sm fixed bottom-0 flex-col items-center
+  shadow md:shadow-none md:border-r border-primary-150
+  bg-surface-200 dark:bg-surfacedark-200
+  md:left-0 md:top-0 md:w-auto md:pt-20;
 }
 
 .menu {
-  @apply flex flex-row justify-center gap-2 w-full bg-surface-200 dark:bg-surfacedark-200;
+  @apply flex flex-row justify-center gap-2 w-full
+  md:flex-col md:w-auto md:gap-5 md:mb-[30vh];
 }
 
 .link {
-  @apply flex w-1/4 md:w-32 flex-col items-center justify-center px-0 pt-3 pb-4 gap-1;
+  @apply flex w-1/4 flex-col items-center justify-center px-0 pt-3 pb-4 gap-1
+  md:w-24 md:p-0;
 }
 
 .icon-wrapper {

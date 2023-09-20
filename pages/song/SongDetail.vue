@@ -1,16 +1,13 @@
 <template>
-  <div class="m-5">
-    <div class="my-4">
-      <div>
+  <div>
+    <div class="custom-container">
+      <div class="mx-5 my-4">
         <h1 class="song-title"><song-name :song="song" /></h1>
         <div class="mt-1 text-sm basic-content">
           <song-author-label :song="song" />
           <song-info :song="song" />
         </div>
       </div>
-      <!-- <div class="d-none d-md-block">
-                <tags :song="song"></tags>
-            </div> -->
     </div>
     <song-box :song_lyric="song"></song-box>
   </div>

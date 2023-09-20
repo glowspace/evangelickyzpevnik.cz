@@ -8,8 +8,11 @@
 
 body {
   /* max-width: 400px; */
-  @apply mx-auto border-x-2;
-  padding-bottom: 84px;
+  /* @apply mx-auto border-x-2; */
+
+  /* padding-bottom: calc(5.25 * theme(spacing.4)); */
+  @apply pb-[84px] /* this is equal to the line above */
+  md:pb-0 md:pl-[97px]; /* pl-24 + 1px to preserve border */
 }
 
 /* .menu-wrapper,
@@ -21,6 +24,10 @@ body {
   max-width: 400px;
   margin: 0 auto;
 } */
+
+.custom-container {
+  @apply max-w-[700px] mx-auto;
+}
 
 .stretched-link {
   position: static;
