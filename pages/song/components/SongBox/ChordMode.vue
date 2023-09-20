@@ -1,6 +1,6 @@
 <template>
   <ToolboxContainer>
-    <div>Zobrazit akordy</div>
+    <div @click="showChords = !showChords">Zobrazit akordy</div>
     <BasicSwitch v-model="showChords" id="chordmode-switch" />
   </ToolboxContainer>
 </template>

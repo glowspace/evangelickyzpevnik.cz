@@ -1,6 +1,6 @@
 <template>
   <ToolboxContainer>
-    <div>Blokovat zhasínání displeje</div>
+    <div @click="nsComp = !nsComp">Blokovat zhasínání displeje</div>
     <BasicSwitch id="nosleep-switch" v-model="nsComp" />
   </ToolboxContainer>
 </template>
