@@ -307,15 +307,13 @@ export default {
         });
       }
 
-      menu.concat(
+      return menu.concat(
         this.external.authors.map((a) => ({
           label: a.name,
           to: a.public_route,
           icon: 'person',
         }))
       );
-
-      return menu;
     },
   },
 

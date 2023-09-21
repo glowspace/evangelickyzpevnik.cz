@@ -24,6 +24,7 @@
             : 'Hledat autora podle jména'
         "
         class="bg-transparent py-2 px-1 ring-0 focus:outline-none grow"
+        :class="{ 'pr-4': value == '' }"
         v-model="value"
         @keyup.enter="emit('enter')"
         @focus="emit('focus')"

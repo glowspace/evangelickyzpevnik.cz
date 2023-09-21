@@ -234,17 +234,16 @@
         <BottomSheets v-model="showMedia" title="Nahrávky">
           <div
             v-if="hasExternals && loadMedia && !$apollo.loading"
-            class="-m-6"
+            class="flex flex-col sm:grid grid-cols-2 gap-5"
           >
-            <external
-              v-for="(external, index) in recordings"
-              :key="index"
-              :line="false"
-              :index="index"
-              :external="external"
-              :song-name="song_lyric.name"
-              class="m-6"
-            ></external>
+            <div v-for="(external, index) in recordings" :key="index">
+              <external
+                :line="false"
+                :index="index"
+                :external="external"
+                :song-name="song_lyric.name"
+              ></external>
+            </div>
           </div>
         </BottomSheets>
       </div>

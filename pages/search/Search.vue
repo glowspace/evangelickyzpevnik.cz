@@ -104,7 +104,7 @@
     </div>
     <div
       v-if="!init"
-      class="hidden md:block sticky top-0 flex-grow-0 w-2/5 xl:w-1/3 p-8 h-screen overflow-auto border-l border-primary-150"
+      class="hidden md:block sticky top-0 flex-grow-0 w-2/5 xl:w-1/3 p-8 h-screen overflow-auto border-l border-primary-150 bg-surface-50"
     >
       <div>
         <Filters
@@ -348,8 +348,6 @@ export default {
       this.resetState();
     },
     init(val) {
-      console.log('init changed');
-
       if (val) {
         this.seedLocked = false;
         this.resetState();

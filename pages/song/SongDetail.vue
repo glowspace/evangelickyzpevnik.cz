@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="custom-container">
-      <div class="mx-5 my-4">
+      <div class="mx-5 my-4 md:mt-6">
         <h1 class="song-title"><song-name :song="song" /></h1>
         <div class="mt-1 text-sm basic-content">
           <song-author-label :song="song" />

@@ -9,8 +9,9 @@
       btnType,
       {
         'icon-only': iconOnly,
+        'mobile-icon-only': mobileIconOnly,
         /*'!pr-8': icon*/
-        'with-icon': !!iconName && !iconOnly,
+        'with-icon': !!iconName && !iconOnly && !mobileIconOnly,
         compact,
       },
     ]"
@@ -20,6 +21,7 @@
       :name="iconName"
       :type="iconType"
       :fill="iconFill"
+      class="icon"
     />
     <slot />
   </BasicClickable>
@@ -36,6 +38,7 @@ const props = defineProps({
   iconName: String,
   iconFill: Boolean,
   iconOnly: Boolean,
+  mobileIconOnly: Boolean, // when using this, icon label has to be inside another tag in order to be hidden
   iconType: String,
 });
 
@@ -46,7 +49,7 @@ const btnType = computed(() => {
 
 <style lang="postcss" scoped>
 .btn {
-  @apply inline-flex flex-row items-center justify-center gap-x-2 py-2.5 px-6 rounded-[6.25rem]
+  @apply inline-flex flex-row items-center justify-center gap-x-2 py-2.5 px-5 rounded-[6.25rem]
   text-sm tracking-[.00714em] font-custom-medium transition;
 }
 
@@ -58,8 +61,8 @@ const btnType = computed(() => {
 
 .btn.text,
 .btn.outlined {
-  @apply hover:bg-primary/10
-  dark:text-primary-200 dark:hover:bg-surfacedark-200;
+  @apply hover:bg-primary/10 focus:bg-primary/10
+  dark:text-primary-200 dark:hover:bg-surfacedark-200 dark:focus:bg-surfacedark-400;
 }
 
 .btn.outlined {
@@ -70,16 +73,26 @@ const btnType = computed(() => {
   @apply pointer-events-none opacity-30;
 }
 
-.icon-only {
-  @apply w-12 h-12 gap-x-2 p-0 rounded-[6.25rem] text-sm tracking-[.00714em] text-center font-custom-medium dark:text-primary-200;
-  @apply hover:bg-primary/10 focus:bg-primary/10 dark:hover:bg-surfacedark-300 dark:focus:bg-surfacedark-400;
+.icon-only,
+.mobile-icon-only {
+  @apply w-12 h-12 p-0 rounded-[6.25rem];
+
+  &.compact {
+    @apply w-8 h-8 p-1;
+  }
 }
 
 .with-icon {
-  @apply pr-7;
+  @apply pr-6;
 }
 
-.compact {
-  @apply w-8 h-8 p-1;
+.mobile-icon-only > :not(.icon) {
+  @apply hidden md:block;
+}
+
+@media screen(md) {
+  .mobile-icon-only {
+    @apply w-auto h-auto py-2.5 pl-5 pr-6;
+  }
 }
 </style>

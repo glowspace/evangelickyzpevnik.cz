@@ -32,6 +32,6 @@ const props = defineProps({ title: String, isH1: Boolean });
 }
 
 .top-bar {
-  @apply h-16 flex flex-row items-center justify-between gap-1.5 px-1;
+  @apply h-16 md:h-20 flex flex-row items-center justify-between gap-1.5 px-1;
 }
 </style>

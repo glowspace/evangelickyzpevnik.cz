@@ -1,9 +1,11 @@
 <template>
   <BasicButton
     :icon-name="fullscreen ? 'fullscreen_exit' : 'fullscreen'"
-    icon-only
+    mobile-icon-only
     @click="toggleFullscreen"
-  />
+  >
+    <span>Celá obrazovka</span>
+  </BasicButton>
 </template>
 
 <script>

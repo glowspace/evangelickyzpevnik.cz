@@ -17,11 +17,12 @@
       :disabled="autoscrollNum == 20"
     />
     <BasicClickable
-      class="fab flex justify-center items-center w-14 h-14 rounded-2xl ml-1 bg-primary-150 dark:bg-primary-700 hover:bg-primary-200"
+      class="floating-action-button"
       @click="autoscroll = !autoscroll"
       :disabled="!scrollable"
     >
       <BasicIcon :name="autoscroll ? 'stop' : 'arrow_downward'" fill />
+      <span class="hidden md:block">Rolovat</span>
     </BasicClickable>
   </div>
 </template>
@@ -98,7 +99,13 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-.fab:disabled {
+.floating-action-button {
+  @apply flex justify-center items-center p-4 rounded-2xl ml-1
+  text-sm gap-x-2 md:pr-5 font-custom-medium
+  bg-primary-150 dark:bg-primary-700 hover:bg-primary-200;
+}
+
+.floating-action-button:disabled {
   @apply pointer-events-none opacity-80 bg-gray-100 text-gray-600;
 }
 </style>

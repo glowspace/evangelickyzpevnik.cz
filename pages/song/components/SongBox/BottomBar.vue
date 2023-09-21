@@ -1,17 +1,27 @@
 <template>
   <div class="bottom-bar-wrapper">
     <div class="bottom-bar custom-container">
-      <div class="flex flex-row gap-2 items-center">
-        <BasicBadge :small="showToolsBadge"
-          ><BasicButton @click="$emit('tools')" icon-name="tune" icon-only
-        /></BasicBadge>
+      <div class="flex flex-row gap-2 md:gap-0 items-center">
+        <BasicBadge :small="showToolsBadge">
+          <BasicButton
+            @click="$emit('tools')"
+            icon-name="tune"
+            mobile-icon-only
+          >
+            <span>Nástroje</span>
+          </BasicButton>
+        </BasicBadge>
+
         <BasicButton
           :disabled="!mediaAvailable"
           icon-name="headphones"
           icon-fill
-          icon-only
+          mobile-icon-only
           @click="$emit('media')"
-        />
+        >
+          <span>Nahrávky</span>
+        </BasicButton>
+
         <Fullscreen />
       </div>
       <Autoscroll :scrollable="scrollable" />
@@ -22,8 +32,11 @@
 <style lang="postcss" scoped>
 .bottom-bar-wrapper {
   @apply fixed bottom-0 z-10 bg-surface-200 dark:bg-surfacedark-200
-  shadow md:shadow-none md:border-t border-primary-150;
-  width: calc(100% - 97px);
+  shadow md:shadow-none md:border-t border-primary-150 w-full;
+
+  @media screen(md) {
+    width: calc(100% - 97px);
+  }
 }
 
 .bottom-bar {
