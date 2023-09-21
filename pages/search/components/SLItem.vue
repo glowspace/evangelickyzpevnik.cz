@@ -1,101 +1,120 @@
 <template>
-  <tr>
-    <!-- <td class="p-1 align-middle text-right w-min">
-      <nuxt-link
-        class="p-2 pl-3 w-full d-flex justify-content-between text-secondary"
+  <tr :class="{ 'bg-surface-200': active }">
+    <td
+      v-if="isSearch"
+      class="hidden lg:table-cell text-secondary text-right w-16 text-sm"
+    >
+      <BasicClickable
+        class="pl-7 p-3"
+        tabindex="-1"
         :to="song_lyric.public_route"
       >
-        <span>{{ number }}</span>
-      </nuxt-link>
-    </td> -->
-    <td class="p-1" :colspan="song_lyric.lang != 'cs' ? 1 : 2">
-      <nuxt-link class="p-2 w-full inline-block" :to="song_lyric.public_route">
-        <song-name :song="song_lyric" :multiline="true" />
-      </nuxt-link>
+        {{ number }}
+      </BasicClickable>
     </td>
-    <!-- <td class="p-1 align-middle" :colspan="song_lyric.lang != 'cs' ? 1 : 2">
+    <td>
+      <BasicClickable
+        class="block p-3 lg:pl-3"
+        :class="{ 'md:pl-7': isSearch }"
+        :to="song_lyric.public_route"
+      >
+        <span v-if="specialNumber" :class="{ 'lg:hidden': isSearch }"
+          >{{ specialNumber }}.
+        </span>
+        <song-name :song="song_lyric" multiline :active="active" />
+      </BasicClickable>
+    </td>
+    <td
+      v-if="allowAuthors || isSearch"
+      class="text-secondary hidden"
+      :class="[ isSearch ? 'lg:table-cell' : 'sm:table-cell' ]"
+    >
       <span
         v-for="(ap, authorIndex) in song_lyric.authors_pivot"
         :key="authorIndex"
       >
-        <span v-if="authorIndex">,</span>
-        <nuxt-link
+        <span v-if="authorIndex">, </span>
+        <BasicLink
           :to="ap.pivot.author.public_route"
           :title="
             song_lyric.type
-              ? { GENERIC: '', LYRICS: 'text', MUSIC: 'hudba' }['LYRICS']
-              : { GENERIC: '', LYRICS: 'text', MUSIC: 'hudba' }[
-                  ap.pivot.authorship_type
-                ]
+              ? authorshipTypes['LYRICS']
+              : authorshipTypes[ap.pivot.authorship_type]
           "
-          class="text-secondary"
-          >{{ ap.pivot.author.name }}</nuxt-link
         >
+          {{ ap.pivot.author.name }}
+        </BasicLink>
       </span>
-    </td> -->
-    <td
-      class="text-right pr-3 uppercase text-sm"
-      v-if="song_lyric.lang != 'cs'"
-    >
-      <span
-        :class="[
-          {
-            'text-secondary/20': !song_lyric.has_lyrics,
-          },
-          'pr-sm-0 pr-1',
-        ]"
-        :title="song_lyric.lang_string"
-        >{{ song_lyric.lang.substring(0, 3) }}</span
-      >
     </td>
-    <td class="w-24" v-if="!hideIcons">
-      <div class="icons">
-        <!-- todo: replace with image and remove FA icons -->
+    <td
+      :class="[
+        'text-right pr-3 uppercase text-sm',
+        { 'text-secondary/20': !song_lyric.has_lyrics },
+        { 'md:pr-6': isSearch },
+      ]"
+      :title="song_lyric.lang_string"
+    >
+      {{ song_lyric.lang != 'cs' ? song_lyric.lang.substring(0, 3) : '' }}
+    </td>
+    <td class="w-24" :class="{ 'md:pr-6': isSearch }" v-if="!hideIcons">
+      <BasicClickable class="icons" :to="song_lyric.public_route" tabindex="-1">
         <BasicIcon
           v-if="song_lyric.has_chords"
-          fa="fas fa-guitar text-primary text-lg -mt-px"
+          name="fas fa-guitar"
+          type="fa"
+          class="text-primary"
           title="Tato píseň má přidané akordy."
-        ></BasicIcon>
+        />
         <BasicIcon
           v-else-if="song_lyric.has_lyrics"
+          name="subject"
           title="U této písně je zaznamenán text (bez akordů)."
-          >subject</BasicIcon
-        >
-        <BasicIcon v-else class="text-secondary/20">subject</BasicIcon>
+        />
+        <BasicIcon v-else name="subject" class="text-secondary/20" />
 
         <BasicIcon
           v-if="song_lyric.scores.length"
+          name="audio_file"
           title="U této písně je k dispozici soubor s notami."
           class="text-error-500"
           fill
-          >audio_file</BasicIcon
-        >
-        <BasicIcon v-else class="text-secondary/20" fill>audio_file</BasicIcon>
+        />
+        <BasicIcon v-else name="audio_file" class="text-secondary/20" fill />
 
         <BasicIcon
           v-if="song_lyric.recordings.length"
+          name="headphones"
           title="U této písně je k dispozici nahrávka."
           class="text-green"
           fill
-          >headphones</BasicIcon
-        >
-        <BasicIcon v-else class="text-secondary/20" fill>headphones</BasicIcon>
-      </div>
+        />
+        <BasicIcon v-else name="headphones" class="text-secondary/20" fill />
+      </BasicClickable>
     </td>
   </tr>
 </template>
 
 <script setup>
-const props = defineProps(['song_lyric', 'number', 'hideIcons']);
+const props = defineProps({
+  song_lyric: Object,
+  number: String,
+  specialNumber: String,
+  hideIcons: Boolean,
+  active: Boolean,
+  isSearch: Boolean,
+  allowAuthors: Boolean,
+});
+const authorshipTypes = { GENERIC: '', LYRICS: 'text', MUSIC: 'hudba' };
 </script>
 
 <style lang="postcss" scoped>
-tr:hover {
- @apply bg-surface-50;
+tr:hover,
+tr:focus-within {
+  @apply bg-surface-50;
 }
 
-td {
-  @apply align-middle;
+tr:active {
+  @apply bg-surface-200;
 }
 
 .icons {

@@ -1,17 +1,23 @@
 <template>
-  <div>
+  <ToolboxContainer>
     <div>Transpozice</div>
-    <div class="btn-group m-0" role="group">
-      <a class="btn btn-secondary" @click="transpose(-1)">-</a>
-      <a class="btn btn-secondary bg-light transpose-window" @click="reset()">{{
-        value
-      }}</a>
-      <a class="btn btn-secondary" @click="transpose(1)">+</a>
-    </div>
-  </div>
+    <BasicButtonGroup>
+      <BasicButtonGroupItem centered @click="transpose(-1)">
+        <BasicIcon name="remove" />
+      </BasicButtonGroupItem>
+      <BasicButtonGroupItem centered @click="reset()" class="w-14">
+        {{ value.toString().replace('-', '&minus;') }}
+      </BasicButtonGroupItem>
+      <BasicButtonGroupItem centered @click="transpose(1)">
+        <BasicIcon name="add" />
+      </BasicButtonGroupItem>
+    </BasicButtonGroup>
+  </ToolboxContainer>
 </template>
 
 <script setup>
+import ToolboxContainer from './ToolboxContainer.vue';
+
 const props = defineProps(['modelValue']);
 const emit = defineEmits(['update:modelValue']);
 

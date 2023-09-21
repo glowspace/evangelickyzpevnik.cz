@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const plugin = require('tailwindcss/plugin')
+
 // note: if you change these values, you may need to restart the `yarn dev` nuxt server
 module.exports = {
   darkMode: 'class', // or 'media' or 'class'
@@ -97,8 +99,24 @@ module.exports = {
       }
     },
     fontFamily: {
-      sans: ['Roboto', 'sans-serif'],
-      serif: ['Roboto Serif', 'serif'],
+      sans: ['Nunito', 'sans-serif'],
     },
   },
+  plugins: [
+    // https://tailwindcss.com/docs/functions-and-directives#using-apply-with-per-component-css
+    // https://tailwindcss.com/docs/plugins
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+        '.font-custom-light': {
+          fontWeight: 300
+        },
+        '.font-custom-medium': {
+          fontWeight: 600
+        },
+        '.font-custom-bold': {
+          fontWeight: 700
+        },
+      })
+    })
+  ],
 }

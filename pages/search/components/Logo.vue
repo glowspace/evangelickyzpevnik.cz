@@ -1,7 +1,7 @@
 <template>
   <div class="logo">
-  <img src="/img/logo.svg" alt="logo" />
-  <h1>Evangelický zpěvník</h1>
+    <img src="/img/logo.svg" alt="logo" />
+    <h1>Evangelický zpěvník</h1>
   </div>
 </template>
 
@@ -15,6 +15,6 @@ img {
 }
 
 h1 {
-  @apply font-bold text-2xl ml-3;
+  @apply font-custom-bold text-2xl ml-3 md:ml-5;
 }
 </style>

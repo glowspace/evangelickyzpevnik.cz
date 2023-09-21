@@ -1,57 +1,56 @@
 <template>
-  <component
-    :is="to ? NuxtLink : href ? 'a' : 'button'"
+  <BasicClickable
     :to="to"
     :href="href"
-    @click="clicked"
+    :event-id="eventId"
+    :disabled="disabled"
     :class="[
       'btn',
       btnType,
       {
         'icon-only': iconOnly,
+        'mobile-icon-only': mobileIconOnly,
         /*'!pr-8': icon*/
+        'with-icon': !!iconName && !iconOnly && !mobileIconOnly,
         compact,
       },
-      props.class,
     ]"
   >
-    <BasicIcon v-if="icon" :fill="iconFill">{{ icon }}</BasicIcon>
+    <BasicIcon
+      v-if="iconName"
+      :name="iconName"
+      :type="iconType"
+      :fill="iconFill"
+      class="icon"
+    />
     <slot />
-  </component>
+  </BasicClickable>
 </template>
 
 <script setup>
-import { NuxtLink } from '#components';
-// const props = defineProps(['eventId', 'href', 'to', 'icon', 'text', 'class']);
 const props = defineProps({
   eventId: String,
   href: String,
   to: String,
-  icon: String,
-  class: String,
-  text: Boolean,
-  iconFill: Boolean,
+  type: String,
   compact: Boolean,
+  disabled: Boolean,
+  iconName: String,
+  iconFill: Boolean,
   iconOnly: Boolean,
+  mobileIconOnly: Boolean, // when using this, icon label has to be inside another tag in order to be hidden
+  iconType: String,
 });
 
-function clicked() {
-  // here we can do some logging
-}
-
 const btnType = computed(() => {
-  if (props.text) {
-    return 'text';
-  } else {
-    return 'primary';
-  }
+  return props.type || 'text';
 });
 </script>
 
 <style lang="postcss" scoped>
 .btn {
-  @apply inline-flex flex-row items-center justify-center gap-x-2 py-2.5 px-6 rounded-[6.25rem]
-  text-sm tracking-[.00714em] font-medium transition;
+  @apply inline-flex flex-row items-center justify-center gap-x-2 py-2.5 px-5 rounded-[6.25rem]
+  text-sm tracking-[.00714em] font-custom-medium transition;
 }
 
 .btn.primary {
@@ -60,17 +59,40 @@ const btnType = computed(() => {
   dark:bg-primary-200 dark:text-primary-800;
 }
 
-.btn.text {
-  @apply hover:bg-primary/10
-  dark:text-primary-200 dark:hover:bg-surfacedark-200;
+.btn.text,
+.btn.outlined {
+  @apply hover:bg-primary/10 focus:bg-primary/10
+  dark:text-primary-200 dark:hover:bg-surfacedark-200 dark:focus:bg-surfacedark-400;
 }
 
-.icon-only {
-  @apply !inline-flex !items-center justify-center w-12 h-12 gap-x-2 py-2.5 px-6 rounded-[6.25rem] text-sm tracking-[.00714em] text-center font-medium dark:text-primary-200;
-  @apply hover:bg-primary/10 focus:bg-primary/10 dark:hover:bg-surfacedark-300 dark:focus:bg-surfacedark-400;
+.btn.outlined {
+  @apply border border-gray-400 text-primary;
 }
 
-.compact {
-  @apply w-8 h-8 p-1;
+.btn:disabled {
+  @apply pointer-events-none opacity-30;
+}
+
+.icon-only,
+.mobile-icon-only {
+  @apply w-12 h-12 p-0 rounded-[6.25rem];
+
+  &.compact {
+    @apply w-8 h-8 p-1;
+  }
+}
+
+.with-icon {
+  @apply pr-6;
+}
+
+.mobile-icon-only > :not(.icon) {
+  @apply hidden md:block;
+}
+
+@media screen(md) {
+  .mobile-icon-only {
+    @apply w-auto h-auto py-2.5 pl-5 pr-6;
+  }
 }
 </style>

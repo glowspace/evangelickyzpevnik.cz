@@ -1,11 +1,12 @@
 <template>
-  <i v-if="fa" :class="fa"></i>
+  <i v-if="type == 'fa'" :class="[name, 'text-xl -mt-px']"></i>
+  <img v-else-if="type == 'img'" :src="'/img/' + name" class="w-7" />
   <span
     v-else
     class="material-symbols-outlined"
-    :class="[{ 'icon-fill': fill }, props.class]"
+    :class="{ 'icon-fill': fill }"
   >
-    <slot />
+    {{ name }}
   </span>
 </template>
 
@@ -13,12 +14,17 @@
 const props = defineProps({
   fill: Boolean,
   fa: String,
-  class: String,
+  name: String,
+  type: String,
 });
 </script>
 
-<style lang="postcss" scoped>
+<style lang="postcss">
 .icon-fill {
-  font-variation-settings: 'FILL' 1;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 30;
+}
+
+.fab {
+  @apply font-normal;
 }
 </style>

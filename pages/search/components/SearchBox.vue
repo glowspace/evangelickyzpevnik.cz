@@ -1,28 +1,50 @@
 <template>
   <div
     class="flex flex-row items-center justify-between h-14 rounded-full bg-surface-100 dark:bg-surfacedark-100 p-2 m-2 border border-gray-500"
+    @click="focusInput"
   >
     <div class="flex flex-row items-center flex-grow">
-      <span class="button" v-if="onDashboard">
-        <span class="icon material-symbols-outlined">search</span>
-      </span>
-      <button class="button clickable" v-else @click="emit('back')">
-        <span class="icon material-symbols-outlined">arrow_back</span>
-      </button>
+      <BasicButton
+        v-if="onDashboard"
+        icon-name="search"
+        icon-only
+        class="pointer-events-none"
+      />
+      <BasicButton
+        v-else
+        icon-name="arrow_back"
+        icon-only
+        @click="emit('back')"
+      />
       <input
         type="search"
-        placeholder="Hledat píseň podle názvu, čísla nebo textu…"
-        class="bg-transparent py-2 pl-1 pr-4 ring-0 focus:outline-none grow"
+        :placeholder="
+          searchSongs
+            ? 'Hledat píseň podle názvu, čísla nebo textu…'
+            : 'Hledat autora podle jména'
+        "
+        class="bg-transparent py-2 px-1 ring-0 focus:outline-none grow"
+        :class="{ 'pr-4': value == '' }"
         v-model="value"
         @keyup.enter="emit('enter')"
         @focus="emit('focus')"
+        ref="searchInput"
+      />
+      <BasicButton
+        v-if="!onDashboard && value != ''"
+        icon-name="close"
+        icon-only
+        @click="
+          value = '';
+          searchInput.focus();
+        "
       />
     </div>
   </div>
 </template>
 
 <script setup>
-const props = defineProps(['modelValue', 'onDashboard']);
+const props = defineProps(['modelValue', 'onDashboard', 'searchSongs']);
 const emit = defineEmits(['update:modelValue', 'enter', 'back', 'focus']);
 
 const value = computed({
@@ -33,18 +55,21 @@ const value = computed({
     emit('update:modelValue', value);
   },
 });
+
+const searchInput = ref(null);
+
+watch(
+  () => props.onDashboard,
+  (value) => {
+    if (!value) {
+      searchInput.value.focus();
+    }
+  }
+);
+
+onMounted(() => {
+  if (!props.onDashboard) {
+    searchInput.value.focus();
+  }
+});
 </script>
-
-<style lang="postcss" scoped>
-.button {
-  @apply relative !inline-flex !items-center justify-center w-12 h-12 gap-x-2 py-2.5 px-6 rounded-[6.25rem] text-sm tracking-[.00714em] text-center font-medium dark:text-primary-200;
-}
-
-.clickable {
-  @apply hover:bg-surface-300 focus:bg-surface-400 dark:hover:bg-surfacedark-300 dark:focus:bg-surfacedark-400;
-}
-
-.icon {
-  @apply !text-2xl;
-}
-</style>

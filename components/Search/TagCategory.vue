@@ -1,22 +1,21 @@
 <template>
-  <div class="relative">
+  <div class="relative mt-4">
     <div
       :class="[
-        'mt-2 flex flex-wrap items-center justify-between',
+        'flex flex-wrap items-center justify-between',
         { relative: !isClosed },
       ]"
     >
-      <span>{{ heading }}</span>
+      <BasicBadge :small="categoryContainsSelected" badge-class="!top-1 !-right-2">{{ heading }}</BasicBadge>
       <BasicButton
         :class="['stretched-link']"
         @click="isClosed = !isClosed"
-        :icon="isClosed ? 'expand_more' : 'expand_less'"
+        :icon-name="isClosed ? 'expand_more' : 'expand_less'"
         icon-only
         compact
-        text
       ></BasicButton>
     </div>
-    <div :class="{ 'whitespace-nowrap overflow-hidden': isClosed }">
+    <div :class="{ 'whitespace-nowrap overflow-hidden opacity-60': isClosed }">
       <BasicChip
         :class="[{ 'active': isSelectedTag(tag) }, 'tag-' + color]"
         v-for="tag in tagsInCategory.filter((t) => t.song_lyrics_count !== 0)"

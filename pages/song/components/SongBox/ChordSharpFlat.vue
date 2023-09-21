@@ -1,24 +1,20 @@
 <template>
-  <div>
+  <ToolboxContainer>
     <div>Posuvky</div>
-    <div class="btn-group m-0 bg-light" role="group">
-      <a
-        class="btn btn-secondary"
-        :class="{ chosen: !useFlatScale }"
-        @click="useFlatScale = false"
-        >#</a
-      >
-      <a
-        class="btn btn-secondary"
-        :class="{ chosen: useFlatScale }"
-        @click="useFlatScale = true"
-        >♭</a
-      >
-    </div>
-  </div>
+    <BasicButtonGroup>
+      <BasicButtonGroupItem centered @click="useFlatScale = false" :class="{ active: !useFlatScale }">
+        <span class="text-lg w-8">#</span>
+      </BasicButtonGroupItem>
+      <BasicButtonGroupItem centered @click="useFlatScale = true" :class="{ active: useFlatScale }">
+        <span class="text-lg w-8">♭</span>
+      </BasicButtonGroupItem>
+    </BasicButtonGroup>
+  </ToolboxContainer>
 </template>
 
 <script setup>
+import ToolboxContainer from './ToolboxContainer.vue';
+
 const props = defineProps(['modelValue']);
 const emit = defineEmits(['update:modelValue']);
 

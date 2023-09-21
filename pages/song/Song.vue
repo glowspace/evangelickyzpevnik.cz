@@ -3,16 +3,23 @@
     @back="previous ? $router.back() : navigateTo('/')"
     :title="song_lyric ? String(song_lyric?.song_number) : 'načítám…'"
   >
-    <div class="kebab-wrapper" @focusout="kebabWrapperBlurred">
-      <BasicButton
-        icon="more_vert"
-        class="kebab-opener"
-        icon-only
-        text
-        @click="kebabClicked"
-      />
-      <Kebab v-if="song_lyric" :song_lyric="song_lyric" :opened="kebabOpened" />
-    </div>
+    <Kebab
+      v-if="song_lyric"
+      :items="[
+        {
+          label: 'Nahlásit',
+          icon: 'warning',
+          href:
+            'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/1/create/19?customfield_10056=' +
+            encodeURIComponent($config.public.siteUrl + $route.fullPath),
+        },
+        {
+          label: 'Upravit',
+          icon: 'edit',
+          href: $config.public.adminUrl + '/song/' + song_lyric.id + '/edit',
+        },
+      ]"
+    />
   </TopBar>
   <song-loading v-if="$apollo.loading"></song-loading>
   <song-detail v-else-if="song_lyric" :song="song_lyric"></song-detail>
@@ -22,7 +29,7 @@
 import gql from 'graphql-tag';
 import SongDetail from './SongDetail';
 import SongLoading from './SongLoading';
-import Kebab from './components/Kebab';
+import Kebab from '~/components/Kebab';
 import { getFullName } from '~/components/SongName';
 import Bowser from 'bowser';
 
@@ -93,6 +100,8 @@ const FETCH_SONG_LYRIC = gql`
         song_lyrics {
           id
           name
+          secondary_name_1
+          secondary_name_2
           public_route
           type
           authors_pivot {
@@ -160,13 +169,14 @@ export default {
   data() {
     return {
       previous: '',
-      kebabOpened: false,
     };
   },
 
   beforeRouteEnter(to, from, next) {
     next((vm) => {
       // access to component public instance via `vm`
+      // todo: fix for navigating between songs (or authors)
+      // probably using pinia
       vm.previous = from.fullPath;
     });
   },
@@ -176,16 +186,6 @@ export default {
   },
 
   methods: {
-    kebabClicked() {
-      this.kebabOpened = !this.kebabOpened;
-    },
-
-    kebabWrapperBlurred(event) {
-      if (!event.currentTarget.contains(event.relatedTarget)) {
-        this.kebabOpened = false;
-      }
-    },
-
     getTitle() {
       return (
         (this.song_lyric ? getFullName(this.song_lyric) : 'Píseň') +
@@ -209,7 +209,7 @@ export default {
 
     notifySongVisit(visit_type) {
       if (this.$route.params.id) {
-        this.$apollo.mutate({
+        this.$apollo?.mutate({
           mutation: VISIT_SONG,
           variables: {
             // todo: detect desktop/mobile on server side
@@ -284,7 +284,7 @@ export default {
 .song-line--comment {
   color: #767676;
   font-style: italic;
-  font-weight: 300;
+  @apply font-custom-light;
 }
 
 span.song-part-tag {
@@ -319,7 +319,7 @@ span.song-part-tag {
   }
 
   &-base {
-    font-weight: 500;
+    @apply font-custom-medium;
     margin-right: 0.4em;
   }
 

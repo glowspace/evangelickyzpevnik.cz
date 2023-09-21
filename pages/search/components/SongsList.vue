@@ -1,38 +1,39 @@
 <template>
   <!-- todo: refactor so that it does not need client-only wrapper -->
   <!-- <client-only> -->
-  <div class="songs-list mb-4">
-    <!-- <v-progress-linear
-            indeterminate
-            color="bg-main-blue"
-            :height="4"
-            :class="[results_loaded ? '' : 'opacity-1', 'custom-progress-bar']"
-        ></v-progress-linear> -->
-    <table class="table m-0 w-full">
+  <div class="mb-1">
+    <LoaderLinear
+      :class="[{ 'opacity-0': results_loaded }, 'transition-opacity']"
+    />
+    <table class="w-full">
       <tbody>
         <tr v-if="!results_loaded && !(song_lyrics && song_lyrics.length)">
-          <!-- <tr v-if="true"> -->
-          <td class="pl-8 pr-3 w-16">
-            <BasicSpinner />
+          <td class="pl-8 pr-3 w-5">
+            <LoaderCircular size="5" />
           </td>
-          <td class="py-2">Načítám…</td>
-          <td class="p-1" colspan="5">
-            <!-- <a
-                class="btn btn-secondary float-right"
-                :href="
-                  'https://proscholy.atlassian.net/servicedesk/customer/portal/1/group/6/create/20?customfield_10056=' +
-                  encodeURIComponent($config.public.siteUrl + $route.fullPath)
-                "
-              >
-                Nahlásit
-              </a> -->
+          <td>Načítám…</td>
+          <td class="p-2 text-right pr-7">
+            <BasicButton
+              :href="
+                'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/6/create/20?customfield_10056=' +
+                encodeURIComponent($config.public.siteUrl + $route.fullPath)
+              "
+              type="outlined"
+            >
+              Nahlásit
+            </BasicButton>
           </td>
         </tr>
         <template v-else-if="song_lyrics && song_lyrics.length">
+          <!-- <tr v-if="displayHistory">
+            <td>here we can display a list of last visited songs</td>
+          </tr> -->
           <template v-for="song_lyric in song_lyrics" :key="song_lyric.id">
             <SLItem
               :song_lyric="song_lyric"
               :number="getSongNumber(song_lyric)"
+              :special-number="getSongNumber(song_lyric, true)"
+              is-search
             />
           </template>
           <tr v-if="results_loaded">
@@ -50,24 +51,20 @@
             <span class="px-3 py-2 inline-block"
               >Žádná píseň odpovídající zadaným kritériím nebyla nalezena.</span
             >
-            <!-- todo: song form -->
-            <!-- <a
-                class="btn btn-secondary float-right"
-                :href="'https://forms.gle/AYXXxkWtDHQQ13856'"
-              >
-                Přidat píseň
-              </a> -->
+            <BasicButton
+              :href="'https://forms.gle/AYXXxkWtDHQQ13856'"
+              type="outlined"
+              class="mx-3 float-right"
+            >
+              Přidat píseň
+            </BasicButton>
           </td>
         </tr>
       </tbody>
     </table>
-    <div class="text-center my-2">
-      <div
-        class="inline-flex items-center uppercase text-sm"
-        v-if="enable_more && results_loaded"
-        @click="loadMore"
-      >
-        <BasicSpinner v-if="caniuseObserver" class="mr-3" />
+    <div class="text-center my-2" v-if="enable_more && results_loaded">
+      <div class="inline-flex items-center uppercase text-sm" @click="loadMore">
+        <LoaderCircular v-if="caniuseObserver" class="mr-3" />
         {{ caniuseObserver ? 'Načítám' : 'Načíst' }} další výsledky (celkem
         {{ song_lyrics_paginated.paginatorInfo.total }})
       </div>
@@ -85,6 +82,7 @@ import buildElasticSearchParams, {
 import mergeFetchMoreResult from '~/components/Search/mergeFetchMoreResult';
 import { fetchFiltersQuery } from './fetchFiltersQuery.graphql';
 import SLItem from './SLItem';
+import { isEmpty } from 'lodash';
 
 // Query
 const FETCH_ITEMS = gql`
@@ -221,6 +219,15 @@ export default {
     song_lyrics() {
       return this.song_lyrics_paginated ? this.song_lyrics_paginated.data : [];
     },
+
+    displayHistory() {
+      return (
+        this.searchString == '' &&
+        isEmpty(this.selectedSongbooks) &&
+        isEmpty(this.selectedTags) &&
+        isEmpty(this.selectedLanguages)
+      );
+    },
   },
 
   methods: {
@@ -249,18 +256,32 @@ export default {
       }
     },
 
-    getSongNumber(song_lyric) {
+    getSongNumber(song_lyric, onlySpecial = false) {
+      const rec = this.getSongbookRecordForNumber(song_lyric);
+
+      if (onlySpecial) {
+        return rec ? rec.pivot.number : '';
+      }
+
+      if (rec) {
+        return rec.pivot.songbook.shortcut + ' ' + rec.pivot.number;
+      }
+
+      return song_lyric.song_number;
+    },
+
+    getSongbookRecordForNumber(song_lyric) {
       if (this.preferred_songbook_id !== null) {
         let rec = song_lyric.songbook_records.find(
           (record) => record.pivot.songbook.id === this.preferred_songbook_id
         );
 
-        if (rec) {
-          return rec.pivot.songbook.shortcut + ' ' + rec.pivot.number;
+        if (rec && rec.pivot.number && rec.pivot.songbook.shortcut) {
+          return rec;
         }
       }
 
-      return song_lyric.song_number;
+      return null;
     },
   },
 

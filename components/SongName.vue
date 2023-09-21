@@ -1,6 +1,6 @@
 <template>
   <span v-if="multiline">
-    <span class="song-name">{{ song.name }}</span>
+    <span :class="{ 'song-name': true, underline: active }">{{ song.name }}</span>
     <span
       class="song-secondary-name text-secondary text-sm"
       v-if="song.secondary_name_1"
@@ -17,7 +17,7 @@
     </span>
   </span>
   <span v-else>
-    <span class="song-name">{{ song.name }}</span>
+    <span :class="{ 'song-name': true, underline: active }">{{ song.name }}</span>
     <span class="song-secondary-name" v-if="song.secondary_name_1">
       ({{
         song.secondary_name_1 +
@@ -34,6 +34,10 @@ export default {
       type: Object,
     },
     multiline: {
+      type: Boolean,
+      default: false,
+    },
+    active: {
       type: Boolean,
       default: false,
     },

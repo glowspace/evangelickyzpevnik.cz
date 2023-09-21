@@ -1,31 +1,36 @@
 <template>
-  <TopBar title="O Evangelickém zpěvníku" @back="navigateTo('/')" />
-  <div class="cont basic-content">
-    <h2>Kdo za projektem stojí?</h2>
+  <TopBar title="O Evangelickém zpěvníku" is-h1 @back="navigateTo('/')" />
+  <div class="custom-container">
+    <div class="cont basic-content">
+      <h2>Kdo za projektem stojí?</h2>
 
-    <p>
-      Jsme skupina lidí, kteří chtějí usnadnit práci všem, kteří pracují s
-      českou nebo slovenskou křesťanskou tvorbou. V dnešní době, kdy jsou
-      materiály i potřebné know-how roztroušeny po mnoha různých místech na
-      internetu nebo v papírových sbornících a zpěvnících, chceme nabídnout
-      rychlou a praktickou alternativu.
-    </p>
+      <p>
+        Jsme skupina lidí, kteří chtějí usnadnit práci všem, kteří pracují s
+        českou nebo slovenskou křesťanskou tvorbou. V dnešní době, kdy jsou
+        materiály i potřebné know-how roztroušeny po mnoha různých místech na
+        internetu nebo v papírových sbornících a zpěvnících, chceme nabídnout
+        rychlou a praktickou alternativu.
+      </p>
 
-    <h2>Náš tým</h2>
+      <h2>Náš tým</h2>
 
-    <div class="our-team">
-      <h3>Vývoj</h3>
+      <div class="our-team">
+        <h3>Vývoj</h3>
 
-      <ul>
-        <user-card name="Miroslav Šerý" info="vedoucí vývojář, vývoj webu" />
-        <user-card
-          name="Michael Dojčár"
-          info="celková koordinace projektu, IT"
-        />
-        <user-card name="Vít Kološ" info="vývoj webu, návrh rozhraní" />
-        <user-card name="Patrik Dobiáš" info="mobilní aplikace pro iOS" />
-        <user-card name="Benjamín Tichý" info="logo, design, návrh rozhraní" />
-      </ul>
+        <ul>
+          <user-card name="Miroslav Šerý" info="vedoucí vývojář, vývoj webu" />
+          <user-card
+            name="Michael Dojčár"
+            info="celková koordinace projektu, IT"
+          />
+          <user-card name="Vít Kološ" info="vývoj webu, návrh rozhraní" />
+          <user-card name="Patrik Dobiáš" info="mobilní aplikace pro iOS" />
+          <user-card
+            name="Benjamín Tichý"
+            info="logo, design, návrh rozhraní"
+          />
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -53,7 +58,7 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-  .cont {
-    @apply mx-6 my-4;
-  }
+.cont {
+  @apply mx-6 my-4;
+}
 </style>

@@ -1,10 +1,13 @@
 <script>
-import lodash from 'lodash';
-const { isEqual, isEmpty } = lodash;
+import { isEqual, isEmpty } from 'lodash';
 
 export default {
   methods: {
     updateHistoryState(push = true, force) {
+      if (this.$route.query.hledat) {
+        push = false;
+      }
+
       let oldParams = JSON.parse(JSON.stringify(this.$route.query));
       let newParams = JSON.parse(
         JSON.stringify(toGETParameters(this.historyStateObject))
@@ -37,14 +40,16 @@ export default {
 
     applyStateChange(event, basic) {
       let GETparameters = this.$route.query;
+      const forceSearch = !!GETparameters.hledat;
+
       let originalParams = JSON.stringify(GETparameters);
       deleteInvalidGETParameters(GETparameters);
 
       if (basic) {
         this.historyStateObject = fromGETParameters(GETparameters);
       } else {
-        if (isEmpty(GETparameters)) {
-          this.resetState();
+        if (isEmpty(GETparameters) && !forceSearch) {
+          this.init = true;
           return;
         }
 
@@ -60,6 +65,7 @@ export default {
 };
 
 const GET_PARAMETERS = {
+  force_search: 'hledat',
   search_string: 'vyhledavani',
   tags: 'stitky',
   languages: 'jazyky',

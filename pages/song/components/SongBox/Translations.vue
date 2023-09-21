@@ -1,55 +1,51 @@
 <template>
   <table class="table m-0 w-full">
     <tbody>
-      <tr>
-        <th colspan="2" class="text-primary" v-if="filterLyrics(0).length">
-          Originál
-        </th>
-      </tr>
-      <SLItem
-        v-for="song_lyric in filterLyrics(0)"
-        :song_lyric="song_lyric"
-        :key="song_lyric.id"
-        :hideIcons="true"
-      ></SLItem>
-      <tr>
-        <th
-          colspan="2"
-          class="pt-5 text-error-600"
-          v-if="filterLyrics(1).length"
-        >
-          {{
-            filterLyrics(1).length == 1
-              ? 'Překlad'
-              : 'Překlady'
-          }}
-        </th>
-      </tr>
-      <SLItem
-        v-for="song_lyric in filterLyrics(1)"
-        :song_lyric="song_lyric"
-        :key="song_lyric.id"
-        :hideIcons="true"
-      ></SLItem>
-      <tr>
-        <th
-          colspan="2"
-          class="pt-5 text-greendark"
-          v-if="filterLyrics(2).length"
-        >
-          {{
-            filterLyrics(2).length == 1
-              ? 'Autorizovaný překlad'
-              : 'Autorizované překlady'
-          }}
-        </th>
-      </tr>
-      <SLItem
-        v-for="song_lyric in filterLyrics(2)"
-        :song_lyric="song_lyric"
-        :key="song_lyric.id"
-        :hideIcons="true"
-      ></SLItem>
+      <template
+        v-for="subtable in [
+          {
+            labelOne: 'Originál',
+            labelMore: 'Originály',
+            typeNumber: 0,
+            thClass: 'text-primary',
+          },
+          {
+            labelOne: 'Autorizovaný překlad',
+            labelMore: 'Autorizované překlady',
+            typeNumber: 2,
+            thClass: 'text-greendark',
+          },
+          {
+            labelOne: 'Překlad',
+            labelMore: 'Překlady',
+            typeNumber: 1,
+            thClass: 'text-error-600',
+          },
+        ]"
+        :key="subtable.typeNumber"
+      >
+        <tr>
+          <th
+            colspan="2"
+            :class="subtable.thClass"
+            v-if="filterLyrics(subtable.typeNumber).length"
+          >
+            {{
+              filterLyrics(subtable.typeNumber).length == 1
+                ? subtable.labelOne
+                : subtable.labelMore
+            }}
+          </th>
+        </tr>
+        <SLItem
+          v-for="song_lyric in filterLyrics(subtable.typeNumber)"
+          :song_lyric="song_lyric"
+          :key="song_lyric.id"
+          :active="song_lyric.id === props.song_lyric.id"
+          hideIcons
+          allow-authors
+        ></SLItem>
+      </template>
     </tbody>
   </table>
 </template>
@@ -65,6 +61,14 @@ function filterLyrics(type) {
 
 <style lang="postcss" scoped>
 th {
-  @apply font-medium text-left px-3 pb-2;
+  @apply font-custom-medium text-left px-3 pb-2 pt-5;
+}
+
+tr:first-child th {
+  @apply pt-0;
+}
+
+tr.active {
+  @apply bg-surface-100;
 }
 </style>

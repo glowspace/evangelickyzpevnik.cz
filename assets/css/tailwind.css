@@ -7,20 +7,14 @@
 /* @import './song'; */
 
 body {
-  /* @apply p-7 bg-red-200; */
-  max-width: 400px;
-  @apply mx-auto border-x-2;
-  padding-bottom: 84px;
+  /* padding-bottom: calc(5.25 * theme(spacing.4)); */
+  @apply pb-[84px] /* this is equal to the line above */
+  md:pb-0 md:pl-[97px]; /* pl-24 + 1px to preserve border */
+  /* also used in BottomBar.vue */
 }
 
-.menu-wrapper,
-.bottom-bar-wrapper {
-  max-width: 400px !important;
-}
-
-.bottom-sheets-container {
-  max-width: 400px;
-  margin: 0 auto;
+.custom-container {
+  @apply max-w-[700px] mx-auto;
 }
 
 .stretched-link {
@@ -40,30 +34,21 @@ body {
   background-color: rgba(0, 0, 0, 0);
 }
 
-strong {
-  @apply font-medium;
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 30;
 }
 
-/* todo: delete the class below */
-.btn-secondary {
-  display: inline-block;
-  background-color: #ccc;
-  border: 1px solid gray;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
+strong {
+  @apply font-custom-medium;
+}
 
-  &.chosen {
-    background-color: #aaa;
-  }
+th, td {
+  @apply align-middle;
 }
 
 .basic-content {
   a {
-    text-decoration: underline;
-  }
-
-  a:hover {
-    text-decoration: none;
+    @apply underline hover:no-underline;
   }
 
   h2,

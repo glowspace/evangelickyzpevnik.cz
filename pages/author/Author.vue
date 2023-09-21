@@ -2,56 +2,81 @@
   <TopBar
     :title="author ? author.type_string : 'načítám…'"
     @back="previous ? $router.back() : navigateTo('/')"
-  />
+  >
+    <Kebab
+      v-if="author"
+      :items="[
+        {
+          label: 'Nahlásit',
+          icon: 'warning',
+          href:
+            'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/1/create/21?customfield_10056=' +
+            encodeURIComponent($config.public.siteUrl + $route.fullPath),
+        },
+        {
+          label: 'Upravit',
+          icon: 'edit',
+          href: $config.public.adminUrl + '/author/' + author.id + '/edit',
+        },
+      ]"
+    />
+  </TopBar>
   <div class="container" v-if="$apollo.loading">
     <!-- <v-skeleton-loader type="heading" class="mt-4" /> -->
     <!-- <v-skeleton-loader type="text" class="mt-3 mb-3" max-width="100" /> -->
     <!-- <author-songs-list-loading /> -->
   </div>
-  <div class="m-5" v-else-if="author">
-    <h1 class="mb-3 text-2xl font-semibold">{{ author.name }}</h1>
+  <div class="custom-container" v-else-if="author">
+    <div class="m-5">
+      <h1 class="mb-3 text-2xl font-semibold">{{ author.name }}</h1>
 
-    <div class="basic-content">
-      <div v-if="author.description">
-        <h2>O {{ aboutStrings[author.type] }}</h2>
-        <p>{{ author.description }}</p>
+      <div class="basic-content">
+        <div v-if="author.description">
+          <h2>O {{ aboutStrings[author.type] }}</h2>
+          <p>{{ author.description }}</p>
+        </div>
+
+        <p v-if="author.members.length">
+          <strong>Související autoři: </strong>
+          <span v-for="(members, key) in author.members" :key="key">
+            <span v-if="key">, </span>
+            <BasicClickable :to="members.public_route">{{
+              members.name
+            }}</BasicClickable>
+          </span>
+        </p>
+
+        <p v-if="author.memberships.length">
+          <strong>Skupiny: </strong>
+          <span v-for="(membership, key2) in author.memberships" :key="key2">
+            <span v-if="key2">, </span>
+            <BasicClickable :to="membership.public_route">{{
+              membership.name
+            }}</BasicClickable>
+          </span>
+        </p>
       </div>
 
-      <p v-if="author.members.length">
-        <strong>Související autoři: </strong>
-        <span v-for="(members, key) in author.members" :key="key">
-          <span v-if="key">, </span>
-          <nuxt-link :to="members.public_route">{{ members.name }}</nuxt-link>
-        </span>
-      </p>
-
-      <p v-if="author.memberships.length">
-        <strong>Skupiny: </strong>
-        <span v-for="(membership, key2) in author.memberships" :key="key2">
-          <span v-if="key2">, </span>
-          <nuxt-link :to="membership.public_route">{{
-            membership.name
-          }}</nuxt-link>
-        </span>
-      </p>
-    </div>
-
-    <div class="-mx-3">
-      <author-songs-list
-        text="Autorské písně"
-        v-if="author.songs_originals.length"
-        :songs="author.songs_originals"
-      />
-      <author-songs-list
-        text="Překlady"
-        v-if="author.songs_translations.length"
-        :songs="author.songs_translations"
-      />
-      <author-songs-list
-        text="Interpretace písní"
-        v-if="author.songs_interpreted.length"
-        :songs="author.songs_interpreted"
-      />
+      <div class="-mx-3">
+        <AuthorSongsList
+          heading-text="Autorské písně"
+          heading-class="text-primary"
+          v-if="author.songs_originals.length"
+          :songs="author.songs_originals"
+        />
+        <AuthorSongsList
+          heading-text="Překlady"
+          heading-class="text-greendark"
+          v-if="author.songs_translations.length"
+          :songs="author.songs_translations"
+        />
+        <AuthorSongsList
+          heading-text="Interpretace písní"
+          heading-class="text-error-600"
+          v-if="author.songs_interpreted.length"
+          :songs="author.songs_interpreted"
+        />
+      </div>
     </div>
 
     <!-- <div class="p-1 mb-3 mt-n2">
@@ -63,7 +88,7 @@
         <a
           class="btn btn-secondary"
           :href="
-            'https://proscholy.atlassian.net/servicedesk/customer/portal/1/group/1/create/21?customfield_10056=' +
+            'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/1/create/21?customfield_10056=' +
             encodeURIComponent($config.public.siteUrl + $route.fullPath)
           "
           >Nahlásit</a
