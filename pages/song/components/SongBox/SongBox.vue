@@ -89,10 +89,10 @@
             <external
               v-for="(external, index) in scores"
               :key="index"
-              :line="true"
               :index="index"
               :external="external"
               :song-name="song_lyric.name"
+              line
             ></external>
             <div
               v-if="scores.length && otherExternals.length"
@@ -103,10 +103,10 @@
             <external
               v-for="(external, index) in otherExternals"
               :key="index"
-              :line="true"
               :index="index"
               :external="external"
               :song-name="song_lyric.name"
+              line
             ></external>
           </div>
         </TopBox>
@@ -142,8 +142,6 @@
             <div
               id="song-lyrics"
               :class="{
-                'p-1': true,
-                'flex-grow-1': true,
                 'song-lyrics': true,
                 'song-lyrics-extended': chordSharedStore.chordMode == 2,
               }"

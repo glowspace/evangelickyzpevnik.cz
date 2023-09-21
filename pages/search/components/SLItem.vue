@@ -14,16 +14,21 @@
     </td>
     <td>
       <BasicClickable
-        class="block p-3 md:pl-7 lg:pl-3"
+        class="block p-3 lg:pl-3"
+        :class="{ 'md:pl-7': isSearch }"
         :to="song_lyric.public_route"
       >
         <span v-if="specialNumber" :class="{ 'lg:hidden': isSearch }"
           >{{ specialNumber }}.
         </span>
-        <song-name :song="song_lyric" :multiline="true" :active="active" />
+        <song-name :song="song_lyric" multiline :active="active" />
       </BasicClickable>
     </td>
-    <td v-if="isSearch" class="hidden lg:table-cell text-secondary">
+    <td
+      v-if="allowAuthors || isSearch"
+      class="text-secondary hidden"
+      :class="[ isSearch ? 'lg:table-cell' : 'sm:table-cell' ]"
+    >
       <span
         v-for="(ap, authorIndex) in song_lyric.authors_pivot"
         :key="authorIndex"
@@ -90,14 +95,15 @@
 </template>
 
 <script setup>
-const props = defineProps([
-  'song_lyric',
-  'number',
-  'specialNumber',
-  'hideIcons',
-  'active',
-  'isSearch',
-]);
+const props = defineProps({
+  song_lyric: Object,
+  number: String,
+  specialNumber: String,
+  hideIcons: Boolean,
+  active: Boolean,
+  isSearch: Boolean,
+  allowAuthors: Boolean,
+});
 const authorshipTypes = { GENERIC: '', LYRICS: 'text', MUSIC: 'hudba' };
 </script>
 

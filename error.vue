@@ -18,9 +18,14 @@
           </span>
         </p>
         <div class="-m-1">
-          <BasicButton icon-name="search" type="primary" class="m-1" to="/"
-            >Hledat</BasicButton
+          <BasicButton
+            icon-name="search"
+            type="primary"
+            class="m-1"
+            to="/?hledat=ano"
           >
+            Hledat
+          </BasicButton>
           <BasicButton
             icon-name="warning"
             type="outlined"
@@ -32,8 +37,9 @@
               error.statusCode +
               ')'
             "
-            >Nahlásit</BasicButton
           >
+            Nahlásit
+          </BasicButton>
         </div>
       </div>
     </div>

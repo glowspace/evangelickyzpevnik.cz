@@ -30,10 +30,10 @@
           </tr> -->
           <template v-for="song_lyric in song_lyrics" :key="song_lyric.id">
             <SLItem
-              :is-search="true"
               :song_lyric="song_lyric"
               :number="getSongNumber(song_lyric)"
               :special-number="getSongNumber(song_lyric, true)"
+              is-search
             />
           </template>
           <tr v-if="results_loaded">

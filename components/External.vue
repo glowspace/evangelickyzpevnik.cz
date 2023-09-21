@@ -1,7 +1,7 @@
 <template>
   <div v-if="line" class="flex flex-row line">
     <BasicClickable
-      class="py-3 pl-6 flex flex-row items-center min-w-0"
+      class="py-3 pl-6 flex flex-row items-center min-w-0 flex-grow"
       :href="mediaLink"
       target="_blank"
       @click="openPreview($event)"
@@ -16,9 +16,7 @@
         </div>
       </div>
     </BasicClickable>
-    <div
-      class="flex-shrink-0 flex-grow flex flex-row items-center justify-end pr-3"
-    >
+    <div class="flex-shrink-0 flex flex-row items-center justify-end pr-3">
       <Kebab :items="kebabMenuItems" button-class="text-gray-600" />
     </div>
   </div>

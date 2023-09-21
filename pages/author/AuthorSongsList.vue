@@ -10,7 +10,7 @@
         v-for="song_lyric in songs"
         :song_lyric="song_lyric"
         :key="song_lyric.id"
-        :hideIcons="true"
+        hide-icons
       ></SLItem>
     </tbody>
   </table>
