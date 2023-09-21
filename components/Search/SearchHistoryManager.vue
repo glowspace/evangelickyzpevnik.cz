@@ -1,5 +1,6 @@
 <script>
-import { isEqual, isEmpty } from 'lodash';
+import lodash from 'lodash';
+const { isEqual, isEmpty } = lodash; // lodash is CommonJS, therefore we can't do `import { xyz } from 'lodash';`
 
 export default {
   methods: {

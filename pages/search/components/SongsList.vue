@@ -82,7 +82,8 @@ import buildElasticSearchParams, {
 import mergeFetchMoreResult from '~/components/Search/mergeFetchMoreResult';
 import { fetchFiltersQuery } from './fetchFiltersQuery.graphql';
 import SLItem from './SLItem';
-import { isEmpty } from 'lodash';
+import lodash from 'lodash';
+const { isEmpty } = lodash; // lodash is CommonJS, therefore we can't do `import { xyz } from 'lodash';`
 
 // Query
 const FETCH_ITEMS = gql`

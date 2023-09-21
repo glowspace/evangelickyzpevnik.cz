@@ -274,7 +274,8 @@
 
 <script>
 import { store } from '../../store.js';
-import { throttle } from 'lodash';
+import lodash from 'lodash';
+const { throttle } = lodash; // lodash is CommonJS, therefore we can't do `import { xyz } from 'lodash';`
 
 import FontSizer from './FontSizer';
 import ChordMode from './ChordMode';
