@@ -25,6 +25,9 @@
           </td>
         </tr>
         <template v-else-if="song_lyrics && song_lyrics.length">
+          <!-- <tr v-if="displayHistory">
+            <td>here we can display a list of last visited songs</td>
+          </tr> -->
           <template v-for="song_lyric in song_lyrics" :key="song_lyric.id">
             <SLItem
               :is-search="true"
@@ -79,6 +82,7 @@ import buildElasticSearchParams, {
 import mergeFetchMoreResult from '~/components/Search/mergeFetchMoreResult';
 import { fetchFiltersQuery } from './fetchFiltersQuery.graphql';
 import SLItem from './SLItem';
+import { isEmpty } from 'lodash';
 
 // Query
 const FETCH_ITEMS = gql`
@@ -214,6 +218,15 @@ export default {
 
     song_lyrics() {
       return this.song_lyrics_paginated ? this.song_lyrics_paginated.data : [];
+    },
+
+    displayHistory() {
+      return (
+        this.searchString == '' &&
+        isEmpty(this.selectedSongbooks) &&
+        isEmpty(this.selectedTags) &&
+        isEmpty(this.selectedLanguages)
+      );
     },
   },
 

@@ -7,7 +7,6 @@
         icon-name="logo.svg"
         icon-only
         to="/"
-        @click="store.showDashboard = true"
       />
       <component
         :is="isH1 ? 'h1' : 'h2'"
@@ -23,9 +22,6 @@
 </template>
 
 <script setup>
-import hpStore from '~/stores/homepage';
-const store = hpStore();
-
 const emit = defineEmits(['back']);
 const props = defineProps({ title: String, isH1: Boolean });
 </script>

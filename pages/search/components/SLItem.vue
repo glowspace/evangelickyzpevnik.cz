@@ -2,7 +2,7 @@
   <tr :class="{ 'bg-surface-200': active }">
     <td
       v-if="isSearch"
-      class="hidden md:table-cell text-secondary text-right w-16 text-sm"
+      class="hidden lg:table-cell text-secondary text-right w-16 text-sm"
     >
       <BasicClickable
         class="pl-7 p-3"
@@ -14,17 +14,16 @@
     </td>
     <td>
       <BasicClickable
-        class="p-3 block"
-        :class="{ 'md:pl-8': false }"
+        class="block p-3 md:pl-7 lg:pl-3"
         :to="song_lyric.public_route"
       >
-        <span v-if="specialNumber" :class="{ 'md:hidden': isSearch }"
+        <span v-if="specialNumber" :class="{ 'lg:hidden': isSearch }"
           >{{ specialNumber }}.
         </span>
         <song-name :song="song_lyric" :multiline="true" :active="active" />
       </BasicClickable>
     </td>
-    <td v-if="isSearch" class="hidden md:table-cell text-secondary">
+    <td v-if="isSearch" class="hidden lg:table-cell text-secondary">
       <span
         v-for="(ap, authorIndex) in song_lyric.authors_pivot"
         :key="authorIndex"

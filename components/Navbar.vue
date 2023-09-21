@@ -4,11 +4,7 @@
     :class="[{ hidden: $route.name == 'song' }, 'md:flex']"
   >
     <div class="menu">
-      <BasicClickable
-        to="/"
-        class="link group"
-        @click="store.showDashboard = true"
-      >
+      <BasicClickable to="/" class="link group">
         <div
           class="icon-wrapper"
           :class="{ active: $route.name == 'index' && store.showDashboard }"
@@ -17,11 +13,7 @@
         </div>
         <p class="label">Nástěnka</p>
       </BasicClickable>
-      <BasicClickable
-        to="/"
-        class="link group"
-        @click="store.showDashboard = false"
-      >
+      <BasicClickable to="/?hledat=ano" class="link group">
         <div
           class="icon-wrapper"
           :class="{ active: $route.name == 'index' && !store.showDashboard }"

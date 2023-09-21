@@ -18,11 +18,25 @@
       />
       <input
         type="search"
-        :placeholder="searchSongs ? 'Hledat píseň podle názvu, čísla nebo textu…' : 'Hledat autora podle jména'"
-        class="bg-transparent py-2 pl-1 pr-4 ring-0 focus:outline-none grow"
+        :placeholder="
+          searchSongs
+            ? 'Hledat píseň podle názvu, čísla nebo textu…'
+            : 'Hledat autora podle jména'
+        "
+        class="bg-transparent py-2 px-1 ring-0 focus:outline-none grow"
         v-model="value"
         @keyup.enter="emit('enter')"
         @focus="emit('focus')"
+        ref="searchInput"
+      />
+      <BasicButton
+        v-if="!onDashboard && value != ''"
+        icon-name="close"
+        icon-only
+        @click="
+          value = '';
+          searchInput.focus();
+        "
       />
     </div>
   </div>
@@ -39,5 +53,22 @@ const value = computed({
   set(value) {
     emit('update:modelValue', value);
   },
+});
+
+const searchInput = ref(null);
+
+watch(
+  () => props.onDashboard,
+  (value) => {
+    if (!value) {
+      searchInput.value.focus();
+    }
+  }
+);
+
+onMounted(() => {
+  if (!props.onDashboard) {
+    searchInput.value.focus();
+  }
 });
 </script>

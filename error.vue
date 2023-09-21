@@ -6,8 +6,8 @@
       :title="'Chyba ' + error.statusCode"
       is-h1
     />
-    <div>
-      <div class="shadow bg-surface-100 mx-6 my-12 px-6 py-4">
+    <div class="custom-container">
+      <div class="shadow bg-surface-100 mx-4 my-12 px-6 py-4 inline-block">
         <p class="mb-3">
           <span v-if="error.statusCode === 404">
             Stránka nebyla nalezena. <br />Zkuste použít vyhledávání.

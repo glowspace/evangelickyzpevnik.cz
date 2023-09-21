@@ -277,8 +277,7 @@
 
 <script>
 import { store } from '../../store.js';
-import lodash from 'lodash';
-const { throttle } = lodash;
+import { throttle } from 'lodash';
 
 import FontSizer from './FontSizer';
 import ChordMode from './ChordMode';

@@ -1,11 +1,11 @@
 <template>
   <div class="flex flex-row">
     <div :class="{ 'md:w-3/5 xl:w-2/3': !init }" class="w-full">
-      <div :class="{ 'custom-container': init }">
-        <Logo v-if="init" />
+      <div v-if="init" class="custom-container md:mt-8">
+        <Logo />
       </div>
       <StickyContainer :onDashboard="init">
-        <div :class="{ 'custom-container': init }">
+        <div :class="{ 'custom-container': init, 'md:mt-4 lg:mx-5': !init }">
           <SearchBox
             v-model="search_string"
             :on-dashboard="init"
@@ -17,17 +17,7 @@
               resetState(true);
             "
           />
-          <FilterRow
-            v-if="!init"
-            v-model:selected-songbooks="selected_songbooks"
-            v-model:selected-tags="selected_tags"
-            v-model:selected-languages="selected_languages"
-            v-model:show-authors="showAuthors"
-            v-model:sort="sort"
-            v-model:descending="descending"
-            :search-string="search_string"
-            @input="updateHistoryState"
-          >
+          <FilterRow v-if="!init">
             <template #row>
               <Filters
                 :is-filter-row="true"
@@ -112,7 +102,10 @@
         <i class="fas fa-exclamation-triangle p-0"></i>
       </a> -->
     </div>
-    <div v-if="!init" class="hidden md:block sticky top-0 flex-grow-0 w-2/5 xl:w-1/3 p-8 h-screen overflow-auto border-l border-primary-150">
+    <div
+      v-if="!init"
+      class="hidden md:block sticky top-0 flex-grow-0 w-2/5 xl:w-1/3 p-8 h-screen overflow-auto border-l border-primary-150"
+    >
       <div>
         <Filters
           v-model:selected-songbooks="selected_songbooks"
@@ -176,12 +169,11 @@ export default {
 
       // View state
       // init: true,
-      displayFilter: false,
       showAuthors: false,
 
       // Random order seed
       seed: this.randomInt(1, 100000),
-      seedLocked: false,
+      seedLocked: false, // seed is shown in url
 
       // Sort
       sort: 0,
@@ -211,29 +203,21 @@ export default {
       this.selected_songbooks = {};
       this.sort = 0;
       this.descending = false;
+      this.search_string = '';
 
       if (manual) {
         this.showAuthors = false;
-        // if (document.getElementById('search-home')) {
-        //   document.getElementById('search-home').focus();
-        // }
-        this.search_string = ''; // this prevents search box from being cleared after filters' load
         this.refreshSeed();
         this.updateHistoryState();
       }
     },
 
     queryLoaded() {
-      if (this.search_string && this.init) {
-        this.updateHistoryState();
-        this.init = false;
-      } else if (!this.init) {
-        this.updateHistoryState();
-      }
+      this.updateHistoryState();
     },
 
     inputEnter() {
-      this.init = false;
+      // try to open song or administration
       if (this.search_string) {
         let searchParsedToInt = parseInt(this.search_string, 10);
 
@@ -276,7 +260,6 @@ export default {
   },
 
   mounted() {
-    window.onpopstate = this.applyStateChange;
     this.applyStateChange();
   },
 
@@ -365,14 +348,22 @@ export default {
       this.resetState();
     },
     init(val) {
+      console.log('init changed');
+
       if (val) {
         this.seedLocked = false;
         this.resetState();
       } else {
         this.seedLocked = true;
-        this.updateHistoryState(false);
+        this.updateHistoryState();
       }
     },
+    $route() {
+      this.applyStateChange();
+      // we intercept route changes this way, because:
+      // - beforeRouteUpdate fires before route change
+      // - window.onpopstate does not fire for nuxt-links
+    }
   },
 };
 </script>
