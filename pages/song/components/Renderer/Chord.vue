@@ -19,7 +19,8 @@
 </template>
 
 <script>
-import { store } from '../../store.js';
+import { mapStores } from 'pinia';
+import chordStore from '~/stores/chord.js';
 
 export default {
   props: [
@@ -32,12 +33,6 @@ export default {
     'isOptional',
     'hasNextSibling',
   ],
-
-  data() {
-    return {
-      chordSharedStore: store,
-    };
-  },
 
   created() {
     // each chords notifies its state to the global store.js file
@@ -64,6 +59,8 @@ export default {
   },
 
   computed: {
+    ...mapStores(chordStore),
+
     baseNote() {
       if (this.base == '') {
         return '';

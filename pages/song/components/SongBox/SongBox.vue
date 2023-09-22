@@ -273,7 +273,9 @@
 </template>
 
 <script>
-import { store } from '../../store.js';
+import { mapStores } from 'pinia';
+import chordStore from '~/stores/chord.js';
+
 import lodash from 'lodash';
 const { throttle } = lodash; // lodash is CommonJS, therefore we can't do `import { xyz } from 'lodash';`
 
@@ -321,11 +323,12 @@ export default {
       loadMedia: false, // prevents loading iframes when user doesn't want them
       topMode: 0,
       scrollable: true,
-      chordSharedStore: store,
     };
   },
 
   computed: {
+    ...mapStores(chordStore), // store content accessible by id + 'Store', which equals this.chordSharedStore here
+
     hasExternals: {
       get() {
         return (
@@ -448,6 +451,7 @@ export default {
     }
 
     this.chordSharedStore.transposition = 0;
+    this.chordSharedStore.nChordModes = 1;
   },
 };
 </script>
