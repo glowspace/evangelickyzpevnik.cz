@@ -152,21 +152,6 @@
                 class="-ml-6 -mr-4 mb-3 lilypond-container"
               ></div>
               <span v-if="song_lyric.has_lyrics">
-                <!-- <BasicButton
-                class="mb-2 ml-1"
-                v-if="
-                  chordSharedStore.nChordModes != 1 &&
-                  chordSharedStore.chordMode == 0
-                "
-                @click="chordSharedStore.chordMode = 2"
-                >Zobrazit akordy</BasicButton
-              >
-              <BasicButton
-                class="mb-2 ml-1"
-                v-if="chordSharedStore.chordMode != 0"
-                @click="chordSharedStore.chordMode = 0"
-                >Skrýt akordy</BasicButton
-              > -->
                 <div
                   v-if="
                     !$apollo.loading &&
@@ -436,6 +421,12 @@ export default {
     getFullName: getFullName,
   },
 
+  created() {
+    this.chordSharedStore.transposition = 0;
+    this.chordSharedStore.nChordModes = 1;
+    this.chordSharedStore.chordMode = 0;
+  },
+
   mounted() {
     if (!this.song_lyric.has_lyrics) {
       if (this.scores.length) {
@@ -449,9 +440,6 @@ export default {
       window.addEventListener('resize', this.checkScrollability);
       this.checkScrollability(true);
     }
-
-    this.chordSharedStore.transposition = 0;
-    this.chordSharedStore.nChordModes = 1;
   },
 };
 </script>
