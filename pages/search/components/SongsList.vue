@@ -1,7 +1,7 @@
 <template>
   <!-- todo: refactor so that it does not need client-only wrapper -->
   <!-- <client-only> -->
-  <div class="mb-1">
+  <div class="mb-4">
     <LoaderLinear
       :class="[{ 'opacity-0': results_loaded }, 'transition-opacity']"
     />
@@ -96,6 +96,7 @@ const FETCH_ITEMS = gql`
       data {
         id
         song_number
+        ez_number
         name
         secondary_name_1
         secondary_name_2
@@ -268,7 +269,11 @@ export default {
         return rec.pivot.songbook.shortcut + ' ' + rec.pivot.number;
       }
 
-      return song_lyric.song_number;
+      return String(
+        this.$config.public.isEvangelicalSongbook
+          ? song_lyric.ez_number
+          : song_lyric.song_number
+      );
     },
 
     getSongbookRecordForNumber(song_lyric) {

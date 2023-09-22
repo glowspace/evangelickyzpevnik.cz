@@ -81,8 +81,7 @@
  * 4) bible reference
  */
 
-// todo: fix bible-liturgy-utils/bible/cs_bcv_parser.js by adding `module.exports = this;` at the end of the file
-// import bible from 'bible-liturgy-utils/bible/bible';
+import bible from 'bible-liturgy-utils/bible/bible';
 
 export default {
   name: 'Tags',
@@ -99,14 +98,12 @@ export default {
     },
 
     bibleRefs() {
-      // todo: fix bible refs (see the comment above)
-      // if (this.song.bible_refs_src) {
-      //   const lines = this.song.bible_refs_src.split('\n');
-      //   const bib_refs = lines.map((l) => bible.parseEuropean(l));
-      //   const lines_cz = bib_refs.flatMap((r) => r.toCzechStrings());
-
-      //   return lines_cz;
-      // }
+      if (this.song.bible_refs_src) {
+        const lines = this.song.bible_refs_src.split('\n');
+        const bib_refs = lines.map((l) => bible.parseEuropean(l));
+        const lines_cz = bib_refs.flatMap((r) => r.toCzechStrings());
+        return lines_cz;
+      }
 
       return false;
     },

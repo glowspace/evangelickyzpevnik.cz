@@ -361,7 +361,7 @@ export default {
       // we intercept route changes this way, because:
       // - beforeRouteUpdate fires before route change
       // - window.onpopstate does not fire for nuxt-links
-    }
+    },
   },
 };
 </script>
