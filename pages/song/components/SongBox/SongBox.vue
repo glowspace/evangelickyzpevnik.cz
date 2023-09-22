@@ -274,7 +274,7 @@
 
 <script>
 import { mapStores } from 'pinia';
-import chordStore from '~/stores/chord.js';
+import useChordStore from '~/stores/chord.js';
 
 import lodash from 'lodash';
 const { throttle } = lodash; // lodash is CommonJS, therefore we can't do `import { xyz } from 'lodash';`
@@ -327,7 +327,7 @@ export default {
   },
 
   computed: {
-    ...mapStores(chordStore), // store content accessible by id + 'Store', which equals this.chordSharedStore here
+    ...mapStores(useChordStore), // store content accessible by id + 'Store', which equals this.chordSharedStore here
 
     hasExternals: {
       get() {

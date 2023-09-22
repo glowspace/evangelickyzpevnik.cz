@@ -20,7 +20,7 @@
 
 <script>
 import { mapStores } from 'pinia';
-import chordStore from '~/stores/chord.js';
+import useChordStore from '~/stores/chord.js';
 
 export default {
   props: [
@@ -59,7 +59,7 @@ export default {
   },
 
   computed: {
-    ...mapStores(chordStore),
+    ...mapStores(useChordStore),
 
     baseNote() {
       if (this.base == '') {

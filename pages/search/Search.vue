@@ -135,7 +135,7 @@ import SearchBox from './components/SearchBox';
 import StickyContainer from './components/StickyContainer';
 import SearchHistoryManager from '~/components/Search/SearchHistoryManager';
 import { mapStores } from 'pinia';
-import hpStore from '~/stores/homepage.js';
+import useHomepageStore from '~/stores/homepage.js';
 
 import gql from 'graphql-tag';
 
@@ -291,7 +291,7 @@ export default {
       );
     },
 
-    ...mapStores(hpStore),
+    ...mapStores(useHomepageStore),
     init: {
       get() {
         return this.homepageStore.showDashboard;

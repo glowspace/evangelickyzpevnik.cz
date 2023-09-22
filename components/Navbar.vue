@@ -72,6 +72,6 @@
 </style>
 
 <script setup>
-import hpStore from '~/stores/homepage';
-const store = hpStore();
+import useHomepageStore from '~/stores/homepage';
+const store = useHomepageStore();
 </script>
