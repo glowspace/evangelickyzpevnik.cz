@@ -2,7 +2,7 @@
   <div class="bottom-bar-wrapper">
     <div class="bottom-bar custom-container">
       <div class="flex flex-row gap-2 md:gap-0 items-center">
-        <BasicBadge :small="showToolsBadge">
+        <BasicBadge :small="showToolsBadge" badge-class="md:left-10 md:!top-2">
           <BasicButton
             @click="$emit('tools')"
             icon-name="tune"

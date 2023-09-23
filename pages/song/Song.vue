@@ -1,7 +1,15 @@
 <template>
   <TopBar
     @back="previous ? $router.back() : navigateTo('/')"
-    :title="song_lyric ? String(song_lyric?.song_number) : 'načítám…'"
+    :title="
+      song_lyric
+        ? String(
+            $config.public.isEvangelicalSongbook
+              ? song_lyric?.ez_number
+              : song_lyric?.song_number
+          )
+        : 'načítám…'
+    "
   >
     <Kebab
       v-if="song_lyric"
@@ -54,8 +62,10 @@ const FETCH_SONG_LYRIC = gql`
   query ($id: ID!) {
     song_lyric(id: $id) {
       has_lyrics
+      has_chords
       id
       song_number
+      ez_number
       name
       secondary_name_1
       secondary_name_2

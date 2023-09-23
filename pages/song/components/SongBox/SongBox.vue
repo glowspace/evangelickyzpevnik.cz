@@ -143,7 +143,7 @@
               id="song-lyrics"
               :class="{
                 'song-lyrics': true,
-                'song-lyrics-extended': chordSharedStore.chordMode == 2,
+                'song-lyrics-extended': !chordSharedStore.simpleView,
               }"
             >
               <div
@@ -152,26 +152,11 @@
                 class="-ml-6 -mr-4 mb-3 lilypond-container"
               ></div>
               <span v-if="song_lyric.has_lyrics">
-                <!-- <BasicButton
-                class="mb-2 ml-1"
-                v-if="
-                  chordSharedStore.nChordModes != 1 &&
-                  chordSharedStore.chordMode == 0
-                "
-                @click="chordSharedStore.chordMode = 2"
-                >Zobrazit akordy</BasicButton
-              >
-              <BasicButton
-                class="mb-2 ml-1"
-                v-if="chordSharedStore.chordMode != 0"
-                @click="chordSharedStore.chordMode = 0"
-                >Skrýt akordy</BasicButton
-              > -->
                 <div
                   v-if="
                     !$apollo.loading &&
                     song_lyric.capo > 0 &&
-                    chordSharedStore.chordMode != 0
+                    chordSharedStore.showChords
                   "
                   class="mb-2"
                 >
@@ -197,9 +182,9 @@
 
         <BottomSheets v-model="showTools" title="Nástroje">
           <div
-            v-if="chordSharedStore.nChordModes != 1"
+            v-if="song_lyric.has_chords"
             :class="{
-              'opacity-40 pointer-events-none': chordSharedStore.chordMode == 0,
+              'opacity-40 pointer-events-none': !chordSharedStore.showChords,
             }"
           >
             <transposition
@@ -208,9 +193,9 @@
           </div>
 
           <div
-            v-if="chordSharedStore.nChordModes != 1"
+            v-if="song_lyric.has_chords"
             :class="{
-              'opacity-40 pointer-events-none': chordSharedStore.chordMode == 0,
+              'opacity-40 pointer-events-none': !chordSharedStore.showChords,
             }"
           >
             <chord-sharp-flat
@@ -218,8 +203,17 @@
             ></chord-sharp-flat>
           </div>
 
-          <div v-if="chordSharedStore.nChordModes != 1">
-            <chord-mode v-model="chordSharedStore.chordMode"></chord-mode>
+          <div
+            v-if="song_lyric.has_chords"
+            :class="{
+              'opacity-40 pointer-events-none': !chordSharedStore.showChords,
+            }"
+          >
+            <simple-view v-model="chordSharedStore.simpleView"></simple-view>
+          </div>
+
+          <div v-if="song_lyric.has_chords">
+            <chord-mode v-model="chordSharedStore.showChords"></chord-mode>
           </div>
 
           <div>
@@ -273,12 +267,15 @@
 </template>
 
 <script>
-import { store } from '../../store.js';
+import { mapStores } from 'pinia';
+import useChordStore from '~/stores/chord.js';
+
 import lodash from 'lodash';
 const { throttle } = lodash; // lodash is CommonJS, therefore we can't do `import { xyz } from 'lodash';`
 
 import FontSizer from './FontSizer';
 import ChordMode from './ChordMode';
+import SimpleView from './SimpleView';
 import ChordSharpFlat from './ChordSharpFlat';
 import Transposition from './Transposition';
 import Translations from './Translations';
@@ -300,6 +297,7 @@ export default {
   components: {
     FontSizer,
     ChordMode,
+    SimpleView,
     ChordSharpFlat,
     Transposition,
     SongLyricParts,
@@ -315,17 +313,17 @@ export default {
     // use v-model to bind data from every other component
     return {
       controlsDisplay: true,
-      // bottomMode: 0,
       showTools: false,
       showMedia: false,
       loadMedia: false, // prevents loading iframes when user doesn't want them
       topMode: 0,
       scrollable: true,
-      chordSharedStore: store,
     };
   },
 
   computed: {
+    ...mapStores(useChordStore), // store content accessible by id + 'Store', which equals this.chordSharedStore here
+
     hasExternals: {
       get() {
         return (
@@ -433,6 +431,12 @@ export default {
     getFullName: getFullName,
   },
 
+  created() {
+    // this prevents transposition from being preserved globally (you want just the one song to be transposed, not the whole songbook)
+    this.chordSharedStore.transposition = 0;
+    this.chordSharedStore.showChords = this.song_lyric.has_chords;
+  },
+
   mounted() {
     if (!this.song_lyric.has_lyrics) {
       if (this.scores.length) {
@@ -446,8 +450,6 @@ export default {
       window.addEventListener('resize', this.checkScrollability);
       this.checkScrollability(true);
     }
-
-    this.chordSharedStore.transposition = 0;
   },
 };
 </script>

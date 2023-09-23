@@ -1,21 +1,23 @@
 <template>
-  <div class="card news" v-if="news_items && news_items.length">
-    <span class="news-item"><b>Aktuálně:</b></span>
-    <UniversalLink
-      v-for="(item, key) in news_items"
-      :key="key"
-      :type="item.link_type"
-      :link="item.link"
-      classes="news-item"
-      ><i v-if="item.fa_icon" :class="item.fa_icon"></i
-      >{{ item.text }}</UniversalLink
-    >
-    <slot></slot>
+  <div v-if="news_items && news_items.length">
+    <DashboardCard title="Novinky">
+      <UniversalLink
+        v-for="(item, key) in news_items"
+        :key="key"
+        :type="item.link_type"
+        :link="item.link"
+        class="list-item"
+      >
+        <span class="list-icon" v-if="anyIcons">
+          <BasicIcon :name="item.fa_icon" type="fa" />
+        </span>
+        <span>{{ item.text }}</span>
+      </UniversalLink>
+    </DashboardCard>
   </div>
 </template>
 
 <script>
-import UniversalLink from './UniversalLink';
 import gql from 'graphql-tag';
 
 const FETCH_NEWS = gql`
@@ -30,26 +32,15 @@ const FETCH_NEWS = gql`
 `;
 
 export default {
-  name: 'News',
-
-  components: { UniversalLink },
-
-  data() {
-    return {
-      // news_items: [
-      //     {
-      //         text: 'Zpěvníková šifra',
-      //         fa_icon: 'key',
-      //         link: 'https://zpevnik.proscholy.cz/preview/501/a-mezidobi-11.pdf',
-      //         link_type: 'PDF'
-      //     }
-      // ]
-    };
-  },
-
   apollo: {
     news_items: {
-      query: FETCH_NEWS
+      query: FETCH_NEWS,
+    },
+  },
+
+  computed: {
+    anyIcons() {
+      return this.news_items.some((item) => item.fa_icon);
     },
   },
 };

@@ -4,13 +4,14 @@
       class="tag-group"
       v-if="song.tags_liturgy_part.length || song.is_approved_for_liturgy"
     >
-      <!-- <nuxt-link
-        to="/napoveda#schvaleno-cbk"
-        class="tag tag-blue"
-        v-if="song.is_approved_for_liturgy"
+      <BasicChip
+        v-if="
+          !$config.public.isEvangelicalSongbook && song.is_approved_for_liturgy
+        "
       >
-        schváleno ČBK pro liturgii <i class="fas fa-check"></i
-      ></nuxt-link> -->
+        schváleno ČBK pro liturgii
+        <BasicIcon name="check" class="text-xl -mx-1" />
+      </BasicChip>
       <BasicChip
         v-for="tag in song.tags_liturgy_part"
         :key="tag.id"
@@ -33,6 +34,7 @@
         v-for="tag in song.tags_liturgy_period"
         :key="tag.id"
         :to="'/?stitky=' + tag.id"
+        class="tag-red"
       >
         {{ tag.name }}
       </BasicChip>
@@ -42,6 +44,7 @@
           .concat(song.tags_generic)"
         :key="tag.id"
         :to="'/?stitky=' + tag.id"
+        class="tag-green"
       >
         {{ tag.name }}
       </BasicChip>
@@ -51,7 +54,7 @@
       <BasicChip
         v-for="(sb, key) in publicSongbookRecords"
         :key="key"
-         class="songbook-chip"
+        class="songbook-chip tag-yellow"
         :to="'/?zpevniky=' + sb.pivot.songbook.id + '&razeni=2'"
       >
         <span class="songbook-name">{{ sb.pivot.songbook.name }}</span
@@ -81,8 +84,7 @@
  * 4) bible reference
  */
 
-// todo: fix bible-liturgy-utils/bible/cs_bcv_parser.js by adding `module.exports = this;` at the end of the file
-// import bible from 'bible-liturgy-utils/bible/bible';
+import bible from 'bible-liturgy-utils/bible/bible';
 
 export default {
   name: 'Tags',
@@ -99,14 +101,12 @@ export default {
     },
 
     bibleRefs() {
-      // todo: fix bible refs (see the comment above)
-      // if (this.song.bible_refs_src) {
-      //   const lines = this.song.bible_refs_src.split('\n');
-      //   const bib_refs = lines.map((l) => bible.parseEuropean(l));
-      //   const lines_cz = bib_refs.flatMap((r) => r.toCzechStrings());
-
-      //   return lines_cz;
-      // }
+      if (this.song.bible_refs_src) {
+        const lines = this.song.bible_refs_src.split('\n');
+        const bib_refs = lines.map((l) => bible.parseEuropean(l));
+        const lines_cz = bib_refs.flatMap((r) => r.toCzechStrings());
+        return lines_cz;
+      }
 
       return false;
     },
@@ -123,7 +123,8 @@ export default {
   @apply !gap-0 p-0 overflow-hidden;
 }
 
-.songbook-name, .songbook-number {
+.songbook-name,
+.songbook-number {
   @apply py-1.5;
 }
 

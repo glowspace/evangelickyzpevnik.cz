@@ -1,7 +1,7 @@
 <template>
   <!-- todo: refactor so that it does not need client-only wrapper -->
   <!-- <client-only> -->
-  <div>
+  <div class="mb-4">
     <LoaderLinear
       :class="[{ 'opacity-0': results_loaded }, 'transition-opacity']"
     />
@@ -27,13 +27,13 @@
         <template v-else-if="authors && authors.length">
           <tr v-for="author in authors" :key="author.id">
             <td>
-              <BasicClickable class="px-5 py-3 block" :to="author.public_route">
+              <BasicClickable class="px-5 py-3 lg:pl-12 block" :to="author.public_route">
                 {{ author.name }}
               </BasicClickable>
             </td>
             <td>
               <BasicClickable
-                class="pr-6 py-3 block text-right text-secondary"
+                class="pr-6 lg:pr-12 py-3 block text-right text-secondary"
                 :to="author.public_route"
                 tabindex="-1"
               >

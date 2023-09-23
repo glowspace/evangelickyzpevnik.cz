@@ -1,38 +1,18 @@
 <template>
-  <span>
-    <template v-if="link">
-      <a v-if="type == 'BLANK'" :href="link" target="_blank" :class="classes">
-        <slot></slot>
-      </a>
-      <nuxt-link v-else-if="type == 'NUXTLINK'" :to="link" :class="classes">
-        <slot></slot>
-      </nuxt-link>
-      <a
-        v-else-if="
-          ['IMAGE', 'YOUTUBE', 'VIDEO', 'IFRAME', 'PDF'].includes(type)
-        "
-        :href="link"
-        target="_blank"
-        @click.prevent="openBP($event)"
-        :class="classes"
-      >
-        <slot></slot>
-      </a>
-      <a v-else :href="link" :class="classes">
-        <slot></slot>
-      </a>
-    </template>
-    <span v-else :class="classes">
-      <slot></slot>
-    </span>
-  </span>
+  <BasicClickable
+    :to="type == 'NUXTLINK' ? link : undefined"
+    :href="type == 'NUXTLINK' ? undefined : link"
+    @click="supportsBP && openBP($event)"
+    :target="type == 'BLANK' ? '_blank' : '_self'"
+  >
+    <slot />
+  </BasicClickable>
 </template>
 
 <script>
 // SUPPORTED MEDIA TYPES
-
-// see https://github.com/proscholy/regenschori-api/blob/development/graphql/news.graphql
-// respectively the enum LinkType in the graphql schema
+// see https://github.com/glowspace/proscholy-api/blob/develop/graphql/news.graphql#L35
+// (specifically the LinkType enum in the graphql schema)
 
 import BigPicture from 'bigpicture';
 import Bowser from 'bowser';
@@ -44,7 +24,6 @@ export default {
       default: 'NORMAL',
     },
     link: String,
-    classes: String,
   },
 
   data() {
@@ -66,6 +45,8 @@ export default {
 
   methods: {
     openBP(e) {
+      e.preventDefault();
+
       switch (this.type) {
         case 'IMAGE':
           BigPicture({ el: e.target, imgSrc: this.link });
@@ -90,6 +71,12 @@ export default {
           BigPicture({ el: e.target, iframeSrc: this.link });
           break;
       }
+    },
+  },
+
+  computed: {
+    supportsBP() {
+      return ['IMAGE', 'YOUTUBE', 'VIDEO', 'IFRAME', 'PDF'].includes(this.type);
     },
   },
 };
