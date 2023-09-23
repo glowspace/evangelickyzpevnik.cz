@@ -422,7 +422,11 @@ export default {
   },
 
   created() {
+    // this prevents transposition from being preserved globally (you want just the one song to be transposed, not the whole songbook)
     this.chordSharedStore.transposition = 0;
+    // the lines below serve two purposes:
+    // a) to properly detect if the current song has chords after navigating from a different one
+    // b) correctly rehydrate server-side rendered page (store values are passed from server to client -> )
     this.chordSharedStore.nChordModes = 1;
     this.chordSharedStore.chordMode = 0;
   },

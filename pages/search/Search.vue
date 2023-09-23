@@ -46,30 +46,63 @@
           </FilterRow>
         </div>
       </StickyContainer>
-      <div :class="{ 'custom-container': init }">
+      <div class="custom-container" v-if="init">
         <InitFilters
-          v-if="init"
           v-model="selected_tags"
           @update:modelValue="init = false"
         ></InitFilters>
-        <div class="text-center mt-1" v-if="init">
+        <div class="text-center mt-1">
           <BasicButton
             @click="init = false"
             icon-name="add"
             class="text-primary -ml-3"
-            >Zobrazit všechy písně</BasicButton
           >
+            Zobrazit všechy písně
+          </BasicButton>
         </div>
       </div>
-      <!-- todo: news -->
-      <!-- <div class="row justify-content-center text-center pt-4" v-show="init">
-      <div class="col-lg-8 search-column">
-        <News><div class="news-opener" @click="init = false"></div></News>
+      <div v-if="init" class="p-5 sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-x-7 gap-y-5 space-y-4 sm:space-y-0 max-w-[1400px] mx-auto">
+        <News />
+        <DashboardCard title="O projektu">
+          <div class="basic-content p-4">
+            Evangelický zpěvník je projektem
+            <BasicLink href="https://e-cirkev.cz" underline
+              >Českobratrské církve evangelické</BasicLink
+            >. Tuto aplikaci vytvořil tým vývojářů z komunity
+            <BasicLink href="https://glowspace.cz" underline
+              >Glow Space</BasicLink
+            >.
+          </div>
+        </DashboardCard>
+        <DashboardCard title="Další možnosti">
+          <BasicClickable
+            :href="
+              'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/6/create/20?customfield_10056=' +
+              encodeURIComponent($config.public.siteUrl + $route.fullPath)
+            "
+            class="list-item"
+          >
+            <BasicIcon name="warning" class="list-icon" />
+            <span>Nahlásit chybu</span>
+          </BasicClickable>
+          <BasicClickable
+            :href="
+              'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/7/create/18?summary=' +
+              encodeURIComponent($config.public.siteName) +
+              ':+'
+            "
+            class="list-item"
+          >
+            <BasicIcon name="chat" class="list-icon" />
+            <span>Zpětná vazba</span>
+          </BasicClickable>
+          <BasicClickable href="https://play.google.com/store/apps/details?id=cce.evangelicky_zpevnik" class="list-item">
+            <BasicIcon name="smartphone" class="list-icon" />
+            <span>Mobilní aplikace</span>
+          </BasicClickable>
+        </DashboardCard>
       </div>
-      <div class="col-lg-4 search-balance"></div>
-      </div> -->
       <div v-show="!init">
-        <!-- <News v-show="!filters_active && !search_string" /> -->
         <SongsList
           v-if="!showAuthors"
           :search-string="search_string"
@@ -276,21 +309,6 @@ export default {
   },
 
   computed: {
-    /**
-     * Note that there has to be sth together at the line with return,
-     * otherwise js will see only return; and don't give a f*ck about the things below.
-     *
-     * @returns {boolean}
-     */
-    filters_active() {
-      return (
-        Object.keys(this.selected_songbooks).length +
-          Object.keys(this.selected_tags).length +
-          Object.keys(this.selected_languages).length >
-        0
-      );
-    },
-
     ...mapStores(useHomepageStore),
     init: {
       get() {
