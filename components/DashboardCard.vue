@@ -17,7 +17,7 @@ const props = defineProps({ title: String });
 }
 
 .card-body {
-  @apply bg-surface-200 shadow rounded-xl;
+  @apply bg-surface-200 shadow rounded-xl overflow-hidden;
 
   :slotted(.list-item) {
     @apply flex items-center px-4 py-3 hover:bg-surface-50 border-gray-100;

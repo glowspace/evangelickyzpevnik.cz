@@ -4,7 +4,6 @@
       <BasicButton icon-name="filter_alt" icon-only icon-fill @click="showFilters = true" class="flex-shrink-0 md:pointer-events-none" />
       <div class="flex flex-row items-center overflow-auto whitespace-nowrap">
         <slot name="row" />
-        <!-- <BasicChip v-for="filter in ">{{  }}</BasicChip> -->
         <BasicChip class="chip-add hover:!bg-surface-200 md:!hidden" @click="showFilters = true"><BasicIcon name="add" class="-mx-1 text-lg" />přidat filtr</BasicChip>
       </div>
     </div>

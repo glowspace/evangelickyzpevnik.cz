@@ -6,7 +6,11 @@
         { relative: !isClosed },
       ]"
     >
-      <BasicBadge :small="categoryContainsSelected" badge-class="!top-1 !-right-2">{{ heading }}</BasicBadge>
+      <BasicBadge
+        :small="categoryContainsSelected"
+        :badge-class="'!top-1 !-right-2 ' + badgeColor"
+        >{{ heading }}</BasicBadge
+      >
       <BasicButton
         :class="['stretched-link']"
         @click="isClosed = !isClosed"
@@ -17,7 +21,7 @@
     </div>
     <div :class="{ 'whitespace-nowrap overflow-hidden opacity-60': isClosed }">
       <BasicChip
-        :class="[{ 'active': isSelectedTag(tag) }, 'tag-' + color]"
+        :class="[{ active: isSelectedTag(tag) }, 'tag-' + color]"
         v-for="tag in tagsInCategory.filter((t) => t.song_lyrics_count !== 0)"
         :key="'tag-' + tag.id"
         @click="$emit('selectTag', tag)"
@@ -50,6 +54,19 @@ export default {
           return true;
         }
       });
+    },
+
+    badgeColor() {
+      switch (this.color) {
+        case 'green':
+          return '!bg-green';
+        case 'red':
+          return '!bg-error-600';
+        case 'yellow':
+          return '!bg-yellow';
+        default:
+          return '';
+      }
     },
   },
 

@@ -13,6 +13,7 @@ module.exports = {
       white: '#fff',
       green: '#44B436',
       greendark: '#318127',
+      yellow: '#faa61b',
       primary: {
         DEFAULT: '#006EB7',
         50: '#EAF7FF',
