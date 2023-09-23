@@ -1,32 +1,32 @@
 <template>
   <ToolboxContainer>
-    <div @click="nsComp = !nsComp">Blokovat zhasínání displeje</div>
-    <BasicSwitch id="nosleep-switch" v-model="nsComp" />
+    <div @click="noSleepActive = !noSleepActive">
+      Blokovat zhasínání displeje
+    </div>
+    <BasicSwitch id="nosleep-switch" v-model="noSleepActive" />
   </ToolboxContainer>
 </template>
 
 <script setup>
 import ToolboxContainer from './ToolboxContainer.vue';
-
 import NoSleep from 'nosleep.js';
-const nsRef = ref(false);
-const nsObject = ref(null);
+import useChordStore from '~/stores/homepage';
 
-if (process.client) {
-  nsObject.value = new NoSleep();
+const store = useChordStore();
+
+if (process.client && store.noSleep == null) {
+  store.noSleep = new NoSleep();
 }
 
-const nsComp = computed({
+const noSleepActive = computed({
   get() {
-    return nsRef.value;
+    return store.noSleep?.enabled;
   },
   set(value) {
-    nsRef.value = value;
-
     if (value) {
-      nsObject.value.enable();
+      store.noSleep.enable();
     } else {
-      nsObject.value.disable();
+      store.noSleep.disable();
     }
   },
 });

@@ -62,6 +62,7 @@ const FETCH_SONG_LYRIC = gql`
   query ($id: ID!) {
     song_lyric(id: $id) {
       has_lyrics
+      has_chords
       id
       song_number
       ez_number

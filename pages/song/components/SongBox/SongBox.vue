@@ -143,7 +143,7 @@
               id="song-lyrics"
               :class="{
                 'song-lyrics': true,
-                'song-lyrics-extended': chordSharedStore.chordMode == 2,
+                'song-lyrics-extended': !chordSharedStore.simpleView,
               }"
             >
               <div
@@ -156,7 +156,7 @@
                   v-if="
                     !$apollo.loading &&
                     song_lyric.capo > 0 &&
-                    chordSharedStore.chordMode != 0
+                    chordSharedStore.showChords
                   "
                   class="mb-2"
                 >
@@ -182,9 +182,9 @@
 
         <BottomSheets v-model="showTools" title="Nástroje">
           <div
-            v-if="chordSharedStore.nChordModes != 1"
+            v-if="song_lyric.has_chords"
             :class="{
-              'opacity-40 pointer-events-none': chordSharedStore.chordMode == 0,
+              'opacity-40 pointer-events-none': !chordSharedStore.showChords,
             }"
           >
             <transposition
@@ -193,9 +193,9 @@
           </div>
 
           <div
-            v-if="chordSharedStore.nChordModes != 1"
+            v-if="song_lyric.has_chords"
             :class="{
-              'opacity-40 pointer-events-none': chordSharedStore.chordMode == 0,
+              'opacity-40 pointer-events-none': !chordSharedStore.showChords,
             }"
           >
             <chord-sharp-flat
@@ -203,8 +203,17 @@
             ></chord-sharp-flat>
           </div>
 
-          <div v-if="chordSharedStore.nChordModes != 1">
-            <chord-mode v-model="chordSharedStore.chordMode"></chord-mode>
+          <div
+            v-if="song_lyric.has_chords"
+            :class="{
+              'opacity-40 pointer-events-none': !chordSharedStore.showChords,
+            }"
+          >
+            <simple-view v-model="chordSharedStore.simpleView"></simple-view>
+          </div>
+
+          <div v-if="song_lyric.has_chords">
+            <chord-mode v-model="chordSharedStore.showChords"></chord-mode>
           </div>
 
           <div>
@@ -266,6 +275,7 @@ const { throttle } = lodash; // lodash is CommonJS, therefore we can't do `impor
 
 import FontSizer from './FontSizer';
 import ChordMode from './ChordMode';
+import SimpleView from './SimpleView';
 import ChordSharpFlat from './ChordSharpFlat';
 import Transposition from './Transposition';
 import Translations from './Translations';
@@ -287,6 +297,7 @@ export default {
   components: {
     FontSizer,
     ChordMode,
+    SimpleView,
     ChordSharpFlat,
     Transposition,
     SongLyricParts,
@@ -302,7 +313,6 @@ export default {
     // use v-model to bind data from every other component
     return {
       controlsDisplay: true,
-      // bottomMode: 0,
       showTools: false,
       showMedia: false,
       loadMedia: false, // prevents loading iframes when user doesn't want them
@@ -424,11 +434,7 @@ export default {
   created() {
     // this prevents transposition from being preserved globally (you want just the one song to be transposed, not the whole songbook)
     this.chordSharedStore.transposition = 0;
-    // the lines below serve two purposes:
-    // a) to properly detect if the current song has chords after navigating from a different one
-    // b) correctly rehydrate server-side rendered page (store values are passed from server to client -> )
-    this.chordSharedStore.nChordModes = 1;
-    this.chordSharedStore.chordMode = 0;
+    this.chordSharedStore.showChords = this.song_lyric.has_chords;
   },
 
   mounted() {

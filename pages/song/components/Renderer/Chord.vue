@@ -35,14 +35,6 @@ export default {
   ],
 
   created() {
-    // each chords notifies its state to the global store.js file
-
-    // I'm a chord that has a chord sign -> allow to display chords + to switch to extended chord mode
-    if (this.base != '' && this.chordSharedStore.nChordModes == 1) {
-      this.chordSharedStore.nChordModes = 3;
-      this.chordSharedStore.chordMode = 2;
-    }
-
     // After being decided between #/b, do not use later chords
     // (there can be some transposition later in the song)
     if (this.chordSharedStore.useFlatScale_notified) {
@@ -86,9 +78,9 @@ export default {
     },
 
     displayChordSign() {
-      if (this.chordSharedStore.chordMode === 0) return false;
-      if (this.chordSharedStore.chordMode === 1) return !this.isSubstitute;
-      if (this.chordSharedStore.chordMode === 2) return true;
+      if (!this.chordSharedStore.showChords) return false;
+      if (this.chordSharedStore.simpleView) return !this.isSubstitute;
+      return true;
     },
   },
 
