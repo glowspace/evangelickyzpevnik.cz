@@ -10,6 +10,7 @@
         materiály i potřebné know-how roztroušeny po mnoha různých místech na
         internetu nebo v papírových sbornících a zpěvnících, chceme nabídnout
         rychlou a praktickou alternativu.
+        <a href="https://www.evangelickyzpevnik.cz/">Evangelický zpěvník</a>
       </p>
 
       <h2>Náš tým</h2>
@@ -28,6 +29,10 @@
           <user-card
             name="Benjamín Tichý"
             info="logo, design, návrh rozhraní"
+          />
+           <user-card
+            name="Pavel Hanych"
+            info="koordinátor nového evangelického zpěvníku"
           />
         </ul>
       </div>
