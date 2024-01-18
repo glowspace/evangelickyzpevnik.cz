@@ -203,12 +203,7 @@
             ></chord-sharp-flat>
           </div>
 
-          <div
-            v-if="song_lyric.has_chords"
-            :class="{
-              'opacity-40 pointer-events-none': !chordSharedStore.showChords,
-            }"
-          >
+          <div>
             <simple-view v-model="chordSharedStore.simpleView"></simple-view>
           </div>
 

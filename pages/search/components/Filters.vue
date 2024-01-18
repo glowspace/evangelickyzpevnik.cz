@@ -205,6 +205,7 @@
             @selectTag="selectTag"
           ></SearchTagCategory>
           <SearchTagCategory
+            v-if="!$config.public.isEvangelicalSongbook"
             heading="Zpěvníky"
             color="yellow"
             :tags-in-category="songbooks"
@@ -212,6 +213,7 @@
             @selectTag="selectSongbook"
           ></SearchTagCategory>
           <SearchTagCategory
+            v-if="!$config.public.isEvangelicalSongbook"
             heading="Jazyky"
             color="red"
             :tags-in-category="all_languages"
