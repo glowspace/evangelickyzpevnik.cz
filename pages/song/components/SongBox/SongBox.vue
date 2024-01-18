@@ -71,6 +71,15 @@
             <span v-else-if="hasTags">Štítky</span>
             <span v-else>Zpěvníky</span>
           </BasicChip>
+          <BasicChip
+            v-if="song_lyric.hymnology"
+            class="pl-2 font-custom-medium"
+            :class="{ active: topMode == 4 }"
+            @click="topMode = topMode == 4 ? 0 : 4"
+          >
+            <BasicIcon name="info" :fill="topMode == 4" class="text-primary" />
+            <span>O písni</span>
+          </BasicChip>
         </div>
 
         <!-- scores -->
@@ -131,6 +140,16 @@
         >
           <div class="px-5 pb-5" v-if="!$apollo.loading">
             <tags :song="song_lyric"></tags>
+          </div>
+        </TopBox>
+        <!-- info (hymnology) -->
+        <TopBox
+          :active="topMode === 4"
+          @close="topMode = 0"
+          title="O písni"
+        >
+          <div class="px-5 pb-5 whitespace-pre-line" v-if="!$apollo.loading">
+            {{ song_lyric.hymnology }}
           </div>
         </TopBox>
       </div>
