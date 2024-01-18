@@ -1,5 +1,5 @@
 <template>
-  <div class="relative mt-4">
+  <div class="relative mt-4" v-if="categoryHasSongs">
     <div
       :class="[
         'flex flex-wrap items-center justify-between',
@@ -22,7 +22,9 @@
     <div :class="{ 'whitespace-nowrap overflow-hidden opacity-60': isClosed }">
       <BasicChip
         :class="[{ active: isSelectedTag(tag) }, 'tag-' + color]"
-        v-for="tag in tagsInCategory.filter((t) => t.song_lyrics_count !== 0)"
+        v-for="tag in tagsInCategory.filter(
+          (tag) => tagHasSongs(tag) || isSelectedTag(tag)
+        )"
         :key="'tag-' + tag.id"
         @click="$emit('selectTag', tag)"
         >{{ tag.name }}</BasicChip
@@ -68,6 +70,10 @@ export default {
           return '';
       }
     },
+
+    categoryHasSongs() {
+      return this.tagsInCategory.some((tag) => this.tagHasSongs(tag));
+    },
   },
 
   watch: {
@@ -81,6 +87,14 @@ export default {
   methods: {
     isSelectedTag(tag) {
       return this.selectedTags[tag.id];
+    },
+
+    tagHasSongs(tag) {
+      if ('song_lyrics_count' in tag) {
+        return !!tag.song_lyrics_count;
+      }
+
+      return true;
     },
   },
 };

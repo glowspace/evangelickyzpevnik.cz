@@ -174,12 +174,17 @@ export default {
   components: { ScrollTrigger, SLItem },
 
   data() {
+    const default_preferred_songbook = this.$config.public.isEvangelicalSongbook
+      ? '58'
+      : null;
+
     return {
       page: 1,
       per_page: 20,
       enable_more: true,
       results_loaded: false,
-      preferred_songbook_id: null,
+      default_preferred_songbook: default_preferred_songbook,
+      preferred_songbook_id: default_preferred_songbook,
       caniuseObserver: true,
       loadedMore: false,
     };
@@ -262,18 +267,21 @@ export default {
       const rec = this.getSongbookRecordForNumber(song_lyric);
 
       if (onlySpecial) {
-        return rec ? rec.pivot.number : '';
+        return rec &&
+          this.preferred_songbook_id != this.default_preferred_songbook
+          ? rec.pivot.number
+          : '';
       }
 
       if (rec) {
-        return rec.pivot.songbook.shortcut + ' ' + rec.pivot.number;
+        if (this.preferred_songbook_id == this.default_preferred_songbook) {
+          return rec.pivot.number;
+        } else {
+          return rec.pivot.songbook.shortcut + ' ' + rec.pivot.number;
+        }
       }
 
-      return String(
-        this.$config.public.isEvangelicalSongbook
-          ? song_lyric.ez_number
-          : song_lyric.song_number
-      );
+      return String(song_lyric.song_number);
     },
 
     getSongbookRecordForNumber(song_lyric) {
@@ -349,7 +357,7 @@ export default {
         if (arr.length == 1) {
           this.preferred_songbook_id = arr[0];
         } else {
-          this.preferred_songbook_id = null;
+          this.preferred_songbook_id = this.default_preferred_songbook;
         }
       },
       deep: true,
