@@ -6,10 +6,9 @@
       :title="song.lang_string"
       >{{ song.lang }}</span
     >
-    <span v-if="song.licence_type_cc != 'UNSET'"
-      ><br />Licence:
-      {{ licenceValues ? licenceValues[song.licence_type_cc] : '' }}</span
-    >
+    <div v-if="song.licence_type_cc != 'UNSET'">
+      Licence: {{ licenceValues ? licenceValues[song.licence_type_cc] : '' }}
+    </div>
   </span>
 </template>
 
