@@ -74,6 +74,9 @@ const FETCH_SONG_LYRIC = gql`
       lyrics_no_chords
       bible_refs_src
       lilypond_svg
+      external_rendered_scores {
+        contents
+      }
       lang
       lang_string
       licence_type_cc
