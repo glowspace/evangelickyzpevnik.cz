@@ -65,6 +65,10 @@ const btnType = computed(() => {
   dark:text-primary-200 dark:hover:bg-surfacedark-200 dark:focus:bg-surfacedark-400;
 }
 
+.btn.nohover {
+  @apply hover:bg-transparent focus:bg-transparent cursor-default
+}
+
 .btn.outlined {
   @apply border border-gray-400 text-primary;
 }

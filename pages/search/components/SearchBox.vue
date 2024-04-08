@@ -8,7 +8,9 @@
         v-if="onDashboard"
         icon-name="search"
         icon-only
-        class="pointer-events-none"
+        class="nohover"
+        tabindex="-1"
+        @click="emit('focus')"
       />
       <BasicButton
         v-else
