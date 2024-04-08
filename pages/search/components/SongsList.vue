@@ -96,7 +96,6 @@ const FETCH_ITEMS = gql`
       data {
         id
         song_number
-        ez_number
         name
         secondary_name_1
         secondary_name_2
@@ -288,7 +287,7 @@ export default {
     getSongbookRecordForNumber(song_lyric) {
       if (this.preferred_songbook_id !== null) {
         let rec = song_lyric.songbook_records.find(
-          (record) => record.pivot.songbook.id === this.preferred_songbook_id
+          (record) => record.pivot.songbook.id == this.preferred_songbook_id
         );
 
         if (rec && rec.pivot.number && rec.pivot.songbook.shortcut) {

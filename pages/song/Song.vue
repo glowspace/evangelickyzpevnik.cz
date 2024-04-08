@@ -1,15 +1,7 @@
 <template>
   <TopBar
     @back="previous ? $router.back() : navigateTo('/')"
-    :title="
-      song_lyric
-        ? String(
-            $config.public.isEvangelicalSongbook
-              ? song_lyric?.ez_number
-              : song_lyric?.song_number
-          )
-        : 'načítám…'
-    "
+    :title="songTitle"
   >
     <Kebab
       v-if="song_lyric"
@@ -65,7 +57,6 @@ const FETCH_SONG_LYRIC = gql`
       has_chords
       id
       song_number
-      ez_number
       name
       secondary_name_1
       secondary_name_2
@@ -240,6 +231,24 @@ export default {
         Bowser.getParser(window.navigator.userAgent).getPlatformType() ===
         'mobile'
       );
+    },
+  },
+
+  computed: {
+    songTitle() {
+      return this.song_lyric
+        ? String(
+            this.$config.public.isEvangelicalSongbook
+              ? this.ezNumber
+              : this.song_lyric?.song_number
+          )
+        : 'načítám…';
+    },
+
+    ezNumber() {
+      return this.song_lyric.songbook_records.find(
+        (record) => record.pivot.songbook.id == 58
+      )?.pivot.number;
     },
   },
 
