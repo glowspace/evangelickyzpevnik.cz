@@ -1,7 +1,10 @@
 <template>
   <div class="pt-0 p-1 md:px-4">
     <div class="flex flex-row items-stretch">
-      <BasicButton icon-name="filter_alt" icon-only icon-fill @click="showFilters = true" class="flex-shrink-0 md:pointer-events-none" />
+      <!-- desktop button -->
+      <BasicButton icon-name="filter_alt" icon-only icon-fill class="flex-shrink-0 !hidden md:!inline-flex pointer-events-none" tabindex="-1" />
+      <!-- mobile button -->
+      <BasicButton icon-name="filter_alt" icon-only icon-fill class="flex-shrink-0 md:!hidden" @click="showFilters = true" />
       <div class="flex flex-row items-center overflow-auto whitespace-nowrap">
         <slot name="row" />
         <BasicChip class="chip-add hover:!bg-surface-200 md:!hidden" @click="showFilters = true"><BasicIcon name="add" class="-mx-1 text-lg" />přidat filtr</BasicChip>
