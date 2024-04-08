@@ -3,7 +3,7 @@
   <!-- <client-only> -->
   <div class="mb-4">
     <LoaderLinear
-      :class="[{ 'opacity-0': results_loaded }, 'transition-opacity']"
+      :class="[{ 'opacity-0': (results_loaded || !loading_bar) }, 'transition-opacity']"
     />
     <table class="w-full">
       <tbody>
@@ -183,6 +183,7 @@ export default {
       per_page: 20,
       enable_more: true,
       results_loaded: false,
+      loading_bar: false,
       default_preferred_songbook: default_preferred_songbook,
       preferred_songbook_id: default_preferred_songbook,
       caniuseObserver: true,
@@ -326,8 +327,8 @@ export default {
           per_page: this.per_page,
         };
       },
-      // debounce waits 200ms for query refetching
-      debounce: 200,
+      // debounce waits 500 ms for query refetching (originally 200 ms)
+      debounce: 500,
       result(result) {
         this.$emit('query-loaded', null);
         this.enable_more =
@@ -341,6 +342,9 @@ export default {
           this.page =
             result.data.song_lyrics_paginated.paginatorInfo.currentPage;
         }
+      },
+      watchLoading(isLoading, countModifier) {
+        this.loading_bar = isLoading;
       },
     },
   },
