@@ -92,8 +92,8 @@ export default {
           search_string: this.searchString,
         };
       },
-      // debounce waits 200ms for query refetching
-      debounce: 200,
+      // debounce waits 500 ms for query refetching (originally 200 ms)
+      debounce: 500,
       result(result) {
         this.$emit('query-loaded', null);
         this.results_loaded = true;
