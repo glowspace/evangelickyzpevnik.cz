@@ -168,7 +168,7 @@
               <div
                 v-if="song_lyric.lilypond_svg || song_lyric.external_rendered_scores[0]?.contents"
                 v-html="song_lyric.lilypond_svg || song_lyric.external_rendered_scores[0]?.contents"
-                class="-ml-6 -mr-4 mb-3 lilypond-container"
+                class="mb-3 lilypond-container"
               ></div>
               <span v-if="song_lyric.has_lyrics">
                 <div
