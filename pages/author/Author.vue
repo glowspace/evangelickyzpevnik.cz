@@ -57,7 +57,7 @@
         </p>
       </div>
 
-      <div class="-mx-3">
+      <div class="-mx-3" v-if="author.songs_originals.length + author.songs_translations.length + author.songs_interpreted.length > 0">
         <AuthorSongsList
           heading-text="Autorské písně"
           heading-class="text-primary"
@@ -76,6 +76,9 @@
           v-if="author.songs_interpreted.length"
           :songs="author.songs_interpreted"
         />
+      </div>
+      <div v-else class="py-5">
+        V databázi zatím nemáme žádné související písně.
       </div>
     </div>
 
