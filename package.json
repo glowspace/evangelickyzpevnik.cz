@@ -1,6 +1,9 @@
 {
   "name": "evangelicky-zpevnik",
   "private": true,
+  "engines": {
+    "node": ">=20.12.2"
+  },
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
