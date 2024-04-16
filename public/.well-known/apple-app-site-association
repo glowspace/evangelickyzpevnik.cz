@@ -1,0 +1,17 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [
+          "FQHP4NZDDV.cz.proscholy.id.Zpevnik"
+        ],
+        "components": [
+          {
+            "/": "/*",
+            "comment": "Matches any URL."
+          }
+        ]
+      }
+    ]
+  }
+}
