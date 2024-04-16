@@ -20,7 +20,7 @@ export default defineNuxtConfig({
       regenschoriUrl:
         process.env.REGENSCHORI_URL || 'https://www.regenschori.cz',
       proscholyUrl: process.env.PROSCHOLY_URL || 'https://zpevnik.proscholy.cz',
-      isEvangelicalSongbook: true,
+      isEvangelicalSongbook: false,
     },
   },
   vite: {

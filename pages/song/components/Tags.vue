@@ -54,11 +54,13 @@
       <BasicChip
         v-for="(sb, key) in publicSongbookRecords"
         :key="key"
-        class="songbook-chip tag-yellow"
+        :class="[sb.pivot.number ? 'songbook-chip' : '', 'tag-yellow']"
         :to="'/?zpevniky=' + sb.pivot.songbook.id + '&razeni=2'"
       >
-        <span class="songbook-name">{{ sb.pivot.songbook.name }}</span
-        ><span class="songbook-number">{{ sb.pivot.number }}</span>
+        <template v-if="sb.pivot.number">
+          <span class="songbook-name">{{ sb.pivot.songbook.name }}</span><span class="songbook-number">{{ sb.pivot.number }}</span>
+        </template>
+        <span v-else>{{ sb.pivot.songbook.name }}</span>
       </BasicChip>
     </div>
 
