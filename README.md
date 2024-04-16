@@ -15,3 +15,5 @@ Rozsáhlejší dokumentace vývoje je dostupná v Confluence komunity Glow Space
 Vývojový server se spustí na adrese `http://localhost:3000`.
 
 Produkční build lze vytvořit pomocí `yarn build`. Náhled produkčního serveru se spouští příkazem `yarn preview`.
+
+Aktuální verzi Node.js lze specifikovat v souboru `package.json` pomocí `engines`. Uvedenou verzí se řídí i Vercel.
