@@ -49,7 +49,7 @@ export default {
     },
   },
 
-  destroyed() {
+  beforeUnmount() {
     this.setScroll(this.autoscrollNum, false);
   },
 
@@ -66,7 +66,7 @@ export default {
         this.heightChecker = setInterval(
           function () {
             if (
-              window.innerHeight + window.scrollY >=
+              window.innerHeight + window.scrollY + 1 >=
               document.body.scrollHeight
             ) {
               // we're at the bottom of the page
