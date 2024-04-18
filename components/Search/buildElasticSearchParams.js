@@ -38,7 +38,7 @@ function applyFulltext(query, search_string, options = {
       //fuzzy search, authors more prone to errors
       multi_match: {
         query: search_string,
-        fields: ['authors'],
+        fields: ['authors', 'hymnology'],
         fuzziness: 'AUTO'
       }
     })
