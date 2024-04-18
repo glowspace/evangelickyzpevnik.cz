@@ -7,7 +7,7 @@ function applyFulltext(query, search_string, options = {
     query.bool.must.push({
       multi_match: {
         query: search_string,
-        fields: ['name', 'lyrics', 'authors'],
+        fields: ['name', 'lyrics', 'authors', 'hymnology'],
         type: 'phrase'
       }
     })
