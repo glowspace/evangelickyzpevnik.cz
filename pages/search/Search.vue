@@ -48,9 +48,11 @@
       </StickyContainer>
       <div class="custom-container" v-if="init">
         <InitFilters
+          v-if="!$config.public.isEvangelicalSongbook"
           v-model="selected_tags"
           @update:modelValue="init = false"
         ></InitFilters>
+        <!-- todo: allow filters for EZ -->
         <div class="text-center mt-1">
           <BasicButton
             @click="init = false"
