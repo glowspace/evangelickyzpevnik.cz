@@ -168,7 +168,8 @@
             <BasicIcon name="search" />
           </BasicButtonGroupItem>
         </BasicButtonGroup>
-        <div v-if="!localShowAuthors" class="mb-3">
+        <div v-if="!localShowAuthors && !$config.public.isEvangelicalSongbook" class="mb-3">
+          <!-- todo: allow filters for EZ -->
           <SearchTagCategory
             heading="Mše svatá"
             color="blue"

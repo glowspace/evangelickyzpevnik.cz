@@ -47,25 +47,15 @@
             <BasicIcon name="edit_note" class="text-primary" />
             <span>Aranže</span>
           </BasicChip>
+          <!-- todo: allow tags for EZ -->
           <BasicChip
-            v-if="
-              hasTags ||
-              song_lyric.songbook_records.filter(
-                (sb) => !sb.pivot.songbook.is_private
-              ).length
-            "
+            v-if="(hasTags || publicSongbookRecords.length) && !$config.public.isEvangelicalSongbook"
             class="pl-2 font-custom-medium"
             :class="{ active: topMode == 3 }"
             @click="topMode = topMode == 3 ? 0 : 3"
           >
             <BasicIcon name="sell" :fill="topMode == 3" class="text-primary" />
-            <span
-              v-if="
-                hasTags &&
-                song_lyric.songbook_records.filter(
-                  (sb) => !sb.pivot.songbook.is_private
-                ).length
-              "
+            <span v-if="hasTags && publicSongbookRecords.length"
               >Štítky, zpěvníky</span
             >
             <span v-else-if="hasTags">Štítky</span>
@@ -143,13 +133,9 @@
           </div>
         </TopBox>
         <!-- info (hymnology) -->
-        <TopBox
-          :active="topMode === 4"
-          @close="topMode = 0"
-          title="O písni"
-        >
-          <div class="px-5 pb-5 whitespace-pre-line" v-if="!$apollo.loading">
-            {{ song_lyric.hymnology }}
+        <TopBox :active="topMode === 4" @close="topMode = 0" title="O písni">
+          <div class="px-5 pb-3" v-if="!$apollo.loading">
+            <p v-for="line in song_lyric.hymnology.split('\n')" class="mb-2">{{ line }}</p>
           </div>
         </TopBox>
       </div>
@@ -166,8 +152,14 @@
               }"
             >
               <div
-                v-if="song_lyric.lilypond_svg || song_lyric.external_rendered_scores[0]?.contents"
-                v-html="song_lyric.lilypond_svg || song_lyric.external_rendered_scores[0]?.contents"
+                v-if="
+                  song_lyric.external_rendered_scores[0]?.contents ||
+                  song_lyric.lilypond_svg
+                "
+                v-html="
+                  song_lyric.external_rendered_scores[0]?.contents ||
+                  song_lyric.lilypond_svg
+                "
                 class="mb-3 lilypond-container"
               ></div>
               <span v-if="song_lyric.has_lyrics">
@@ -404,6 +396,12 @@ export default {
             this.song_lyric.tags_sacred_occasion.length
         );
       },
+    },
+
+    publicSongbookRecords() {
+      return this.song_lyric.songbook_records.filter(
+        (sb) => !sb.pivot.songbook.is_private
+      );
     },
 
     mediaTypes: {
