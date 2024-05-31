@@ -48,13 +48,23 @@ th, td {
 
 .basic-content {
   a {
-    @apply underline hover:no-underline;
+    @apply underline hover:no-underline text-primary-800;
   }
 
-  h2,
+  h2 {
+    @apply mt-8;
+    @apply mb-2;
+  }
+
   h3,
   h4 {
     @apply mt-6;
+  }
+
+  h2, h3, h4 {
+    &:first-child {
+      @apply mt-0;
+    }
   }
 
   p {
@@ -66,6 +76,18 @@ th, td {
   }
 
   h3 {
-    @apply uppercase;
+    @apply font-custom-bold;
+  }
+
+  h4 {
+    @apply font-custom-medium;
+  }
+
+  ol {
+    @apply list-decimal pl-5 my-2;
+  }
+
+  li {
+    @apply my-2;
   }
 }

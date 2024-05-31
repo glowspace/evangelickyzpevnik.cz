@@ -28,6 +28,12 @@
         </div>
         <p class="label">O zpěvníku</p>
       </BasicClickable>
+      <BasicClickable to="/materialy" class="link group">
+        <div class="icon-wrapper" :class="{ active: $route.name == 'downloads' }">
+          <BasicIcon name="description" />
+        </div>
+        <p class="label">Materiály</p>
+      </BasicClickable>
     </div>
   </div>
 </template>
@@ -46,7 +52,7 @@
 }
 
 .link {
-  @apply flex w-1/4 flex-col items-center justify-center px-0 pt-3 pb-4 gap-1
+  @apply flex w-1/4 sm:w-1/5 flex-col items-center justify-center px-0 pt-3 pb-4 gap-1
   md:w-24 md:p-0;
 }
 

@@ -81,7 +81,7 @@
         </template>
       </div>
       <div v-else>
-        <BasicButtonGroup class="mr-2 mb-2">
+        <BasicButtonGroup v-if="!$config.public.isEvangelicalSongbook" class="mr-2 mb-2">
           <BasicButtonGroupItem
             :class="{ active: !localShowAuthors }"
             @click="localShowAuthors = false"

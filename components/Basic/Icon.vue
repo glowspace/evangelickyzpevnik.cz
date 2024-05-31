@@ -13,7 +13,6 @@
 <script setup>
 const props = defineProps({
   fill: Boolean,
-  fa: String,
   name: String,
   type: String,
 });

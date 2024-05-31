@@ -63,20 +63,26 @@
           </BasicButton>
         </div>
       </div>
-      <div v-if="init" class="p-5 sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-x-7 gap-y-5 space-y-4 sm:space-y-0 max-w-[1400px] mx-auto">
-        <News />
-        <DashboardCard title="O projektu">
-          <div class="basic-content p-4">
-            Evangelický zpěvník je projektem
-            <BasicLink href="https://e-cirkev.cz" underline
-              >Českobratrské církve evangelické</BasicLink
-            >. Tuto aplikaci vytvořil tým vývojářů z komunity
-            <BasicLink href="https://glowspace.cz" underline
-              >Glow Space</BasicLink
-            >.
-          </div>
-        </DashboardCard>
-        <DashboardCard title="Další možnosti">
+      <div
+        v-if="init"
+        class="p-5 sm:grid sm:grid-cols-2 gap-x-7 gap-y-5 space-y-4 sm:space-y-0 lg:mx-[16.5%] max-w-[1400px] mx-auto"
+      >
+        <DashboardCard title="Digitální zpěvník">
+          <BasicClickable
+            href="https://play.google.com/store/apps/details?id=cce.evangelicky_zpevnik"
+            class="list-item"
+          >
+            <BasicIcon name="android" class="list-icon" />
+            <span>Aplikace pro Android</span>
+          </BasicClickable>
+          <BasicClickable href="#" class="list-item">
+            <BasicIcon name="ios" class="list-icon" />
+            <span>Aplikace pro iOS</span>
+          </BasicClickable>
+          <BasicClickable to="/o-zpevniku" class="list-item">
+            <BasicIcon name="newspaper" class="list-icon" />
+            <span>Novinky</span>
+          </BasicClickable>
           <BasicClickable
             :href="
               'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/6/create/20?customfield_10056=' +
@@ -87,20 +93,28 @@
             <BasicIcon name="warning" class="list-icon" />
             <span>Nahlásit chybu</span>
           </BasicClickable>
+        </DashboardCard>
+        <DashboardCard title="Další možnosti">
           <BasicClickable
-            :href="
-              'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/7/create/18?summary=' +
-              encodeURIComponent($config.public.siteName) +
-              ':+'
-            "
+            href="https://eshop.e-cirkev.cz/produkty/zpevnik/"
             class="list-item"
           >
-            <BasicIcon name="chat" class="list-icon" />
-            <span>Zpětná vazba</span>
+            <BasicIcon name="book_2" class="list-icon" />
+            <span>Koupit zpěvník</span>
           </BasicClickable>
-          <BasicClickable href="https://play.google.com/store/apps/details?id=cce.evangelicky_zpevnik" class="list-item">
-            <BasicIcon name="smartphone" class="list-icon" />
-            <span>Mobilní aplikace</span>
+          <BasicClickable
+            to="/materialy"
+            class="list-item"
+          >
+            <BasicIcon name="download" class="list-icon" />
+            <span>Materiály ke stažení</span>
+          </BasicClickable>
+          <BasicClickable
+            to="https://soundcloud.com/ecirkev/sets/nov-evangelick-zp-vn-k-2021"
+            class="list-item"
+          >
+            <BasicIcon name="headphones" class="list-icon" />
+            <span>Nahrávky písní</span>
           </BasicClickable>
         </DashboardCard>
       </div>
