@@ -107,6 +107,14 @@ const FETCH_SONG_LYRIC = gql`
           name
           secondary_name_1
           secondary_name_2
+          songbook_records {
+            pivot {
+              songbook {
+                id
+              }
+              song_name
+            }
+          }
           public_route
           type
           authors_pivot {
@@ -126,6 +134,7 @@ const FETCH_SONG_LYRIC = gql`
       songbook_records {
         pivot {
           number
+          song_name
           songbook {
             id
             name
@@ -193,7 +202,12 @@ export default {
   methods: {
     getTitle() {
       return (
-        (this.song_lyric ? getFullName(this.song_lyric) : 'Píseň') +
+        (this.song_lyric
+          ? getFullName(
+              this.song_lyric,
+              this.$config.public.isEvangelicalSongbook
+            )
+          : 'Píseň') +
         this.$config.public.titleSeparator +
         this.$config.public.siteName
       );

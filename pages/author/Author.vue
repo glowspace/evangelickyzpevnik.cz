@@ -57,7 +57,15 @@
         </p>
       </div>
 
-      <div class="-mx-3" v-if="author.songs_originals.length + author.songs_translations.length + author.songs_interpreted.length > 0">
+      <div
+        class="-mx-3"
+        v-if="
+          author.songs_originals.length +
+            author.songs_translations.length +
+            author.songs_interpreted.length >
+          0
+        "
+      >
         <AuthorSongsList
           heading-text="Autorské písně"
           heading-class="text-primary"
@@ -146,6 +154,14 @@ const FETCH_AUTHOR = gql`
     name
     secondary_name_1
     secondary_name_2
+    songbook_records {
+      pivot {
+        songbook {
+          id
+        }
+        song_name
+      }
+    }
     lang
     has_lyrics
     public_route

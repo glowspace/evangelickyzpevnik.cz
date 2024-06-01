@@ -289,7 +289,6 @@ import TopBox from './TopBox';
 import BottomBar from './BottomBar';
 import NoSleep from './NoSleep';
 import SongLyricParts from '../Renderer/SongLyricParts';
-import { getFullName } from '~/components/SongName';
 import Tags from '../Tags';
 
 /**
@@ -439,8 +438,6 @@ export default {
         this.scrollable = true;
       }
     }, 100),
-
-    getFullName: getFullName,
   },
 
   created() {

@@ -126,6 +126,7 @@ const FETCH_ITEMS = gql`
         songbook_records {
           pivot {
             number
+            song_name
             songbook {
               id
               name

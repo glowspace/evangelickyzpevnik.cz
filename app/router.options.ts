@@ -24,9 +24,17 @@ export default <RouterOptions>{
       component: () => import('~/pages/about/About.vue'),
     },
     {
+      path: '/zpevnik/:page?',
+      redirect: '/o-zpevniku',
+    },
+    {
       name: 'downloads',
       path: '/materialy',
       component: () => import('~/pages/about/Downloads.vue'),
+    },
+    {
+      path: '/materialy/:page',
+      redirect: '/materialy',
     },
   ],
 };
