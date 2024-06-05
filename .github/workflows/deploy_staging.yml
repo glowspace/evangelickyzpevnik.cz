@@ -1,0 +1,27 @@
+name: staging_deploy
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH in staging server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          script: cd /var/www/html/staging/evangelickyzpevnik-staging && make staging-pull --silent && make deploy --silent
+          host: ${{ secrets.HOST }}
+          port: ${{ secrets.PORT }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY}}
+          passphrase: ${{ secrets.PRIVATE_KEY_PASSPHRASE}}
+      - name: Discord notification
+        uses: Ilshidur/action-discord@master
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_DEPLOY_WEBHOOK_URL }}
+          DISCORD_USERNAME: "${{ github.workflow }} - ${{ github.event.repository.name }}"
+          DISCORD_AVATAR: "https://upload.wikimedia.org/wikipedia/sl/1/11/048029f362c484a2a46b928afbe98837.jpg"
+        with:
+          args: "Proběhlo vývojové nasazení (frontend) na dev.evangelickyzpevnik.cz! :tada:"

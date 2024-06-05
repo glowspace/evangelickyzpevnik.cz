@@ -2,6 +2,7 @@
   <TopBar title="Materiály ke stažení" is-h1 @back="navigateTo('/')" />
   <div class="custom-container">
     <div class="cont basic-content">
+      <p>Hledáte chorálník nebo kytarový doprovodník? Odpovídající materiály najdete u&nbsp;jednotlivých písní v sekci Noty.</p>
       <h2>Společné písně ve starém a novém zpěvníku</h2>
       <p>
         Pro snazší seznámení s novým zpěvníkem jsme připravili
@@ -18,7 +19,13 @@
       </p>
 
       <h2>Nahrávky písní</h2>
-      <p>Poslouchejte <a href="https://soundcloud.com/ecirkev/sets/nov-evangelick-zp-vn-k-2021">na platformě SoundCloud</a>.</p>
+      <p>
+        Poslouchejte
+        <a
+          href="https://soundcloud.com/ecirkev/sets/nov-evangelick-zp-vn-k-2021"
+          >na platformě SoundCloud</a
+        >.
+      </p>
 
       <h2>Písně k promítání</h2>
       <p>
@@ -36,7 +43,10 @@
         </li>
         <li>
           Stáhněte si
-          <a href="#">data nového zpěvníku v&nbsp;archivu zip</a>
+          <a
+            href="https://zpevnik.proscholy.cz/soubor/ez21--openlp-2022-01-25.zip"
+            >data nového zpěvníku v&nbsp;archivu zip</a
+          >
           a&nbsp;rozbalte je do libovolné složky ve svém počítači.
         </li>
         <li>

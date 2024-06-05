@@ -5,28 +5,18 @@
     }}</span>
     <span
       class="song-secondary-name text-secondary text-sm"
-      v-if="song.secondary_name_1"
+      v-for="name in secondaryNames"
     >
       <br />
-      {{ song.secondary_name_1 }}
-    </span>
-    <span
-      class="song-secondary-name text-secondary text-sm"
-      v-if="song.secondary_name_2"
-    >
-      <br />
-      {{ song.secondary_name_2 }}
+      {{ name }}
     </span>
   </span>
   <span v-else>
     <span :class="{ 'song-name': true, underline: active }">{{
       songName
     }}</span>
-    <span class="song-secondary-name" v-if="song.secondary_name_1">
-      ({{
-        song.secondary_name_1 +
-        (song.secondary_name_2 ? ', ' + song.secondary_name_2 : '')
-      }})
+    <span class="song-secondary-name" v-if="secondaryNames.length">
+      ({{ secondaryNames.join(', ') }})
     </span>
   </span>
 </template>
@@ -50,6 +40,12 @@ export default {
     songName() {
       return getName(this.song, this.$config.public.isEvangelicalSongbook);
     },
+    names() {
+      return getNames(this.song, this.$config.public.isEvangelicalSongbook);
+    },
+    secondaryNames() {
+      return this.names.slice(1);
+    },
   },
 };
 
@@ -67,11 +63,30 @@ function getName(song, isEvangelicalSongbook = false) {
   return song.name;
 }
 
+function getNames(song, isEvangelicalSongbook = false) {
+  const names = [
+    getName(song, isEvangelicalSongbook),
+    song.secondary_name_1,
+    song.secondary_name_2,
+  ];
+  const result = [];
+
+  for (const name of names) {
+    if (name && !result.includes(name)) {
+      result.push(name);
+    }
+  }
+
+  return result;
+}
+
 export function getFullName(song, isEvangelicalSongbook = false) {
-  return song.secondary_name_1
-    ? `${getName(song, isEvangelicalSongbook)} (${song.secondary_name_1}${
-        song.secondary_name_2 ? ', ' + song.secondary_name_2 : ''
-      })`
-    : song.name;
+  const names = getNames(song, isEvangelicalSongbook);
+
+  if (names.length == 1) {
+    return names[0];
+  } else {
+    return `${names[0]} (${names.slice(1).join(', ')})`;
+  }
 }
 </script>

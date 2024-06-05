@@ -75,6 +75,15 @@
         >.
       </p>
 
+      <h2>Kontakt</h2>
+
+      <p>
+        <span>Pavel Hanych</span> <br>
+        <span class="text-secondary">koordinátor nového zpěvníku</span> <br>
+        <a href="tel:+420-608-880-579">+420 608 880 579</a> <br>
+        <a href="mailto:zpevnik@e-cirkev.cz">zpevnik@e-cirkev.cz</a>
+      </p>
+
       <h2>Tým, který stojí za touto aplikací</h2>
 
       <TeamSection

@@ -65,7 +65,7 @@
       </div>
       <div
         v-if="init"
-        class="p-5 sm:grid sm:grid-cols-2 gap-x-7 gap-y-5 space-y-4 sm:space-y-0 lg:mx-[16.5%] max-w-[1400px] mx-auto"
+        class="p-5 sm:grid sm:grid-cols-2 gap-x-7 gap-y-5 space-y-4 sm:space-y-0 max-w-[1000px] mx-auto"
       >
         <DashboardCard title="Digitální zpěvník">
           <BasicClickable
@@ -75,7 +75,10 @@
             <BasicIcon name="android" class="list-icon" />
             <span>Aplikace pro Android</span>
           </BasicClickable>
-          <BasicClickable href="#" class="list-item">
+          <BasicClickable
+            href="https://apps.apple.com/cz/developer/it2go-s-r-o/id1609756263"
+            class="list-item"
+          >
             <BasicIcon name="ios" class="list-icon" />
             <span>Aplikace pro iOS</span>
           </BasicClickable>
@@ -102,10 +105,7 @@
             <BasicIcon name="book_2" class="list-icon" />
             <span>Koupit zpěvník</span>
           </BasicClickable>
-          <BasicClickable
-            to="/materialy"
-            class="list-item"
-          >
+          <BasicClickable to="/materialy" class="list-item">
             <BasicIcon name="download" class="list-icon" />
             <span>Materiály ke stažení</span>
           </BasicClickable>
