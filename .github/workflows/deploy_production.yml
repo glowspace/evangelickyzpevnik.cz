@@ -1,0 +1,27 @@
+name: production_deploy
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH in production server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          script: cd /var/www/html/evangelickyzpevnik && make production-pull --silent && make deploy --silent
+          host: ${{ secrets.HOST }}
+          port: ${{ secrets.PORT }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY}}
+          passphrase: ${{ secrets.PRIVATE_KEY_PASSPHRASE}}
+      - name: Discord notification
+        uses: Ilshidur/action-discord@master
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_DEPLOY_WEBHOOK_URL }}
+          DISCORD_USERNAME: "${{ github.workflow }} - ${{ github.event.repository.name }}"
+          DISCORD_AVATAR: "https://upload.wikimedia.org/wikipedia/en/2/2b/Legolas600ppx.jpg"
+        with:
+          args: "Proběhlo produkční nasazení (frontend) na www.evangelickyzpevnik.cz! :tada:"
