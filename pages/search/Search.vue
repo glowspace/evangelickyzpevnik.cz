@@ -76,7 +76,7 @@
             <span>Aplikace pro Android</span>
           </BasicClickable>
           <BasicClickable
-            href="https://apps.apple.com/cz/developer/it2go-s-r-o/id1609756263"
+            href="https://apps.apple.com/us/app/id6502984934"
             class="list-item"
           >
             <BasicIcon name="ios" class="list-icon" />
@@ -178,7 +178,6 @@ import FilterRow from './components/FilterRow';
 import AuthorsList from './components/AuthorsList';
 import Filters from './components/Filters';
 import InitFilters from './components/InitFilters';
-import AppLinks from './components/AppLinks';
 import Logo from './components/Logo';
 import SearchBox from './components/SearchBox';
 import StickyContainer from './components/StickyContainer';
@@ -314,7 +313,6 @@ export default {
 
   components: {
     Logo,
-    AppLinks,
     SongsList,
     AuthorsList,
     Filters,
