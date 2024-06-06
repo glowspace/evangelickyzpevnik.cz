@@ -3,10 +3,9 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
-      "package_name": "jozkar.mladez",
-      "sha256_cert_fingerprints": [
-        "D1:C7:57:07:BB:E5:3A:0B:6C:EE:AF:0E:77:8E:BF:B3:E6:FC:A9:E4:9C:F3:8D:1A:76:D9:2B:93:E9:FF:04:6B"
-      ]
+      "package_name": "cce.evangelicky_zpevnik",
+      "sha256_cert_fingerprints":
+        ["6E:92:E0:1F:42:06:E3:0E:A7:87:8A:7E:87:C6:AE:B2:8C:63:34:74:EE:C3:E2:1B:8A:CF:8B:DD:9D:96:7A:36"]
     }
   }
 ]
