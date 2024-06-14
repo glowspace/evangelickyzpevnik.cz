@@ -58,7 +58,7 @@
 
       <p>
         Digitální evangelický zpěvník je společným projektem
-        <a href="https://e-cirkev.cz">Českobratrské církve evangelické</a>.
+        <a href="https://e-cirkev.cz">Českobratrské církve evangelické</a>
         a&nbsp;týmu vývojářů z&nbsp;komunity
         <a href="https://glowspace.cz">Glow Space</a>.
       </p>
