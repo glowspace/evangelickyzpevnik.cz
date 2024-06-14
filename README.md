@@ -1,10 +1,8 @@
-# Portál hudba.e-cirkev.cz
+# Webová aplikace [evangelickyzpevnik.cz](https://www.evangelickyzpevnik.cz/)
 
-> Projekt vzniká pod záštitou České církve evangelické (e-cirkev.cz) ve spolupráci s komunitou Glow Space.
+> Digitální evangelický zpěvník je společným projektem [Českobratrské církve evangelické](https://e-cirkev.cz/) a týmu vývojářů z komunity [Glow Space](https://glowspace.cz/).
 
 Logo ČCE je jejím duševním vlastnictvím a nevztahuje se na něj open-source licence, pod kterou je zdrojový kód aplikace zveřejněný.
-
-Rozsáhlejší dokumentace vývoje je dostupná v Confluence komunity Glow Space na adrese: (TODO)
 
 ## Prostředí pro vývoj
 
