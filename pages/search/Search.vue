@@ -76,7 +76,7 @@
             <span>Aplikace pro Android</span>
           </BasicClickable>
           <BasicClickable
-            href="https://apps.apple.com/us/app/id6502984934"
+            href="https://apps.apple.com/us/app/evangelick%C3%BD-zp%C4%9Bvn%C3%ADk/id6502984934"
             class="list-item"
           >
             <BasicIcon name="ios" class="list-icon" />
