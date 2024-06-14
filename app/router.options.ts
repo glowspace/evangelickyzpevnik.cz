@@ -33,6 +33,10 @@ export default <RouterOptions>{
       component: () => import('~/pages/about/Downloads.vue'),
     },
     {
+      path: '/materialy/mobilni-aplikace',
+      redirect: '/',
+    },
+    {
       path: '/materialy/:page',
       redirect: '/materialy',
     },

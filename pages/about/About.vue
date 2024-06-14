@@ -9,8 +9,16 @@
         Slíbený digitální Evangelický zpěvník je tady. Spustili jsme první verzi
         nového webového portálu, kde jsou již nyní všechny písně, kytarové verze
         s&nbsp;akordy i&nbsp;všechny doprovody z&nbsp;chorálníku. Součástí je
-        také zcela nová mobilní aplikace pro Android a&nbsp;konečně také pro iOS
-        (Apple). Projekt počítá s&nbsp;rozšiřováním a&nbsp;nahráváním dalších
+        také zcela nová mobilní aplikace
+        <a
+          href="https://play.google.com/store/apps/details?id=cce.evangelicky_zpevnik"
+          >pro Android</a
+        >
+        a&nbsp;konečně také
+        <a
+          href="https://apps.apple.com/us/app/evangelick%C3%BD-zp%C4%9Bvn%C3%ADk/id6502984934"
+          >pro iOS (Apple)</a
+        >. Projekt počítá s&nbsp;rozšiřováním a&nbsp;nahráváním dalších
         materiálů k&nbsp;písním, aby tak tak postupně vzniklo velké úložiště
         veškerých dostupných písňových materiálů.
       </p>
@@ -45,8 +53,10 @@
       <h3>Kdo za projektem stojí</h3>
       <p>
         Projekt je vzácným příkladem ekumenické spolupráce. Oslovili jsme
-        komunitu Glow Space, která v&nbsp;římskokatolickém prostředí vydala
-        podobné zpěvníky zpevnik.proscholy.cz a&nbsp;regenschori.cz. Naši
+        komunitu <a href="https://glowspace.cz">Glow Space</a>, která
+        v&nbsp;římskokatolickém prostředí vydala podobné zpěvníky
+        <a href="https://zpevnik.proscholy.cz/">zpevnik.proscholy.cz</a>
+        a&nbsp;<a href="https://www.regenschori.cz/">regenschori.cz</a>. Naši
         ekumeničtí přátelé souhlasili s&nbsp;využitím jejich řešení i&nbsp;pro
         naši církev a&nbsp;náš zpěvník. Za velmi výhodných podmínek jsme se tedy
         mohli stát součástí funkčního, prověřeného a&nbsp;neustále se
@@ -78,9 +88,9 @@
       <h2>Kontakt</h2>
 
       <p>
-        <span>Pavel Hanych</span> <br>
-        <span class="text-secondary">koordinátor nového zpěvníku</span> <br>
-        <a href="tel:+420-608-880-579">+420 608 880 579</a> <br>
+        <span>Pavel Hanych</span> <br />
+        <span class="text-secondary">koordinátor nového zpěvníku</span> <br />
+        <a href="tel:+420-608-880-579">+420 608 880 579</a> <br />
         <a href="mailto:zpevnik@e-cirkev.cz">zpevnik@e-cirkev.cz</a>
       </p>
 
