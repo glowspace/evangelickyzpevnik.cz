@@ -152,16 +152,11 @@
               }"
             >
               <div
-                v-if="
-                  song_lyric.external_rendered_scores[0]?.contents ||
-                  song_lyric.lilypond_svg
-                "
-                v-html="
-                  song_lyric.external_rendered_scores[0]?.contents ||
-                  song_lyric.lilypond_svg
-                "
+                v-if="song_lyric.lilypond_svg"
+                v-html="song_lyric.lilypond_svg"
                 class="mb-3 lilypond-container"
               ></div>
+              <img v-if="song_lyric.external_rendered_scores[0]?.public_url" :src="song_lyric.external_rendered_scores[0]?.public_url" />
               <span v-if="song_lyric.has_lyrics">
                 <div
                   v-if="
