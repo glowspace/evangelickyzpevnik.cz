@@ -66,7 +66,7 @@ const FETCH_SONG_LYRIC = gql`
       bible_refs_src
       lilypond_svg
       external_rendered_scores {
-        contents
+        public_url
       }
       lang
       lang_string
