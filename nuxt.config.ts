@@ -31,6 +31,7 @@ const variations: IVariation[] = [
     hideAuthorSearch: true,
   },
 ];
+const variationKey = process.env.VARIATION || 'ez';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -51,8 +52,7 @@ export default defineNuxtConfig({
       regenschoriUrl:
         process.env.REGENSCHORI_URL || 'https://www.regenschori.cz',
       proscholyUrl: process.env.PROSCHOLY_URL || 'https://zpevnik.proscholy.cz',
-      variation:
-        variations.find((v) => v.key == process.env.VARIATION) || variations[0],
+      variation: variations.find((v) => v.key == variationKey) || variations[0],
     },
   },
   vite: {

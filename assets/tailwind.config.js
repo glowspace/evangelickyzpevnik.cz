@@ -40,7 +40,8 @@ const variations = [
   },
 ]
 
-const variation = variations.find((v) => v.key == process.env.VARIATION) || variations[0]
+const variationKey = process.env.VARIATION || 'ez'
+const variation = variations.find((v) => v.key == variationKey) || variations[0]
 
 // note: if you change these values, you may need to restart the `yarn dev` nuxt server
 module.exports = {
