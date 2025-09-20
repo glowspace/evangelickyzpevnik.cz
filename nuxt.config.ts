@@ -3,6 +3,7 @@ import graphql from '@rollup/plugin-graphql';
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   // debug: true,
+  compatibilityDate: '2025-09-20',
   modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
   runtimeConfig: {
     public: {
