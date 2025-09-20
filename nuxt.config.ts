@@ -36,6 +36,9 @@ const variationKey = process.env.VARIATION || 'ez';
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   // debug: true,
+  devtools: {
+    enabled: false,
+  },
   compatibilityDate: '2025-09-20',
   modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
   runtimeConfig: {

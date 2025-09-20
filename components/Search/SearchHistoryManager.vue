@@ -3,16 +3,21 @@ import lodash from 'lodash';
 const { isEqual, isEmpty } = lodash; // lodash is CommonJS, therefore we can't do `import { xyz } from 'lodash';`
 
 export default {
+  data() {
+    return {
+      internalParams: {},
+    };
+  },
+
   methods: {
     updateHistoryState(push = true, force) {
       if (this.$route.query.hledat) {
         push = false;
       }
 
-      let oldParams = JSON.parse(JSON.stringify(this.$route.query));
-      let newParams = JSON.parse(
-        JSON.stringify(toGETParameters(this.historyStateObject))
-      );
+      let oldParams = this.$route.query;
+      let newParams = toGETParameters(this.historyStateObject);
+      this.internalParams = newParams;
 
       if (isEqual(oldParams, newParams) && !force) {
         return;
@@ -39,27 +44,25 @@ export default {
       }
     },
 
-    applyStateChange(event, basic) {
+    applyStateChange() {
       let GETparameters = this.$route.query;
       const forceSearch = !!GETparameters.hledat;
 
-      let originalParams = JSON.stringify(GETparameters);
-      deleteInvalidGETParameters(GETparameters);
+      if (isEmpty(GETparameters) && !forceSearch) {
+        this.init = true;
+        return;
+      }
 
-      if (basic) {
+      this.init = false;
+
+      if (!isEqual(this.internalParams, GETparameters)) {
+        // path was really changed by the user (not from updateHistoryState)
         this.historyStateObject = fromGETParameters(GETparameters);
-      } else {
-        if (isEmpty(GETparameters) && !forceSearch) {
-          this.init = true;
-          return;
-        }
+      }
 
-        this.init = false;
-        this.historyStateObject = fromGETParameters(GETparameters);
-
-        if (JSON.stringify(GETparameters) != originalParams) {
-          this.updateHistoryState(false);
-        }
+      if (hasInvalidGETParameters(GETparameters)) {
+        // we want to normalize the GET parameters
+        this.updateHistoryState(false);
       }
     },
   },
@@ -96,7 +99,7 @@ function toGETParameters(
   const joinKeys = (obj) =>
     Object.keys(obj).length ? Object.keys(obj).join(',') : undefined;
 
-  return {
+  let get = {
     vyhledavani: params.search_string
       ? params.search_string.replace(/\s/g, '_')
       : undefined,
@@ -108,15 +111,22 @@ function toGETParameters(
     sestupne: params.is_descending == true ? 'ano' : undefined,
     nahoda: params.seed ? String(params.seed) : undefined,
   };
+  // delete undefined items
+  Object.keys(get).forEach((key) => {
+    if (get[key] === undefined) {
+      delete get[key];
+    }
+  });
+  return get;
 }
 
-function deleteInvalidGETParameters(params) {
-  // checks if the parameter is valid and its value is not undefined, otherwise it deletes the property
-  Object.keys(params).forEach(
-    (p) =>
-      (validParameters().includes(p) && params[p] !== undefined) ||
-      delete params[p]
-  );
+function hasInvalidGETParameters(params) {
+  Object.keys(params).forEach(function (p) {
+    if (!validParameters().includes(p)) {
+      return true;
+    }
+  });
+  return false;
 }
 
 function fromGETParameters(params) {

@@ -192,6 +192,14 @@ const FETCH_SONG_ROUTE = gql`
   }
 `;
 
+const FETCH_SONGBOOK_SONG_ROUTE = gql`
+  query ($number: String!) {
+    song_lyric_songbook_number(number: $number) {
+      public_route
+    }
+  }
+`;
+
 /**
  * Root search component.
  *
@@ -269,25 +277,39 @@ export default {
         if (this.search_string == 'admin') {
           window.location.href = this.$config.public.adminUrl;
         } else if (!isNaN(searchParsedToInt)) {
+          let query = this.$config.public.variation.filter
+            ? {
+                query: FETCH_SONGBOOK_SONG_ROUTE,
+                variables: {
+                  number:
+                    this.$config.public.variation.filter.toUpperCase() +
+                    ' ' +
+                    this.search_string,
+                },
+              }
+            : {
+                query: FETCH_SONG_ROUTE,
+                variables: {
+                  song_number: searchParsedToInt,
+                },
+              };
           this.songLoading = true;
           this.$apollo
-            .query({
-              query: FETCH_SONG_ROUTE,
-              variables: {
-                song_number: searchParsedToInt,
-              },
-            })
+            .query(query)
             .then((response) => {
-              if (response.data.song_lyric_number) {
+              let result =
+                response.data.song_lyric_number ||
+                response.data.song_lyric_songbook_number;
+
+              if (result) {
                 this.$router
                   .push({
-                    path: response.data.song_lyric_number.public_route,
+                    path: result.public_route,
                   })
                   .catch((err) => {});
               }
-              this.songLoading = false;
             })
-            .catch((err) => {
+            .finally(() => {
               this.songLoading = false;
             });
         }

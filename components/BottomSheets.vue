@@ -25,7 +25,7 @@
           <BasicButton @click="show = false" icon-name="close" icon-only />
         </div>
         <!-- body -->
-        <div class="relative text-left px-6 py-6 overflow-y-scroll">
+        <div class="relative text-left px-6 py-6 overflow-y-auto">
           <slot />
         </div>
       </div>

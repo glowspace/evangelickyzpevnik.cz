@@ -106,6 +106,6 @@ export default {
 }
 
 .floating-action-button:disabled {
-  @apply pointer-events-none opacity-80 bg-gray-100 text-gray-600;
+  @apply pointer-events-none opacity-30;
 }
 </style>

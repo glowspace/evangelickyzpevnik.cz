@@ -49,7 +49,10 @@
           </BasicChip>
           <!-- todo: allow tags for EZ -->
           <BasicChip
-            v-if="(hasTags || publicSongbookRecords.length) && !$config.public.variation.hideTags"
+            v-if="
+              (hasTags || publicSongbookRecords.length) &&
+              !$config.public.variation.hideTags
+            "
             class="pl-2 font-custom-medium"
             :class="{ active: topMode == 3 }"
             @click="topMode = topMode == 3 ? 0 : 3"
@@ -135,7 +138,9 @@
         <!-- info (hymnology) -->
         <TopBox :active="topMode === 4" @close="topMode = 0" title="O písni">
           <div class="px-5 pb-3" v-if="!$apollo.loading">
-            <p v-for="line in song_lyric.hymnology.split('\n')" class="mb-2">{{ line }}</p>
+            <p v-for="line in song_lyric.hymnology.split('\n')" class="mb-2">
+              {{ line }}
+            </p>
           </div>
         </TopBox>
       </div>
@@ -156,7 +161,11 @@
                 v-html="song_lyric.lilypond_svg"
                 class="mb-3 lilypond-container"
               ></div>
-              <img v-if="song_lyric.external_rendered_scores[0]?.public_url" :src="song_lyric.external_rendered_scores[0]?.public_url" />
+              <img
+                v-if="song_lyric.external_rendered_scores[0]?.public_url"
+                :src="song_lyric.external_rendered_scores[0]?.public_url"
+                class="mb-3 external-score"
+              />
               <span v-if="song_lyric.has_lyrics">
                 <div
                   v-if="
@@ -459,7 +468,7 @@ export default {
 </script>
 
 <style lang="postcss">
-.lilypond-container svg {
+.lilypond-container svg, .external-score {
   width: 100%;
   max-width: 500px;
   height: auto;
