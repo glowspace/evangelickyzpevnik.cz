@@ -237,7 +237,7 @@ export default {
       return (
         (this.author ? this.author.name : 'Autor') +
         this.$config.public.titleSeparator +
-        this.$config.public.siteName
+        this.$config.public.variation.title
       );
     },
 
@@ -246,11 +246,8 @@ export default {
         return this.author.description;
       }
 
-      let str = 'Písně i ';
       let type = this.author && this.author.type ? this.author.type : 0;
-      str += this.thisStrings[type];
-      str += ' najdete v Evangelickém zpěvníku.';
-      return str;
+      return `Písně i ${this.thisStrings[type]} obsahuje ${this.$config.public.variation.name}.`;
     },
   },
 

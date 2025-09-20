@@ -10,7 +10,6 @@
         icon-only
         class="nohover"
         tabindex="-1"
-        @click="emit('focus')"
       />
       <BasicButton
         v-else
@@ -46,7 +45,7 @@
 
 <script setup>
 const props = defineProps(['modelValue', 'onDashboard', 'searchSongs']);
-const emit = defineEmits(['update:modelValue', 'enter', 'back', 'focus']);
+const emit = defineEmits(['update:modelValue', 'enter', 'back']);
 
 const value = computed({
   get() {
@@ -62,7 +61,6 @@ const searchInput = ref(null);
 watch(
   () => props.onDashboard,
   (value) => {
-    console.log('on dashboard changed', value);
     if (!value) {
       searchInput.value.focus();
     }
@@ -70,7 +68,6 @@ watch(
 );
 
 onMounted(() => {
-  console.log('searchbox mounted', value);
   if (!props.onDashboard) {
     searchInput.value.focus();
   }

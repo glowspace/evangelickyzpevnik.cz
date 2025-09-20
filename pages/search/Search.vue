@@ -48,7 +48,7 @@
       </StickyContainer>
       <div class="custom-container" v-if="init">
         <InitFilters
-          v-if="!$config.public.isEvangelicalSongbook"
+          v-if="!$config.public.variation.hideTags"
           v-model="selected_tags"
           @update:modelValue="init = false"
         ></InitFilters>
@@ -136,9 +136,6 @@
           @query-loaded="queryLoaded"
         ></AuthorsList>
       </div>
-
-      <!-- todo: app links -->
-      <!-- <app-links v-if="init" /> -->
       <!-- todo: report bug -->
       <!-- <a
       class="btn btn-secondary search-report bg-transparent"
@@ -235,7 +232,7 @@ export default {
   methods: {
     getTitle() {
       return (
-        this.$config.public.siteName +
+        this.$config.public.variation.title +
         this.$config.public.titleSeparator +
         'chytrý křesťanský zpěvník'
       );

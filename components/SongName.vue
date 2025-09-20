@@ -38,10 +38,10 @@ export default {
   },
   computed: {
     songName() {
-      return getName(this.song, this.$config.public.isEvangelicalSongbook);
+      return getName(this.song, this.$config.public.variation);
     },
     names() {
-      return getNames(this.song, this.$config.public.isEvangelicalSongbook);
+      return getNames(this.song, this.$config.public.variation);
     },
     secondaryNames() {
       return this.names.slice(1);
@@ -49,23 +49,23 @@ export default {
   },
 };
 
-function getName(song, isEvangelicalSongbook = false) {
-  if (isEvangelicalSongbook) {
-    const ezName = song.songbook_records?.find(
-      (record) => record.pivot.songbook.id == 58
+function getName(song, variation) {
+  if (variation.songbook != null) {
+    const songbookName = song.songbook_records?.find(
+      (record) => record.pivot.songbook.id == variation.songbook
     )?.pivot.song_name;
 
-    if (ezName != null) {
-      return ezName;
+    if (songbookName != null) {
+      return songbookName;
     }
   }
 
   return song.name;
 }
 
-function getNames(song, isEvangelicalSongbook = false) {
+function getNames(song, variation) {
   const names = [
-    getName(song, isEvangelicalSongbook),
+    getName(song, variation),
     song.secondary_name_1,
     song.secondary_name_2,
   ];
@@ -80,8 +80,8 @@ function getNames(song, isEvangelicalSongbook = false) {
   return result;
 }
 
-export function getFullName(song, isEvangelicalSongbook = false) {
-  const names = getNames(song, isEvangelicalSongbook);
+export function getFullName(song, variation) {
+  const names = getNames(song, variation);
 
   if (names.length == 1) {
     return names[0];

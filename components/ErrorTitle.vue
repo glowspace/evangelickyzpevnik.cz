@@ -4,11 +4,11 @@
 
 <script setup>
 const props = defineProps(['error']);
-const { siteName, titleSeparator } = useRuntimeConfig()?.public;
+const { variation, titleSeparator } = useRuntimeConfig()?.public;
 
 useHead(
   generateHead(
-    'Chyba ' + props.error.statusCode + titleSeparator + siteName,
+    'Chyba ' + props.error.statusCode + titleSeparator + variation.title,
     ''
   )
 );

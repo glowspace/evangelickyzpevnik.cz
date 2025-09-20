@@ -1,6 +1,47 @@
 /** @type {import('tailwindcss').Config} */
 const plugin = require('tailwindcss/plugin')
 
+const variations = [
+  {
+    key: 'zps',
+    primary: {
+      DEFAULT: '#44B436',
+      50: '#E2FEE0',
+      100: '#C1FDBD',
+      150: '#92FC86',
+      200: '#62FB4F',
+      300: '#5BEB49',
+      400: '#53D843',
+      500: '#4CC63C',
+      600: '#44B436',
+      700: '#308526',
+      800: '#1E5916',
+      900: '#0C2F07',
+      950: '#051C03',
+    }
+  },
+  {
+    key: 'ez',
+    primary: {
+      DEFAULT: '#006EB7',
+      50: '#EAF7FF',
+      100: '#D6EEFF',
+      150: '#C2E6FF',
+      200: '#ADDEFF',
+      300: '#84CEFF',
+      400: '#5BBEFF',
+      500: '#32ADFF',
+      600: '#0A9DFF',
+      700: '#0087E0',
+      800: '#006EB7',
+      900: '#004C7F',
+      950: '#003B63'
+    },
+  },
+]
+
+const variation = variations.find((v) => v.key == process.env.VARIATION) || variations[0]
+
 // note: if you change these values, you may need to restart the `yarn dev` nuxt server
 module.exports = {
   darkMode: 'class', // or 'media' or 'class'
@@ -11,24 +52,11 @@ module.exports = {
       transparent: 'transparent',
       black: '#000',
       white: '#fff',
+      blue: '#006EB7',
       green: '#44B436',
       greendark: '#318127',
       yellow: '#faa61b',
-      primary: {
-        DEFAULT: '#006EB7',
-        50: '#EAF7FF',
-        100: '#D6EEFF',
-        150: '#C2E6FF',
-        200: '#ADDEFF',
-        300: '#84CEFF',
-        400: '#5BBEFF',
-        500: '#32ADFF',
-        600: '#0A9DFF',
-        700: '#0087E0',
-        800: '#006EB7',
-        900: '#004C7F',
-        950: '#003B63'
-      },
+      primary: variation.primary,
       secondary: {
         DEFAULT: '#787579',
         10: '#FFFBFE',

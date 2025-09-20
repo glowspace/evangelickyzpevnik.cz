@@ -203,13 +203,10 @@ export default {
     getTitle() {
       return (
         (this.song_lyric
-          ? getFullName(
-              this.song_lyric,
-              this.$config.public.isEvangelicalSongbook
-            )
+          ? getFullName(this.song_lyric, this.$config.public.variation)
           : 'Píseň') +
         this.$config.public.titleSeparator +
-        this.$config.public.siteName
+        this.$config.public.variation.title
       );
     },
 
@@ -252,16 +249,17 @@ export default {
     songTitle() {
       return this.song_lyric
         ? String(
-            this.$config.public.isEvangelicalSongbook
-              ? this.ezNumber
-              : this.song_lyric?.song_number
+            this.$config.public.variation.songbook == null
+              ? this.song_lyric?.song_number
+              : this.songbookNumber
           )
         : 'načítám…';
     },
 
-    ezNumber() {
+    songbookNumber() {
       return this.song_lyric.songbook_records.find(
-        (record) => record.pivot.songbook.id == 58
+        (record) =>
+          record.pivot.songbook.id == this.$config.public.variation.songbook
       )?.pivot.number;
     },
   },

@@ -1,6 +1,4 @@
 <template>
-  <!-- todo: refactor so that it does not need client-only wrapper -->
-  <!-- <client-only> -->
   <div class="mb-4">
     <LoaderLinear
       :class="[{ 'opacity-0': (results_loaded || !loading_bar) }, 'transition-opacity']"
@@ -70,7 +68,6 @@
       </div>
     </div>
   </div>
-  <!-- </client-only> -->
 </template>
 
 <script>
@@ -174,9 +171,7 @@ export default {
   components: { ScrollTrigger, SLItem },
 
   data() {
-    const default_preferred_songbook = this.$config.public.isEvangelicalSongbook
-      ? '58'
-      : null;
+    const default_preferred_songbook = this.$config.public.variation.songbook;
 
     return {
       page: 1,
@@ -210,7 +205,7 @@ export default {
         sortType: [
           'RANDOM',
           'NAME',
-          this.preferred_songbook_id === null ? 'NUMBER' : 'SONGBOOK_NUMBER',
+          this.preferred_songbook_id == null ? 'NUMBER' : 'SONGBOOK_NUMBER',
         ][this.sort],
         sortConfig: {
           seed: this.seed,
@@ -286,7 +281,7 @@ export default {
     },
 
     getSongbookRecordForNumber(song_lyric) {
-      if (this.preferred_songbook_id !== null) {
+      if (this.preferred_songbook_id != null) {
         let rec = song_lyric.songbook_records.find(
           (record) => record.pivot.songbook.id == this.preferred_songbook_id
         );

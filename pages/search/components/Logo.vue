@@ -1,7 +1,7 @@
 <template>
   <div class="logo">
     <img src="/img/logo.svg" alt="logo" />
-    <h1>Evangelický zpěvník</h1>
+    <h1>{{ $config.public.variation.name }}</h1>
   </div>
 </template>
 

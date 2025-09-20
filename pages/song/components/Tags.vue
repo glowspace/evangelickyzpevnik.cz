@@ -6,7 +6,7 @@
     >
       <BasicChip
         v-if="
-          !$config.public.isEvangelicalSongbook && song.is_approved_for_liturgy
+          !$config.public.variation.showLiturgyApproval && song.is_approved_for_liturgy
         "
       >
         schváleno ČBK pro liturgii

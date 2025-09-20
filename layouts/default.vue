@@ -6,10 +6,10 @@
 </template>
 
 <script setup>
-const { siteName, siteUrl, itunesId } = useRuntimeConfig()?.public;
+const { siteUrl, variation } = useRuntimeConfig()?.public;
 const route = useRoute();
 useHead({
-  title: siteName,
+  title: variation.title,
   htmlAttrs: { lang: 'cs', dir: 'ltr' },
   meta: [
     { name: 'msapplication-TileColor', content: '#da532c' },
@@ -23,7 +23,7 @@ useHead({
     // { property: 'twitter:card', content: 'summary_large_image' },
     // { property: 'twitter:image', content: 'https://zpevnik.proscholy.cz/banner.png' }
 
-    { name: 'apple-itunes-app', content: 'app-id=' + itunesId },
+    { name: 'apple-itunes-app', content: 'app-id=' + variation.itunesId },
   ],
   link: [
     { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },

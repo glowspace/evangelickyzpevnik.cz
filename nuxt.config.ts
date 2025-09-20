@@ -1,5 +1,37 @@
 import graphql from '@rollup/plugin-graphql';
 
+interface IVariation {
+  key: string;
+  filter?: string;
+  name: string;
+  title: string;
+  itunesId: string;
+  songbook?: number;
+  hideTags?: boolean;
+  hideAuthorSearch?: boolean;
+  showLiturgyApproval?: boolean;
+}
+
+const variations: IVariation[] = [
+  {
+    key: 'zps',
+    name: 'Zpěvník pro scholy',
+    title: 'ProScholy.cz',
+    itunesId: '1475375453',
+    showLiturgyApproval: true,
+  },
+  {
+    key: 'ez',
+    filter: 'ez',
+    name: 'Evangelický zpěvník',
+    title: 'Evangelický zpěvník',
+    itunesId: '6502984934',
+    songbook: 58,
+    hideTags: true,
+    hideAuthorSearch: true,
+  },
+];
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   // debug: true,
@@ -7,8 +39,6 @@ export default defineNuxtConfig({
   modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
   runtimeConfig: {
     public: {
-      siteName: 'Evangelický zpěvník',
-      itunesId: '1475375453',
       siteUrl:
         process.env.APP_URL ||
         (process.env.VERCEL_URL
@@ -21,7 +51,8 @@ export default defineNuxtConfig({
       regenschoriUrl:
         process.env.REGENSCHORI_URL || 'https://www.regenschori.cz',
       proscholyUrl: process.env.PROSCHOLY_URL || 'https://zpevnik.proscholy.cz',
-      isEvangelicalSongbook: true,
+      variation:
+        variations.find((v) => v.key == process.env.VARIATION) || variations[0],
     },
   },
   vite: {

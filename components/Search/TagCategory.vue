@@ -66,6 +66,8 @@ export default {
           return '!bg-error-600';
         case 'yellow':
           return '!bg-yellow';
+        case 'blue':
+          return '!bg-blue';
         default:
           return '';
       }

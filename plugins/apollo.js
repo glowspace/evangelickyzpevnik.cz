@@ -7,11 +7,11 @@ import destr from 'destr'
 
 export default defineNuxtPlugin(nuxtApp => {
   const cache = new InMemoryCache()
-  const { siteUrl, apiPath, isEvangelicalSongbook } = useRuntimeConfig()?.public
+  const { siteUrl, apiPath, variation } = useRuntimeConfig()?.public
   const headers = {};
 
-  if (isEvangelicalSongbook) {
-    headers['Filter-Content'] = 'ez';
+  if (variation.filter) {
+    headers['Filter-Content'] = variation.filter;
   }
 
   const httpLink = createHttpLink({

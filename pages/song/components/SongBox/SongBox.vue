@@ -49,7 +49,7 @@
           </BasicChip>
           <!-- todo: allow tags for EZ -->
           <BasicChip
-            v-if="(hasTags || publicSongbookRecords.length) && !$config.public.isEvangelicalSongbook"
+            v-if="(hasTags || publicSongbookRecords.length) && !$config.public.variation.hideTags"
             class="pl-2 font-custom-medium"
             :class="{ active: topMode == 3 }"
             @click="topMode = topMode == 3 ? 0 : 3"

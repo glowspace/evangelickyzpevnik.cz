@@ -81,7 +81,7 @@
         </template>
       </div>
       <div v-else>
-        <BasicButtonGroup v-if="!$config.public.isEvangelicalSongbook" class="mr-2 mb-2">
+        <BasicButtonGroup v-if="!$config.public.variation.hideAuthorSearch" class="mr-2 mb-2">
           <BasicButtonGroupItem
             :class="{ active: !localShowAuthors }"
             @click="localShowAuthors = false"
@@ -168,7 +168,7 @@
             <BasicIcon name="search" />
           </BasicButtonGroupItem>
         </BasicButtonGroup>
-        <div v-if="!localShowAuthors && !$config.public.isEvangelicalSongbook" class="mb-3">
+        <div v-if="!localShowAuthors && !$config.public.variation.hideTags" class="mb-3">
           <!-- todo: allow filters for EZ -->
           <SearchTagCategory
             heading="Mše svatá"
@@ -206,7 +206,7 @@
             @selectTag="selectTag"
           ></SearchTagCategory>
           <SearchTagCategory
-            v-if="!$config.public.isEvangelicalSongbook"
+            v-if="$config.public.variation.songbook == null"
             heading="Zpěvníky"
             color="yellow"
             :tags-in-category="songbooks"
@@ -214,7 +214,6 @@
             @selectTag="selectSongbook"
           ></SearchTagCategory>
           <SearchTagCategory
-            v-if="!$config.public.isEvangelicalSongbook"
             heading="Jazyky"
             color="red"
             :tags-in-category="all_languages"
