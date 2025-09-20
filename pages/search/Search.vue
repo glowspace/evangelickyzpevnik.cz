@@ -11,7 +11,7 @@
             :on-dashboard="init"
             :search-songs="!showAuthors"
             @enter="inputEnter"
-            @click="init = false"
+            @clickBox="init = false"
             @back="
               init = true;
               resetState(true);

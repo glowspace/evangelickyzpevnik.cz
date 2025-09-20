@@ -10,6 +10,7 @@
         icon-only
         class="nohover"
         tabindex="-1"
+        @click="emit('clickBox')"
       />
       <BasicButton
         v-else
@@ -29,6 +30,7 @@
         v-model="value"
         @keyup.enter="emit('enter')"
         ref="searchInput"
+        @click="emit('clickBox')"
       />
       <BasicButton
         v-if="!onDashboard && value != ''"
@@ -45,7 +47,7 @@
 
 <script setup>
 const props = defineProps(['modelValue', 'onDashboard', 'searchSongs']);
-const emit = defineEmits(['update:modelValue', 'enter', 'back']);
+const emit = defineEmits(['update:modelValue', 'enter', 'back', 'clickBox']);
 
 const value = computed({
   get() {
