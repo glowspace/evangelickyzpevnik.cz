@@ -29,7 +29,6 @@
         :class="{ 'pr-4': value == '' }"
         v-model="value"
         @keyup.enter="emit('enter')"
-        @focus="emit('focus')"
         ref="searchInput"
       />
       <BasicButton
@@ -63,6 +62,7 @@ const searchInput = ref(null);
 watch(
   () => props.onDashboard,
   (value) => {
+    console.log('on dashboard changed', value);
     if (!value) {
       searchInput.value.focus();
     }
@@ -70,6 +70,7 @@ watch(
 );
 
 onMounted(() => {
+  console.log('searchbox mounted', value);
   if (!props.onDashboard) {
     searchInput.value.focus();
   }
