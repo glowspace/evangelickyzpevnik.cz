@@ -52,7 +52,6 @@
           v-model="selected_tags"
           @update:modelValue="init = false"
         ></InitFilters>
-        <!-- todo: allow filters for EZ -->
         <div class="text-center mt-1">
           <BasicButton
             @click="init = false"
@@ -136,17 +135,6 @@
           @query-loaded="queryLoaded"
         ></AuthorsList>
       </div>
-      <!-- todo: report bug -->
-      <!-- <a
-      class="btn btn-secondary search-report bg-transparent"
-      title="Nahlásit"
-      :href="
-        'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/6/create/20?customfield_10056=' +
-        encodeURIComponent($config.public.siteUrl + $route.fullPath)
-      "
-      >
-        <i class="fas fa-exclamation-triangle p-0"></i>
-      </a> -->
     </div>
     <div
       v-if="!init"

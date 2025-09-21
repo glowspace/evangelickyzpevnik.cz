@@ -169,7 +169,6 @@
           </BasicButtonGroupItem>
         </BasicButtonGroup>
         <div v-if="!localShowAuthors && !$config.public.variation.hideTags" class="mb-3">
-          <!-- todo: allow filters for EZ -->
           <SearchTagCategory
             heading="Mše svatá"
             color="blue"

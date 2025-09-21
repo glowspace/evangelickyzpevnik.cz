@@ -6,8 +6,9 @@
     >
       <BasicChip
         v-if="
-          !$config.public.variation.showLiturgyApproval && song.is_approved_for_liturgy
+          $config.public.variation.showLiturgyApproval && song.is_approved_for_liturgy
         "
+        class="tag-blue"
       >
         schváleno ČBK pro liturgii
         <BasicIcon name="check" class="text-xl -mx-1" />
@@ -16,6 +17,7 @@
         v-for="tag in song.tags_liturgy_part"
         :key="tag.id"
         :to="'/?stitky=' + tag.id"
+        class="tag-blue"
       >
         {{ tag.name }}
       </BasicChip>
@@ -135,6 +137,6 @@ export default {
 }
 
 .songbook-number {
-  @apply pr-3 pl-2.5 bg-primary/10;
+  @apply pr-3 pl-2.5 bg-gray/10;
 }
 </style>

@@ -47,7 +47,6 @@
             <BasicIcon name="edit_note" class="text-primary" />
             <span>Aranže</span>
           </BasicChip>
-          <!-- todo: allow tags for EZ -->
           <BasicChip
             v-if="
               (hasTags || publicSongbookRecords.length) &&

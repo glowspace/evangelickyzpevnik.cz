@@ -139,6 +139,7 @@ const FETCH_AUTHOR = gql`
       }
     }
     lang
+    lang_string
     has_lyrics
     public_route
     authors_pivot {
