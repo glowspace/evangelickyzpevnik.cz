@@ -1,7 +1,7 @@
 <template>
   <div
     class="menu-wrapper"
-    :class="[{ hidden: $route.name == 'song' }, 'md:flex']"
+    :class="[{ hidden: $route.name == 'song' }, 'md:flex print:hidden']"
   >
     <div class="menu">
       <BasicClickable to="/" class="link group">

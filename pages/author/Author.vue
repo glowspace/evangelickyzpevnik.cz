@@ -85,31 +85,10 @@
         <div v-else class="py-5">
           V databázi zatím nemáme žádné související písně.
         </div>
+
+        <Footer />
       </template>
     </div>
-
-    <!-- <div class="p-1 mb-3 mt-n2">
-      <div class="px-4 py-2 inline-block">
-        Evangelický zpěvník <img src="/img/logo.svg" width="20px" />
-        {{ new Date().getFullYear() }}
-      </div>
-      <div class="float-right">
-        <a
-          class="btn btn-secondary"
-          :href="
-            'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/1/create/21?customfield_10056=' +
-            encodeURIComponent($config.public.siteUrl + $route.fullPath)
-          "
-          >Nahlásit</a
-        >
-        <a
-          v-if="author"
-          class="btn btn-secondary"
-          :href="$config.public.adminUrl + '/author/' + author.id + '/edit'"
-          >Upravit</a
-        >
-      </div>
-    </div> -->
   </div>
 </template>
 

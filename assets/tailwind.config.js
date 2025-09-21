@@ -102,6 +102,12 @@ module.exports = {
     fontFamily: {
       sans: ['Nunito', 'sans-serif'],
     },
+    extend: {
+      screens: {
+        print: { raw: 'print' },
+        screen: { raw: 'screen' },
+      },
+    },
   },
   plugins: [
     // https://tailwindcss.com/docs/functions-and-directives#using-apply-with-per-component-css

@@ -12,7 +12,7 @@
       :class="{ opened: kebabOpened }"
     >
       <li v-for="(item, key) in items" :key="key" class="relative">
-        <BasicClickable class="kebab-item" :href="item.href" :to="item.to" :target="item.target">
+        <BasicClickable class="kebab-item" :href="item.href" :to="item.to" :target="item.target" @click="item.click">
           <BasicIcon :name="item.icon" />
           {{ item.label }}
         </BasicClickable>

@@ -15,6 +15,11 @@
           icon: 'edit',
           href: $config.public.adminUrl + '/song/' + song_lyric.id + '/edit',
         },
+        {
+          label: 'Tisk',
+          icon: 'print',
+          href: 'javascript:window.print()'
+        },
       ]"
     />
   </TopBar>

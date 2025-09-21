@@ -2,12 +2,7 @@
   <div class="top-bar-wrapper">
     <div class="top-bar custom-container">
       <!-- <BasicButton icon-name="arrow_back" icon-only @click="emit('back')" /> -->
-      <BasicButton
-        icon-type="img"
-        icon-name="logo.svg"
-        icon-only
-        to="/"
-      />
+      <BasicButton icon-type="img" icon-name="logo.svg" icon-only to="/" />
       <component
         :is="isH1 ? 'h1' : 'h2'"
         class="flex flex-grow justify-start text-[1.375rem] leading-7"
@@ -28,7 +23,8 @@ const props = defineProps({ title: String, isH1: Boolean });
 
 <style lang="postcss" scoped>
 .top-bar-wrapper {
-  @apply w-full sticky top-0 z-10 bg-surface-200 dark:bg-surfacedark-100  shadow md:shadow-none md:border-b border-primary-150;
+  @apply w-full sticky top-0 z-10 bg-surface-200 dark:bg-surfacedark-100
+  shadow md:shadow-none md:border-b border-primary-150 print:hidden;
 }
 
 .top-bar {

@@ -11,7 +11,7 @@
   />
   <div class="md:pb-20 custom-container">
     <div class="m-5">
-      <div>
+      <div class="print:hidden">
         <div class="-mx-1">
           <BasicChip
             v-if="scores.length || otherExternals.length"
@@ -249,31 +249,9 @@
           </div>
         </BottomSheets>
       </div>
+      <Footer />
     </div>
   </div>
-  <!-- <div class="p-1 mb-3 mt-n2">
-    <div class="px-3 py-2 d-inline-block">
-      Zpěvník ProScholy.cz
-      <img src="/img/logo.svg" width="20px" />
-      {{ new Date().getFullYear() }}
-    </div>
-    <div class="float-right">
-      <a
-        class="btn btn-secondary"
-        :href="
-          'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/1/create/19?customfield_10056=' +
-          encodeURIComponent($config.public.baseUrl + $route.fullPath)
-        "
-        >Nahlásit</a
-      >
-      <a
-        class="btn btn-secondary"
-        v-if="song_lyric"
-        :href="$config.public.adminUrl + '/song/' + song_lyric.id + '/edit'"
-        >Upravit</a
-      >
-    </div>
-  </div> -->
 </template>
 
 <script>
