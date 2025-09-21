@@ -2,7 +2,6 @@
   <NuxtLayout>
     <ErrorTitle :error="error" />
     <TopBar
-      @back="previous ? $router.back() : navigateTo('/')"
       :title="'Chyba ' + error.statusCode"
       is-h1
     />

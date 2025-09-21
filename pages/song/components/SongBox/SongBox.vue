@@ -468,7 +468,8 @@ export default {
 </script>
 
 <style lang="postcss">
-.lilypond-container svg, .external-score {
+.lilypond-container svg,
+.external-score {
   width: 100%;
   max-width: 500px;
   height: auto;

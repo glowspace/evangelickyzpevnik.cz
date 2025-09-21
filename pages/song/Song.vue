@@ -1,8 +1,5 @@
 <template>
-  <TopBar
-    @back="previous ? $router.back() : navigateTo('/')"
-    :title="songTitle"
-  >
+  <TopBar :title="topBarTitle">
     <Kebab
       v-if="song_lyric"
       :items="[
@@ -246,7 +243,7 @@ export default {
   },
 
   computed: {
-    songTitle() {
+    topBarTitle() {
       return this.song_lyric
         ? String(
             this.$config.public.variation.songbook == null

@@ -1,6 +1,5 @@
 <template>
   <BasicClickable
-    :is="to ? NuxtLink : href ? 'a' : 'button'"
     :to="to"
     :href="href"
     :event-id="eventId"

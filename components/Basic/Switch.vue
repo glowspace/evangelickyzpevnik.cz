@@ -14,7 +14,6 @@
 </template>
 
 <script setup>
-const input = ref(null);
 const props = defineProps(['id', 'modelValue']);
 const emit = defineEmits(['update:modelValue']);
 const checked = computed({
