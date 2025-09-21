@@ -7,7 +7,7 @@
             labelOne: 'Originál',
             labelMore: 'Originály',
             typeNumber: 0,
-            thClass: 'text-primary',
+            thClass: 'text-blue',
           },
           {
             labelOne: 'Autorizovaný překlad',
@@ -19,7 +19,7 @@
             labelOne: 'Překlad',
             labelMore: 'Překlady',
             typeNumber: 1,
-            thClass: 'text-error-600',
+            thClass: 'text-red',
           },
         ]"
         :key="subtable.typeNumber"
@@ -66,9 +66,5 @@ th {
 
 tr:first-child th {
   @apply pt-0;
-}
-
-tr.active {
-  @apply bg-surface-100;
 }
 </style>

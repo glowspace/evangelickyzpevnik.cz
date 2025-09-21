@@ -63,7 +63,7 @@ export default {
         case 'green':
           return '!bg-green';
         case 'red':
-          return '!bg-error-600';
+          return '!bg-red';
         case 'yellow':
           return '!bg-yellow';
         case 'blue':

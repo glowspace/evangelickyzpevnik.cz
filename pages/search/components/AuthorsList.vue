@@ -33,7 +33,7 @@
             </td>
             <td>
               <BasicClickable
-                class="pr-6 lg:pr-12 py-3 block text-right text-secondary"
+                class="pr-6 lg:pr-12 py-3 block text-right text-gray"
                 :to="author.public_route"
                 tabindex="-1"
               >

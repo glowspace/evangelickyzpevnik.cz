@@ -2,7 +2,7 @@ import graphql from '@rollup/plugin-graphql';
 
 interface IVariation {
   key: string;
-  filter?: string;
+  filter?: string; // used as header and as songbook shorthand
   name: string;
   title: string;
   itunesId: string;

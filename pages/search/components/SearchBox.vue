@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="flex flex-row items-center justify-between h-14 rounded-full bg-surface-100 dark:bg-surfacedark-100 p-2 m-2 border border-gray-500"
-    @click="focusInput"
-  >
+  <div class="flex flex-row items-center justify-between h-14 rounded-full bg-surface-100 dark:bg-surfacedark-100 p-2 m-2 border border-gray-500">
     <div class="flex flex-row items-center flex-grow">
       <BasicButton
         v-if="onDashboard"

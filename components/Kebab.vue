@@ -42,6 +42,6 @@ function kebabWrapperBlurred(event) {
 }
 
 .kebab-item {
-  @apply min-h-[3rem] flex flex-row items-center gap-4 py-2 px-3 hover:bg-primary-100 dark:hover:bg-secondary-700 hover:bg-opacity-30 dark:hover:bg-opacity-30;
+  @apply min-h-[3rem] flex flex-row items-center gap-4 py-2 px-3 hover:bg-surface-200 dark:hover:bg-primary-700;
 }
 </style>

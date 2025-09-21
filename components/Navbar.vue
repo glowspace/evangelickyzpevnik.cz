@@ -57,7 +57,7 @@
 }
 
 .icon-wrapper {
-  @apply relative w-16 h-8 group-hover:bg-primary-200 dark:group-hover:bg-primary-700 group-hover:bg-opacity-80 flex items-center justify-center rounded-2xl transition;
+  @apply relative w-16 h-8 group-hover:bg-primary-150 dark:group-hover:bg-primary-700 flex items-center justify-center rounded-2xl transition;
 
   &.active {
     @apply bg-primary-150;
@@ -68,10 +68,6 @@
 
     .material-symbols-outlined {
       font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 30;
-    }
-
-    .label {
-      @apply text-xs text-neutral-900 dark:text-neutral-100 leading-tight tracking-[.0416em];
     }
   }
 }

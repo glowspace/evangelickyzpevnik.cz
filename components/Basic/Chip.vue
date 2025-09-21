@@ -22,7 +22,7 @@ const props = defineProps({
   }
 
   &.tag-red {
-    @apply hover:bg-error-600/[.15] [&.active]:bg-error-600/30;
+    @apply hover:bg-red/[.15] [&.active]:bg-red/30;
   }
 
   &.tag-yellow {

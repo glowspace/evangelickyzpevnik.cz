@@ -89,7 +89,7 @@
 
       <p>
         <span>Pavel Hanych</span> <br />
-        <span class="text-secondary">koordinátor nového zpěvníku</span> <br />
+        <span class="text-gray">koordinátor nového zpěvníku</span> <br />
         <a href="tel:+420-608-880-579">+420 608 880 579</a> <br />
         <a href="mailto:zpevnik@e-cirkev.cz">zpevnik@e-cirkev.cz</a>
       </p>

@@ -4,7 +4,7 @@
     <!-- background sheets dialogs -->
     <div
       @click="show = false"
-      class="background group-[&.show]:opacity-20 dark:group-[&.show]:opacity-20 inset-0 fixed z-40 opacity-0 -top-full bg-neutral-900"
+      class="background group-[&.show]:opacity-20 dark:group-[&.show]:opacity-20 inset-0 fixed z-40 opacity-0 -top-full bg-black"
     ></div>
     <!-- side sheets dialogs -->
     <div

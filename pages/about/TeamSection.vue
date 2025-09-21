@@ -3,7 +3,7 @@
   <div class="member-list">
     <div v-for="{ name, role } in members" class="member">
       <p class="my-2">
-        {{ name }}<br /><span class="text-secondary">{{ role }}</span>
+        {{ name }}<br /><span class="text-gray">{{ role }}</span>
       </p>
     </div>
   </div>

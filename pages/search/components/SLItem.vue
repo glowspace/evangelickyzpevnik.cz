@@ -2,7 +2,7 @@
   <tr :class="{ 'bg-surface-200': active }">
     <td
       v-if="isSearch"
-      class="hidden lg:table-cell text-secondary text-right w-16 text-sm"
+      class="hidden lg:table-cell text-gray text-right w-16 text-sm"
     >
       <BasicClickable
         class="pl-7 p-3"
@@ -26,7 +26,7 @@
     </td>
     <td
       v-if="allowAuthors || isSearch"
-      class="text-secondary hidden"
+      class="text-gray hidden"
       :class="[ isSearch ? 'lg:table-cell' : 'sm:table-cell' ]"
     >
       <span
@@ -49,7 +49,7 @@
     <td
       :class="[
         'text-right pr-3 uppercase text-sm',
-        { 'text-secondary/20': !song_lyric.has_lyrics },
+        { 'text-gray/20': !song_lyric.has_lyrics },
         { 'md:pr-6': isSearch },
       ]"
       :title="song_lyric.lang_string"
@@ -62,7 +62,7 @@
           v-if="song_lyric.has_chords"
           name="fas fa-guitar"
           type="fa"
-          class="text-primary"
+          class="text-blue"
           title="Tato píseň má přidané akordy."
         />
         <BasicIcon
@@ -70,16 +70,16 @@
           name="subject"
           title="U této písně je zaznamenán text (bez akordů)."
         />
-        <BasicIcon v-else name="subject" class="text-secondary/20" />
+        <BasicIcon v-else name="subject" class="text-gray/20" />
 
         <BasicIcon
           v-if="song_lyric.scores.length"
           name="audio_file"
           title="U této písně je k dispozici soubor s notami."
-          class="text-error-500"
+          class="text-red"
           fill
         />
-        <BasicIcon v-else name="audio_file" class="text-secondary/20" fill />
+        <BasicIcon v-else name="audio_file" class="text-gray/20" fill />
 
         <BasicIcon
           v-if="song_lyric.recordings.length"
@@ -88,7 +88,7 @@
           class="text-green"
           fill
         />
-        <BasicIcon v-else name="headphones" class="text-secondary/20" fill />
+        <BasicIcon v-else name="headphones" class="text-gray/20" fill />
       </BasicClickable>
     </td>
   </tr>

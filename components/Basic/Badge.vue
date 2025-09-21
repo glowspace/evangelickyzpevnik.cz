@@ -19,8 +19,7 @@ const props = defineProps({ small: Boolean, number: Number, badgeClass: String }
 <style lang="postcss" scoped>
 .badge {
   @apply absolute pointer-events-none flex items-center justify-center rounded-full text-[11px] leading-none tracking-[.045em]
-  font-custom-medium bg-primary dark:bg-error-200 text-white dark:text-error-800;
-  /* font-custom-medium bg-error-600 dark:bg-error-200 text-white dark:text-error-800; */
+  font-custom-medium bg-primary dark:bg-primary-200 text-white dark:text-primary-800;
 }
 
 .badge-a {

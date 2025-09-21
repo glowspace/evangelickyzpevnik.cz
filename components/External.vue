@@ -11,7 +11,7 @@
       </div>
       <div class="min-w-0">
         <div class="pr-3 w-full">{{ displayName }}</div>
-        <div class="text-secondary text-sm truncate">
+        <div class="text-gray text-sm truncate">
           {{ external.authors.map((a) => a.name).join(', ') }}
         </div>
       </div>

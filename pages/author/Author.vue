@@ -80,7 +80,7 @@
         />
         <AuthorSongsList
           heading-text="Interpretace písní"
-          heading-class="text-error-600"
+          heading-class="text-red"
           v-if="author.songs_interpreted.length"
           :songs="author.songs_interpreted"
         />

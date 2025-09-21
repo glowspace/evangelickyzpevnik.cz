@@ -4,7 +4,7 @@
       songName
     }}</span>
     <span
-      class="song-secondary-name text-secondary text-sm"
+      class="song-secondary-name text-gray text-sm"
       v-for="name in secondaryNames"
     >
       <br />
@@ -55,7 +55,7 @@ function getName(song, variation) {
       (record) => record.pivot.songbook.id == variation.songbook
     )?.pivot.song_name;
 
-    if (songbookName != null) {
+    if (songbookName) {
       return songbookName;
     }
   }
