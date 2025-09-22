@@ -1856,9 +1856,9 @@ baseline-browser-mapping@^2.8.3:
   resolved "https://registry.yarnpkg.com/baseline-browser-mapping/-/baseline-browser-mapping-2.8.6.tgz#c37dea4291ed8d01682f85661dbe87967028642e"
   integrity sha512-wrH5NNqren/QMtKUEEJf7z86YjfqW/2uw3IL3/xpqZUC95SSVIFXYQeeGjL6FT/X68IROu6RMehZQS5foy2BXw==
 
-"bible-liturgy-utils@https://github.com/glowspace/bible-liturgy-utils":
+"bible-liturgy-utils@https://github.com/glowspace/bible-liturgy-utils#commonjs":
   version "2.0.2"
-  resolved "https://github.com/glowspace/bible-liturgy-utils#2e6b8f3221dc96aeca7557b7ca2e881757124568"
+  resolved "https://github.com/glowspace/bible-liturgy-utils#e4823e6df31cffec67073002283496d726ec32bf"
   dependencies:
     "@romcal/calendar.czech-republic" "^3.0.0-alpha.0"
     romcal "3.0.0-alpha.0"
