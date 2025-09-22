@@ -1,5 +1,5 @@
 # Image
-FROM node:22-alpine
+FROM node:22.19-alpine
 
 RUN apk update
 # required for yarn install
