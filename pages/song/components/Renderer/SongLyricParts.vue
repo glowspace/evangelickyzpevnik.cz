@@ -1,6 +1,5 @@
 <template>
-  <sl-parts-loading v-if="$apollo.loading" />
-  <div v-else-if="song_lyric_parts">
+  <template v-if="song_lyric_parts">
     <div
       :class="getSongPartClass(part)"
       v-for="(part, key) in song_lyric_parts"
@@ -32,20 +31,17 @@
             :isOptional="chord.isOptional"
             :isSubstitute="chord.isSubstitute"
             :hasNextSibling="hasNextSibling(chord)"
-            >{{ chord.text.replace(/^ /, '&nbsp;') }}</chord
-          ><template v-if="!chord.isDivided && line.chords[key3 + 1]"
-            ><span class="chord">&nbsp;</span></template
+            >{{ chord.text.replace(/^ | $/, '&nbsp;') }}</chord
           >
         </template>
       </div>
     </div>
-  </div>
+  </template>
 </template>
 
 <script>
 import gql from 'graphql-tag';
 import Chord from './Chord';
-import SlPartsLoading from '../SlPartsLoading';
 
 const FETCH_SONG_LYRIC_PARTS = gql`
   query ($id: ID!) {
@@ -66,7 +62,6 @@ export default {
 
   components: {
     Chord,
-    SlPartsLoading,
   },
 
   apollo: {
