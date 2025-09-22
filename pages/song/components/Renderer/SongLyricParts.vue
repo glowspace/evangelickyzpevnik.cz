@@ -1,5 +1,5 @@
 <template>
-  <template v-if="song_lyric_parts">
+  <div v-if="song_lyric_parts">
     <div
       :class="getSongPartClass(part)"
       v-for="(part, key) in song_lyric_parts"
@@ -36,7 +36,7 @@
         </template>
       </div>
     </div>
-  </template>
+  </div>
 </template>
 
 <script>

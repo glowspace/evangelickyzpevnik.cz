@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { fetchFiltersQuery } from './fetchFiltersQuery.graphql';
+import tagsFilters from './tagsFilters';
 
 const requiredAmountOfSongs = 10;
 
@@ -34,21 +34,7 @@ export default {
 
   apollo: {
     $prefetch: false,
-    tags_generic: {
-      query: fetchFiltersQuery,
-    },
-    tags_liturgy_part: {
-      query: fetchFiltersQuery,
-    },
-    tags_liturgy_period: {
-      query: fetchFiltersQuery,
-    },
-    tags_saints: {
-      query: fetchFiltersQuery,
-    },
-    tags_sacred_occasion: {
-      query: fetchFiltersQuery,
-    },
+    ...tagsFilters,
   },
 
   computed: {

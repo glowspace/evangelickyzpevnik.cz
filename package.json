@@ -2,7 +2,7 @@
   "name": "evangelicky-zpevnik",
   "private": true,
   "engines": {
-    "node": ">=20.12.2"
+    "node": ">=22.19.0"
   },
   "scripts": {
     "build": "nuxt build",

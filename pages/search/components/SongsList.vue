@@ -77,7 +77,7 @@ import buildElasticSearchParams, {
   getSelectedTagsDcnf,
 } from '~/components/Search/buildElasticSearchParams';
 import mergeFetchMoreResult from '~/components/Search/mergeFetchMoreResult';
-import { fetchFiltersQuery } from './fetchFiltersQuery.graphql';
+import tagsFilters from './tagsFilters';
 import SLItem from './SLItem';
 import lodash from 'lodash';
 const { isEmpty } = lodash; // lodash is CommonJS, therefore we can't do `import { xyz } from 'lodash';`
@@ -298,21 +298,7 @@ export default {
   // GraphQL client
   apollo: {
     $prefetch: false,
-    tags_generic: {
-      query: fetchFiltersQuery,
-    },
-    tags_liturgy_part: {
-      query: fetchFiltersQuery,
-    },
-    tags_liturgy_period: {
-      query: fetchFiltersQuery,
-    },
-    tags_saints: {
-      query: fetchFiltersQuery,
-    },
-    tags_sacred_occasion: {
-      query: fetchFiltersQuery,
-    },
+    ...tagsFilters,
     song_lyrics_paginated: {
       query: FETCH_ITEMS,
       variables() {

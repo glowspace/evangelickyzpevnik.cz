@@ -226,7 +226,7 @@
 </template>
 
 <script>
-import { fetchFiltersQuery } from './fetchFiltersQuery.graphql';
+import tagsFilters from './tagsFilters';
 import FilterRowItem from './FilterRowItem';
 
 export default {
@@ -267,24 +267,7 @@ export default {
 
   apollo: {
     $prefetch: false,
-    tags_generic: {
-      query: fetchFiltersQuery,
-    },
-    tags_liturgy_part: {
-      query: fetchFiltersQuery,
-    },
-    tags_liturgy_period: {
-      query: fetchFiltersQuery,
-    },
-    tags_saints: {
-      query: fetchFiltersQuery,
-    },
-    tags_sacred_occasion: {
-      query: fetchFiltersQuery,
-    },
-    songbooks: {
-      query: fetchFiltersQuery,
-    },
+    ...tagsFilters,
   },
 
   computed: {
