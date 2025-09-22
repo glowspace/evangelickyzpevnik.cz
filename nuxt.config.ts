@@ -60,6 +60,11 @@ export default defineNuxtConfig({
   },
   vite: {
     plugins: [graphql()], // Allow usage of .gql/.graphql files
+    define: {
+      'globalThis.__DEV__': JSON.stringify(
+        process.env.NODE_ENV === 'development'
+      ), // Sets apollo in correct (development/production) mode
+    },
   },
   nitro: {
     routeRules: {
