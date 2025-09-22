@@ -18,11 +18,23 @@
         {
           label: 'Tisk',
           icon: 'print',
-          href: 'javascript:window.print()'
+          href: 'javascript:window.print()',
         },
       ]"
     />
   </TopBar>
+  <div style="height: 500px">
+    <SongsList
+      v-if="listStore.active"
+      :search-string="listStore.searchString"
+      :selected-tags="listStore.selectedTags"
+      :selected-songbooks="listStore.selectedSongbooks"
+      :selected-languages="listStore.selectedLanguages"
+      :sort="listStore.sort"
+      :descending="listStore.descending"
+      :seed="listStore.seed"
+    ></SongsList>
+  </div>
   <song-loading v-if="$apollo.loading"></song-loading>
   <song-detail v-else-if="song_lyric" :song="song_lyric"></song-detail>
 </template>
@@ -33,7 +45,10 @@ import SongDetail from './SongDetail';
 import SongLoading from './SongLoading';
 import Kebab from '~/components/Kebab';
 import { getFullName } from '~/components/SongName';
+import SongsList from '~/pages/search/components/SongsList';
 import Bowser from 'bowser';
+import { mapStores } from 'pinia';
+import useListStore from '~/stores/list.js';
 
 const VISIT_SONG = gql`
   mutation (
@@ -180,11 +195,11 @@ const FETCH_SONG_LYRIC = gql`
 
 export default {
   name: 'Song',
-  components: { SongLoading, SongDetail, Kebab },
+  components: { SongLoading, SongDetail, Kebab, SongsList },
 
   data() {
     return {
-      previous: '',
+      previous: [],
     };
   },
 
@@ -193,7 +208,7 @@ export default {
       // access to component public instance via `vm`
       // todo: fix for navigating between songs (or authors)
       // probably using pinia
-      vm.previous = from.fullPath;
+      vm.previous.push(from.fullPath);
     });
   },
 
@@ -248,6 +263,8 @@ export default {
   },
 
   computed: {
+    ...mapStores(useListStore),
+
     topBarTitle() {
       return this.song_lyric
         ? String(
