@@ -1,7 +1,10 @@
 <template>
   <div class="mb-4">
     <LoaderLinear
-      :class="[{ 'opacity-0': (results_loaded || !loading_bar) }, 'transition-opacity']"
+      :class="[
+        { 'opacity-0': results_loaded || !loading_bar },
+        'transition-opacity',
+      ]"
     />
     <table class="w-full">
       <tbody>
@@ -29,8 +32,11 @@
           <template v-for="song_lyric in song_lyrics" :key="song_lyric.id">
             <SLItem
               :song_lyric="song_lyric"
-              :number="getSongNumber(song_lyric)"
-              :special-number="getSongNumber(song_lyric, true)"
+              :songbook-id="preferred_songbook_id"
+              :force-number="
+                preferred_songbook_id != $config.public.variation.songbook ||
+                sort == 2
+              "
               is-search
             />
           </template>
@@ -78,7 +84,7 @@ import buildElasticSearchParams, {
 } from '~/components/Search/buildElasticSearchParams';
 import mergeFetchMoreResult from '~/components/Search/mergeFetchMoreResult';
 import tagsFilters from './tagsFilters';
-import SLItem from './SLItem';
+import SLItem, { SongListItemFragment } from './SLItem';
 import lodash from 'lodash';
 const { isEmpty } = lodash; // lodash is CommonJS, therefore we can't do `import { xyz } from 'lodash';`
 
@@ -91,29 +97,13 @@ const FETCH_ITEMS = gql`
       per_page: $per_page
     ) {
       data {
-        id
+        ...SongListItemFragment
         song_number
-        name
-        secondary_name_1
-        secondary_name_2
-        public_route
-        lang
-        lang_string
         scores: externals(content_type: SCORE) {
           id
         }
         recordings: externals(content_type: RECORDING) {
           id
-        }
-        authors_pivot {
-          pivot {
-            author {
-              id
-              name
-              public_route
-            }
-            authorship_type
-          }
         }
         tags {
           id
@@ -140,6 +130,8 @@ const FETCH_ITEMS = gql`
       }
     }
   }
+
+  ${SongListItemFragment}
 `;
 
 export default {
@@ -171,16 +163,13 @@ export default {
   components: { ScrollTrigger, SLItem },
 
   data() {
-    const default_preferred_songbook = this.$config.public.variation.songbook;
-
     return {
       page: 1,
       per_page: 20,
       enable_more: true,
       results_loaded: false,
       loading_bar: false,
-      default_preferred_songbook: default_preferred_songbook,
-      preferred_songbook_id: default_preferred_songbook,
+      preferred_songbook_id: this.$config.public.variation.songbook,
       caniuseObserver: true,
       loadedMore: false,
     };
@@ -258,41 +247,6 @@ export default {
         return e;
       }
     },
-
-    getSongNumber(song_lyric, onlySpecial = false) {
-      const rec = this.getSongbookRecordForNumber(song_lyric);
-
-      if (onlySpecial) {
-        return rec &&
-          this.preferred_songbook_id != this.default_preferred_songbook
-          ? rec.pivot.number
-          : '';
-      }
-
-      if (rec) {
-        if (this.preferred_songbook_id == this.default_preferred_songbook) {
-          return rec.pivot.number;
-        } else {
-          return rec.pivot.songbook.shortcut + ' ' + rec.pivot.number;
-        }
-      }
-
-      return String(song_lyric.song_number);
-    },
-
-    getSongbookRecordForNumber(song_lyric) {
-      if (this.preferred_songbook_id != null) {
-        let rec = song_lyric.songbook_records.find(
-          (record) => record.pivot.songbook.id == this.preferred_songbook_id
-        );
-
-        if (rec && rec.pivot.number && rec.pivot.songbook.shortcut) {
-          return rec;
-        }
-      }
-
-      return null;
-    },
   },
 
   // GraphQL client
@@ -342,7 +296,7 @@ export default {
         if (arr.length == 1) {
           this.preferred_songbook_id = arr[0];
         } else {
-          this.preferred_songbook_id = this.default_preferred_songbook;
+          this.preferred_songbook_id = this.$config.public.variation.songbook;
         }
       },
       deep: true,

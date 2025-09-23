@@ -93,7 +93,7 @@
 </template>
 
 <script>
-import AuthorSongsList from './AuthorSongsList';
+import AuthorSongsList, { AuthorSongsListFields } from './AuthorSongsList';
 import gql from 'graphql-tag';
 
 const FETCH_AUTHOR = gql`
@@ -114,60 +114,18 @@ const FETCH_AUTHOR = gql`
         public_route
       }
       songs_originals {
-        ...slFields
+        ...AuthorSongsListFields
       }
       songs_translations {
-        ...slFields
+        ...AuthorSongsListFields
       }
       songs_interpreted {
-        ...slFields
+        ...AuthorSongsListFields
       }
     }
   }
 
-  fragment slFields on SongLyric {
-    type
-    name
-    secondary_name_1
-    secondary_name_2
-    songbook_records {
-      pivot {
-        songbook {
-          id
-        }
-        song_name
-      }
-    }
-    lang
-    lang_string
-    has_lyrics
-    public_route
-    authors_pivot {
-      pivot {
-        author {
-          name
-          public_route
-        }
-        authorship_type
-      }
-    }
-    song {
-      song_lyrics {
-        type
-        name
-        public_route
-        authors_pivot {
-          pivot {
-            author {
-              name
-              public_route
-            }
-            authorship_type
-          }
-        }
-      }
-    }
-  }
+  ${AuthorSongsListFields}
 `;
 
 export default {

@@ -27,6 +27,9 @@ export default {
     song: {
       type: Object,
     },
+    songbookId: {
+      default: null,
+    },
     multiline: {
       type: Boolean,
       default: false,
@@ -38,50 +41,38 @@ export default {
   },
   computed: {
     songName() {
-      return getName(this.song, this.$config.public.variation);
-    },
-    names() {
-      return getNames(this.song, this.$config.public.variation);
+      return getNames(
+        this.song,
+        this.songbookId ?? this.$config.public.variation.songbook
+      )[0];
     },
     secondaryNames() {
-      return this.names.slice(1);
+      return getNames(
+        this.song,
+        this.songbookId ?? this.$config.public.variation.songbook
+      ).slice(1);
     },
   },
 };
 
-function getName(song, variation) {
-  if (variation.songbook != null) {
-    const songbookName = song.songbook_records?.find(
-      (record) => record.pivot.songbook.id == variation.songbook
+function getNames(song, songbookId) {
+  if (songbookId != null && song.songbook_records != null) {
+    const songbookName = song.songbook_records.find(
+      (record) => record.pivot.songbook.id == songbookId
     )?.pivot.song_name;
 
     if (songbookName) {
-      return songbookName;
+      return [songbookName];
     }
   }
 
-  return song.name;
+  return [song.name, song.secondary_name_1, song.secondary_name_2].filter(
+    (name) => name
+  );
 }
 
-function getNames(song, variation) {
-  const names = [
-    getName(song, variation),
-    song.secondary_name_1,
-    song.secondary_name_2,
-  ];
-  const result = [];
-
-  for (const name of names) {
-    if (name && !result.includes(name)) {
-      result.push(name);
-    }
-  }
-
-  return result;
-}
-
-export function getFullName(song, variation) {
-  const names = getNames(song, variation);
+export function getFullName(song, songbookId) {
+  const names = getNames(song, songbookId);
 
   if (names.length == 1) {
     return names[0];

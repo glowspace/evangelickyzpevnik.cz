@@ -37,6 +37,7 @@ import SongsList from '~/pages/search/components/SongsList';
 import Bowser from 'bowser';
 import { mapStores } from 'pinia';
 import useListStore from '~/stores/list.js';
+import { SongListItemFragment } from '~/pages/search/components/SLItem';
 
 const VISIT_SONG = gql`
   mutation (
@@ -108,31 +109,7 @@ const FETCH_SONG_LYRIC = gql`
       }
       song {
         song_lyrics {
-          id
-          name
-          secondary_name_1
-          secondary_name_2
-          songbook_records {
-            pivot {
-              songbook {
-                id
-              }
-              song_name
-            }
-          }
-          public_route
-          type
-          authors_pivot {
-            pivot {
-              author {
-                ...authorFields
-              }
-              authorship_type
-            }
-          }
-          has_lyrics
-          lang
-          lang_string
+          ...SongListItemFragment
         }
       }
       capo
@@ -174,6 +151,8 @@ const FETCH_SONG_LYRIC = gql`
     }
   }
 
+  ${SongListItemFragment}
+
   fragment authorFields on Author {
     id
     name
@@ -208,7 +187,7 @@ export default {
     getTitle() {
       return (
         (this.song_lyric
-          ? getFullName(this.song_lyric, this.$config.public.variation)
+          ? getFullName(this.song_lyric, this.$config.public.variation.songbook)
           : 'Píseň') +
         this.$config.public.titleSeparator +
         this.$config.public.variation.title
