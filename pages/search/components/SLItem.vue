@@ -5,11 +5,11 @@
       class="hidden lg:table-cell text-gray text-right w-16 text-sm"
     >
       <BasicClickable
-        class="pl-7 p-3"
+        class="pl-7 p-3 whitespace-nowrap"
         tabindex="-1"
         :to="song_lyric.public_route"
       >
-        {{ number }}
+        {{ `${songbookPrefix}${songNumber}` }}
       </BasicClickable>
     </td>
     <td>
@@ -18,16 +18,21 @@
         :class="{ 'md:pl-7': isSearch }"
         :to="song_lyric.public_route"
       >
-        <span v-if="specialNumber" :class="{ 'lg:hidden': isSearch }"
-          >{{ specialNumber }}.
+        <span v-if="forceNumber" :class="{ 'lg:hidden': isSearch }"
+          >{{ songNumber }}.
         </span>
-        <song-name :song="song_lyric" multiline :active="active" />
+        <song-name
+          :song="song_lyric"
+          :songbook-id="songbookId"
+          multiline
+          :active="active"
+        />
       </BasicClickable>
     </td>
     <td
       v-if="allowAuthors || isSearch"
       class="text-gray hidden"
-      :class="[ isSearch ? 'lg:table-cell' : 'sm:table-cell' ]"
+      :class="[isSearch ? 'lg:table-cell' : 'sm:table-cell']"
     >
       <span
         v-for="(ap, authorIndex) in song_lyric.authors_pivot"
@@ -95,16 +100,77 @@
 </template>
 
 <script setup>
+const config = useRuntimeConfig();
 const props = defineProps({
   song_lyric: Object,
-  number: String,
-  specialNumber: String,
+  songbookId: null,
+  forceNumber: Boolean,
   hideIcons: Boolean,
   active: Boolean,
   isSearch: Boolean,
   allowAuthors: Boolean,
 });
 const authorshipTypes = { GENERIC: '', LYRICS: 'text', MUSIC: 'hudba' };
+const songbookPivot = computed(() => {
+  if (props.songbookId != null && props.song_lyric.songbook_records != null) {
+    const record = props.song_lyric.songbook_records.find(
+      (r) => r.pivot.songbook.id == props.songbookId
+    );
+
+    if (
+      record != null &&
+      record.pivot.number &&
+      record.pivot.songbook.shortcut
+    ) {
+      return record.pivot;
+    }
+  }
+});
+const songbookPrefix = computed(() =>
+  config.public.variation.songbook != props.songbookId &&
+  songbookPivot.value != null
+    ? `${songbookPivot.value.songbook.shortcut} `
+    : ''
+);
+const songNumber = computed(() =>
+  songbookPivot.value != null
+    ? songbookPivot.value.number
+    : props.song_lyric.song_number
+);
+</script>
+
+<script>
+import gql from 'graphql-tag';
+export const SongListItemFragment = gql`
+  fragment SongListItemFragment on SongLyric {
+    id
+    name
+    secondary_name_1
+    secondary_name_2
+    songbook_records {
+      pivot {
+        songbook {
+          id
+        }
+        song_name
+      }
+    }
+    public_route
+    type
+    authors_pivot {
+      pivot {
+        author {
+          name
+          public_route
+        }
+        authorship_type
+      }
+    }
+    has_lyrics
+    lang
+    lang_string
+  }
+`;
 </script>
 
 <style lang="postcss" scoped>
