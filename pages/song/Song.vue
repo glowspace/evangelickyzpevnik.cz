@@ -23,18 +23,6 @@
       ]"
     />
   </TopBar>
-  <div style="height: 500px">
-    <SongsList
-      v-if="listStore.active"
-      :search-string="listStore.searchString"
-      :selected-tags="listStore.selectedTags"
-      :selected-songbooks="listStore.selectedSongbooks"
-      :selected-languages="listStore.selectedLanguages"
-      :sort="listStore.sort"
-      :descending="listStore.descending"
-      :seed="listStore.seed"
-    ></SongsList>
-  </div>
   <song-loading v-if="$apollo.loading"></song-loading>
   <song-detail v-else-if="song_lyric" :song="song_lyric"></song-detail>
 </template>
@@ -199,7 +187,7 @@ export default {
 
   data() {
     return {
-      previous: [],
+      previous: '',
     };
   },
 
@@ -208,7 +196,7 @@ export default {
       // access to component public instance via `vm`
       // todo: fix for navigating between songs (or authors)
       // probably using pinia
-      vm.previous.push(from.fullPath);
+      vm.previous = from.fullPath;
     });
   },
 

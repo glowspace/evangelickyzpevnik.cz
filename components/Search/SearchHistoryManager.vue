@@ -1,6 +1,8 @@
 <script>
 import lodash from 'lodash';
 const { isEqual, isEmpty } = lodash; // lodash is CommonJS, therefore we can't do `import { xyz } from 'lodash';`
+import { mapStores } from 'pinia';
+import useListStore from '~/stores/list.js';
 
 export default {
   data() {
@@ -9,11 +11,25 @@ export default {
     };
   },
 
+  computed: {
+    ...mapStores(useListStore),
+  },
+
   methods: {
     updateHistoryState(push = true, force) {
       if (this.$route.query.hledat) {
         push = false;
       }
+
+      // save params to list store
+      this.listStore.active = true;
+      this.listStore.searchString = this.historyStateObject.search_string;
+      this.listStore.selectedTags = this.historyStateObject.tags;
+      this.listStore.selectedSongbooks = this.historyStateObject.songbooks;
+      this.listStore.selectedLanguages = this.historyStateObject.languages;
+      this.listStore.sort = this.historyStateObject.sort;
+      this.listStore.descending = this.historyStateObject.is_descending;
+      this.listStore.seed = this.historyStateObject.seed;
 
       let oldParams = this.$route.query;
       let newParams = toGETParameters(this.historyStateObject);
@@ -151,8 +167,8 @@ function fromGETParameters(params) {
     songbooks: keysToObj(params.zpevniky),
     show_authors: !!params.autori,
     is_descending: !!params.sestupne,
-    seed: params.nahoda,
-    sort: params.razeni ? params.razeni : 0,
+    seed: parseInt(params.nahoda),
+    sort: params.razeni ? parseInt(params.razeni) : 0,
   };
 }
 </script>

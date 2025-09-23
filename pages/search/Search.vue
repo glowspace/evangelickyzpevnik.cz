@@ -124,9 +124,9 @@
           :selected-tags="selected_tags"
           :selected-songbooks="selected_songbooks"
           :selected-languages="selected_languages"
-          :sort="parseInt(sort)"
+          :sort="sort"
           :descending="descending"
-          :seed="parseInt(seed)"
+          :seed="seed"
           @query-loaded="queryLoaded"
         ></SongsList>
         <AuthorsList
