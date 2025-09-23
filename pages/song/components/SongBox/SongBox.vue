@@ -155,8 +155,13 @@
                 'song-lyrics-extended': !chordSharedStore.simpleView,
               }"
             >
+              <!-- MusicXML is preferred -->
+              <!-- todo: let the user select if they prefer lilypond or mxl -->
               <div
-                v-if="song_lyric.lilypond_svg"
+                v-if="
+                  song_lyric.lilypond_svg &&
+                  !song_lyric.external_rendered_scores[0]?.public_url
+                "
                 v-html="song_lyric.lilypond_svg"
                 class="mb-3 lilypond-container"
               ></div>
