@@ -2,15 +2,15 @@
   <div>
     <Navbar />
     <div class="h-[50vh] overflow-auto" v-if="listStore.active">
-      <SongsList
+      <SongList
         :search-string="listStore.searchString"
-        :selected-tags="listStore.selectedTags"
-        :selected-songbooks="listStore.selectedSongbooks"
-        :selected-languages="listStore.selectedLanguages"
-        :sort="listStore.sort"
-        :descending="listStore.descending"
+        :selected-tags="listStore.filters.tags"
+        :selected-songbooks="listStore.filters.songbooks"
+        :selected-languages="listStore.filters.languages"
+        :sort="listStore.sort.by"
+        :descending="listStore.sort.desc"
         :seed="listStore.seed"
-      ></SongsList>
+      ></SongList>
     </div>
     <slot />
   </div>
@@ -18,6 +18,6 @@
 
 <script setup>
 import useListStore from '~/stores/list';
-import SongsList from '~/pages/search/components/SongsList';
+import SongList from '~/components/Song/List';
 const listStore = useListStore();
 </script>

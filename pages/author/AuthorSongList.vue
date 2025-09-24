@@ -10,25 +10,25 @@
           {{ headingText }}
         </th>
       </tr>
-      <SLItem
+      <SongListItem
         v-for="song_lyric in songs"
         :song_lyric="song_lyric"
         :key="song_lyric.id"
         hide-icons
-      ></SLItem>
+      ></SongListItem>
     </tbody>
   </table>
 </template>
 
 <script setup>
-import SLItem, { SongListItemFragment } from '~/pages/search/components/SLItem';
+import SongListItem, { SongListItemFragment } from '~/components/Song/ListItem';
 const props = defineProps(['headingText', 'headingClass', 'songs']);
 </script>
 
 <script>
 import gql from 'graphql-tag';
-export const AuthorSongsListFields = gql`
-  fragment AuthorSongsListFields on SongLyric {
+export const AuthorSongListFields = gql`
+  fragment AuthorSongListFields on SongLyric {
     ...SongListItemFragment
     song {
       song_lyrics {

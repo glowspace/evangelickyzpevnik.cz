@@ -37,21 +37,21 @@
             }}
           </th>
         </tr>
-        <SLItem
+        <SongListItem
           v-for="song_lyric in filterLyrics(subtable.typeNumber)"
           :song_lyric="song_lyric"
           :key="song_lyric.id"
           :active="song_lyric.id === props.song_lyric.id"
           hideIcons
           allow-authors
-        ></SLItem>
+        ></SongListItem>
       </template>
     </tbody>
   </table>
 </template>
 
 <script setup>
-import SLItem from '~/pages/search/components/SLItem';
+import SongListItem from '~/components/Song/ListItem';
 const props = defineProps(['song_lyric']);
 
 function filterLyrics(type) {

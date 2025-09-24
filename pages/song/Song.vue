@@ -33,11 +33,10 @@ import SongDetail from './SongDetail';
 import SongLoading from './SongLoading';
 import Kebab from '~/components/Kebab';
 import { getFullName } from '~/components/SongName';
-import SongsList from '~/pages/search/components/SongsList';
 import Bowser from 'bowser';
+import { SongListItemFragment } from '~/components/Song/ListItem';
 import { mapStores } from 'pinia';
 import useListStore from '~/stores/list.js';
-import { SongListItemFragment } from '~/pages/search/components/SLItem';
 
 const VISIT_SONG = gql`
   mutation (
@@ -162,22 +161,7 @@ const FETCH_SONG_LYRIC = gql`
 
 export default {
   name: 'Song',
-  components: { SongLoading, SongDetail, Kebab, SongsList },
-
-  data() {
-    return {
-      previous: '',
-    };
-  },
-
-  beforeRouteEnter(to, from, next) {
-    next((vm) => {
-      // access to component public instance via `vm`
-      // todo: fix for navigating between songs (or authors)
-      // probably using pinia
-      vm.previous = from.fullPath;
-    });
-  },
+  components: { SongLoading, SongDetail, Kebab },
 
   head() {
     return generateHead(this.getTitle(), this.getDescription());

@@ -9,16 +9,16 @@
           autoři
         </FilterRowItem>
         <FilterRowItem
-          v-if="!searchString && localSort != 0"
+          v-if="!searchString && localSort.by != 0"
           @click="
             refreshSeed();
-            localSort = 0;
-            localDescending = false;
+            localSort.by = 0;
+            localSort.desc = false;
           "
         >
-          <span v-if="localSort == 1 && localDescending">Z–A</span>
-          <span v-else-if="localSort == 1">A–Z</span>
-          <span v-else-if="localSort == 2 && localDescending">9–1</span>
+          <span v-if="localSort.by == 1 && localSort.desc">Z–A</span>
+          <span v-else-if="localSort.by == 1">A–Z</span>
+          <span v-else-if="localSort.by == 2 && localSort.desc">9–1</span>
           <span v-else>1–9</span>
         </FilterRowItem>
         <template
@@ -45,16 +45,16 @@
         </template>
         <template v-for="tag in songbooks" :key="tag.id">
           <FilterRowItem
-            v-if="isSelectedSongbook(tag)"
-            @click="selectSongbook(tag)"
+            v-if="isSelectedTag(tag, 'songbooks')"
+            @click="selectTag(tag, 'songbooks')"
           >
             {{ tag.name }}
           </FilterRowItem>
         </template>
         <template v-for="tag in all_languages" :key="tag.id">
           <FilterRowItem
-            v-if="isSelectedLanguage(tag)"
-            @click="selectLanguage(tag)"
+            v-if="isSelectedTag(tag, 'languages')"
+            @click="selectTag(tag, 'languages')"
           >
             {{ tag.name }}
           </FilterRowItem>
@@ -81,7 +81,10 @@
         </template>
       </div>
       <div v-else>
-        <BasicButtonGroup v-if="!$config.public.variation.hideAuthorSearch" class="mr-2 mb-2">
+        <BasicButtonGroup
+          v-if="!$config.public.variation.hideAuthorSearch"
+          class="mr-2 mb-2"
+        >
           <BasicButtonGroupItem
             :class="{ active: !localShowAuthors }"
             @click="localShowAuthors = false"
@@ -102,63 +105,63 @@
           :title="[searchString ? 'Písně jsou řazeny podle vyhledávání.' : '']"
         >
           <BasicButtonGroupItem
-            :class="{ active: localSort == 0 }"
+            :class="{ active: localSort.by == 0 }"
             :disabled="!!searchString"
             title="řadit náhodně"
             @click="
               refreshSeed();
-              localSort = 0;
-              localDescending = false;
+              localSort.by = 0;
+              localSort.desc = false;
             "
           >
             <BasicIcon name="shuffle" />
             náhodně
           </BasicButtonGroupItem>
           <BasicButtonGroupItem
-            :class="{ active: localSort == 1 }"
+            :class="{ active: localSort.by == 1 }"
             :disabled="!!searchString"
             :title="
               'řadit podle abecedy' +
-              (localSort == 1
-                ? localDescending
+              (localSort.by == 1
+                ? localSort.desc
                   ? 'vzestupně'
                   : 'sestupně'
                 : 'vzestupně')
             "
             @click="
-              if (localSort == 1) {
-                localDescending = !localDescending;
+              if (localSort.by == 1) {
+                localSort.desc = !localSort.desc;
               } else {
-                localSort = 1;
-                localDescending = false;
+                localSort.by = 1;
+                localSort.desc = false;
               }
             "
           >
             <BasicIcon name="sort_by_alpha" />
-            {{ localSort == 1 ? (!localDescending ? 'A–Z' : 'Z–A') : 'A–Z' }}
+            {{ localSort.by == 1 ? (!localSort.desc ? 'A–Z' : 'Z–A') : 'A–Z' }}
           </BasicButtonGroupItem>
           <BasicButtonGroupItem
-            :class="{ active: localSort == 2 }"
+            :class="{ active: localSort.by == 2 }"
             :disabled="!!searchString"
             :title="
               'řadit podle čísla' +
-              (localSort == 2
-                ? localDescending
+              (localSort.by == 2
+                ? localSort.desc
                   ? 'vzestupně'
                   : 'sestupně'
                 : 'vzestupně')
             "
             @click="
-              if (localSort == 2) {
-                localDescending = !localDescending;
+              if (localSort.by == 2) {
+                localSort.desc = !localSort.desc;
               } else {
-                localSort = 2;
-                localDescending = false;
+                localSort.by = 2;
+                localSort.desc = false;
               }
             "
           >
             <BasicIcon name="pin" />
-            {{ localSort == 2 ? (!localDescending ? '1–9' : '9–1') : '1–9' }}
+            {{ localSort.by == 2 ? (!localSort.desc ? '1–9' : '9–1') : '1–9' }}
           </BasicButtonGroupItem>
           <BasicButtonGroupItem
             v-if="searchString"
@@ -168,40 +171,43 @@
             <BasicIcon name="search" />
           </BasicButtonGroupItem>
         </BasicButtonGroup>
-        <div v-if="!localShowAuthors && !$config.public.variation.hideTags" class="mb-3">
+        <div
+          v-if="!localShowAuthors && !$config.public.variation.hideTags"
+          class="mb-3"
+        >
           <SearchTagCategory
             heading="Mše svatá"
             color="blue"
             :tags-in-category="tags_liturgy_part"
-            :selected-tags="selected_tags"
+            :selected-tags="localFilters.tags"
             @selectTag="selectTag"
           ></SearchTagCategory>
           <SearchTagCategory
             heading="Liturgický rok"
             color="red"
             :tags-in-category="tags_liturgy_period"
-            :selected-tags="selected_tags"
+            :selected-tags="localFilters.tags"
             @selectTag="selectTag"
           ></SearchTagCategory>
           <SearchTagCategory
             heading="Svátosti a pobožnosti"
             color="green"
             :tags-in-category="tags_sacred_occasion"
-            :selected-tags="selected_tags"
+            :selected-tags="localFilters.tags"
             @selectTag="selectTag"
           ></SearchTagCategory>
           <SearchTagCategory
             heading="K příležitostem"
             color="green"
             :tags-in-category="tags_generic"
-            :selected-tags="selected_tags"
+            :selected-tags="localFilters.tags"
             @selectTag="selectTag"
           ></SearchTagCategory>
           <SearchTagCategory
             heading="Ke svatým"
             color="green"
             :tags-in-category="tags_saints"
-            :selected-tags="selected_tags"
+            :selected-tags="localFilters.tags"
             @selectTag="selectTag"
           ></SearchTagCategory>
           <SearchTagCategory
@@ -209,15 +215,15 @@
             heading="Zpěvníky"
             color="yellow"
             :tags-in-category="songbooks"
-            :selected-tags="selected_songbooks"
-            @selectTag="selectSongbook"
+            :selected-tags="localFilters.songbooks"
+            @selectTag="(t) => selectTag(t, 'songbooks')"
           ></SearchTagCategory>
           <SearchTagCategory
             heading="Jazyky"
             color="red"
             :tags-in-category="all_languages"
-            :selected-tags="selected_languages"
-            @selectTag="selectLanguage"
+            :selected-tags="localFilters.languages"
+            @selectTag="(t) => selectTag(t, 'languages')"
           ></SearchTagCategory>
         </div>
       </div>
@@ -232,12 +238,9 @@ import FilterRowItem from './FilterRowItem';
 export default {
   props: [
     'is-filter-row',
-    'selected-tags',
-    'selected-songbooks',
-    'selected-languages',
+    'filters',
     'show-authors',
     'sort',
-    'descending',
     'search-string',
   ],
 
@@ -289,37 +292,12 @@ export default {
       },
     },
 
-    localDescending: {
+    localFilters: {
       get() {
-        return this.descending;
+        return this.filters;
       },
       set(val) {
-        this.$emit('update:descending', val);
-      },
-    },
-
-    selected_tags: {
-      get() {
-        return this.selectedTags;
-      },
-      set(val) {
-        this.$emit('update:selected-tags', val);
-      },
-    },
-    selected_songbooks: {
-      get() {
-        return this.selectedSongbooks;
-      },
-      set(val) {
-        this.$emit('update:selected-songbooks', val);
-      },
-    },
-    selected_languages: {
-      get() {
-        return this.selectedLanguages;
-      },
-      set(val) {
-        this.$emit('update:selected-languages', val);
+        this.$emit('update:filters', val);
       },
     },
   },
@@ -330,40 +308,16 @@ export default {
         this.$config.public.regenschoriUrl + window.location.search;
     },
 
-    selectTag(tag) {
-      if (!this.isSelectedTag(tag)) {
-        this.selected_tags[tag.id] = true;
+    selectTag(tag, type = 'tags') {
+      if (!this.isSelectedTag(tag, type)) {
+        this.localFilters[type][tag.id] = true;
       } else {
-        delete this.selected_tags[tag.id];
+        delete this.localFilters[type][tag.id];
       }
     },
 
-    selectSongbook(songbook) {
-      if (!this.isSelectedSongbook(songbook)) {
-        this.selected_songbooks[songbook.id] = true;
-      } else {
-        delete this.selected_songbooks[songbook.id];
-      }
-    },
-
-    selectLanguage(language) {
-      if (!this.isSelectedLanguage(language)) {
-        this.selected_languages[language.id] = true;
-      } else {
-        delete this.selected_languages[language.id];
-      }
-    },
-
-    isSelectedTag(tag) {
-      return this.selected_tags[tag.id];
-    },
-
-    isSelectedSongbook(songbook) {
-      return this.selected_songbooks[songbook.id];
-    },
-
-    isSelectedLanguage(language) {
-      return this.selected_languages[language.id];
+    isSelectedTag(tag, type = 'tags') {
+      return this.localFilters[type][tag.id];
     },
 
     refreshSeed() {

@@ -30,7 +30,7 @@
             <td>here we can display a list of last visited songs</td>
           </tr> -->
           <template v-for="song_lyric in song_lyrics" :key="song_lyric.id">
-            <SLItem
+            <SongListItem
               :song_lyric="song_lyric"
               :songbook-id="preferred_songbook_id"
               :force-number="
@@ -83,8 +83,8 @@ import buildElasticSearchParams, {
   getSelectedTagsDcnf,
 } from '~/components/Search/buildElasticSearchParams';
 import mergeFetchMoreResult from '~/components/Search/mergeFetchMoreResult';
-import tagsFilters from './tagsFilters';
-import SLItem, { SongListItemFragment } from './SLItem';
+import tagsFilters from '../../pages/search/components/tagsFilters';
+import SongListItem, { SongListItemFragment } from './ListItem';
 import lodash from 'lodash';
 const { isEmpty } = lodash; // lodash is CommonJS, therefore we can't do `import { xyz } from 'lodash';`
 
@@ -160,7 +160,7 @@ export default {
     },
   },
 
-  components: { ScrollTrigger, SLItem },
+  components: { ScrollTrigger, SongListItem },
 
   data() {
     return {

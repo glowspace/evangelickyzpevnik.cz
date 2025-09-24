@@ -4,11 +4,12 @@ export default defineStore('list', {
   state: () => ({
     active: false,
     searchString: '',
-    selectedTags: {},
-    selectedSongbooks: {},
-    selectedLanguages: {},
-    sort: 0,
-    descending: false,
-    seed: 0,
+    filters: {
+      tags: {},
+      songbooks: {},
+      languages: {},
+    },
+    sort: { by: 0, desc: false },
+    seed: null,
   }),
 })

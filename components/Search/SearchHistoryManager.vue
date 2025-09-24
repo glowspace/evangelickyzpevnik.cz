@@ -23,12 +23,9 @@ export default {
 
       // save params to list store
       this.listStore.active = true;
-      this.listStore.searchString = this.historyStateObject.search_string;
-      this.listStore.selectedTags = this.historyStateObject.tags;
-      this.listStore.selectedSongbooks = this.historyStateObject.songbooks;
-      this.listStore.selectedLanguages = this.historyStateObject.languages;
+      this.listStore.searchString = this.historyStateObject.searchString;
+      this.listStore.filters = this.historyStateObject.filters;
       this.listStore.sort = this.historyStateObject.sort;
-      this.listStore.descending = this.historyStateObject.is_descending;
       this.listStore.seed = this.historyStateObject.seed;
 
       let oldParams = this.$route.query;
@@ -84,47 +81,38 @@ export default {
   },
 };
 
-const GET_PARAMETERS = {
-  force_search: 'hledat',
-  search_string: 'vyhledavani',
-  tags: 'stitky',
-  languages: 'jazyky',
-  songbooks: 'zpevniky',
-  show_authors: 'autori',
-  sort: 'razeni',
-  is_descending: 'sestupne',
-  seed: 'nahoda',
-};
-
-function validParameters() {
-  return Object.values(GET_PARAMETERS);
-}
-
 function toGETParameters(
   params = {
-    search_string: '',
-    tags: [],
-    languages: [],
-    songbooks: [],
-    sort: 0,
+    searchString: '',
+    filters: {
+      tags: [],
+      languages: [],
+      songbooks: [],
+    },
+    sort: {
+      by: 0,
+      desc: false,
+    },
     seed: null,
-    is_descending: false,
-    show_authors: false,
+    showAuthors: false,
   }
 ) {
   const joinKeys = (obj) =>
     Object.keys(obj).length ? Object.keys(obj).join(',') : undefined;
 
   let get = {
-    vyhledavani: params.search_string
-      ? params.search_string.replace(/\s/g, '_')
+    vyhledavani: params.searchString
+      ? params.searchString.replace(/\s/g, '_')
       : undefined,
-    stitky: joinKeys(params.tags),
-    jazyky: joinKeys(params.languages),
-    zpevniky: joinKeys(params.songbooks),
-    autori: params.show_authors == true ? 'ano' : undefined,
-    razeni: params.sort > 0 ? String(params.sort) : undefined,
-    sestupne: params.is_descending == true ? 'ano' : undefined,
+    stitky: joinKeys(params.filters.tags),
+    jazyky: joinKeys(params.filters.languages),
+    zpevniky: joinKeys(params.filters.songbooks),
+    autori: params.showAuthors ? 'ano' : undefined,
+    razeni:
+      params.sort.by > 0 && !params.searchString
+        ? String(params.sort.by)
+        : undefined,
+    sestupne: params.sort.desc && !params.searchString ? 'ano' : undefined,
     nahoda: params.seed ? String(params.seed) : undefined,
   };
   // delete undefined items
@@ -136,9 +124,21 @@ function toGETParameters(
   return get;
 }
 
+const validParameters = [
+  'hledat',
+  'vyhledavani',
+  'stitky',
+  'jazyky',
+  'zpevniky',
+  'autori',
+  'razeni',
+  'sestupne',
+  'nahoda',
+];
+
 function hasInvalidGETParameters(params) {
   Object.keys(params).forEach(function (p) {
-    if (!validParameters().includes(p)) {
+    if (!validParameters.includes(p)) {
       return true;
     }
   });
@@ -159,16 +159,20 @@ function fromGETParameters(params) {
   };
 
   return {
-    search_string: params.vyhledavani
+    searchString: params.vyhledavani
       ? params.vyhledavani.replace(/_/g, ' ')
       : '',
-    tags: keysToObj(params.stitky),
-    languages: keysToObj(params.jazyky),
-    songbooks: keysToObj(params.zpevniky),
-    show_authors: !!params.autori,
-    is_descending: !!params.sestupne,
+    filters: {
+      tags: keysToObj(params.stitky),
+      languages: keysToObj(params.jazyky),
+      songbooks: keysToObj(params.zpevniky),
+    },
+    showAuthors: !!params.autori,
+    sort: {
+      by: params.razeni ? parseInt(params.razeni) : 0,
+      desc: !!params.sestupne,
+    },
     seed: parseInt(params.nahoda),
-    sort: params.razeni ? parseInt(params.razeni) : 0,
   };
 }
 </script>

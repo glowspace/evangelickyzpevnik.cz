@@ -63,19 +63,19 @@
             0
           "
         >
-          <AuthorSongsList
+          <AuthorSongList
             heading-text="Autorské písně"
             heading-class="text-primary"
             v-if="author.songs_originals.length"
             :songs="author.songs_originals"
           />
-          <AuthorSongsList
+          <AuthorSongList
             heading-text="Překlady"
             heading-class="text-greendark"
             v-if="author.songs_translations.length"
             :songs="author.songs_translations"
           />
-          <AuthorSongsList
+          <AuthorSongList
             heading-text="Interpretace písní"
             heading-class="text-red"
             v-if="author.songs_interpreted.length"
@@ -93,7 +93,7 @@
 </template>
 
 <script>
-import AuthorSongsList, { AuthorSongsListFields } from './AuthorSongsList';
+import AuthorSongList, { AuthorSongListFields } from './AuthorSongList';
 import gql from 'graphql-tag';
 
 const FETCH_AUTHOR = gql`
@@ -114,36 +114,29 @@ const FETCH_AUTHOR = gql`
         public_route
       }
       songs_originals {
-        ...AuthorSongsListFields
+        ...AuthorSongListFields
       }
       songs_translations {
-        ...AuthorSongsListFields
+        ...AuthorSongListFields
       }
       songs_interpreted {
-        ...AuthorSongsListFields
+        ...AuthorSongListFields
       }
     }
   }
 
-  ${AuthorSongsListFields}
+  ${AuthorSongListFields}
 `;
 
 export default {
   name: 'Author',
 
   components: {
-    AuthorSongsList,
+    AuthorSongList,
   },
 
   head() {
     return generateHead(this.getTitle(), this.getDescription());
-  },
-
-  beforeRouteEnter(to, from, next) {
-    next((vm) => {
-      // access to component public instance via `vm`
-      vm.previous = from.fullPath;
-    });
   },
 
   data() {
@@ -162,7 +155,6 @@ export default {
         'této kapely',
         'tohoto sboru',
       ],
-      previous: '',
     };
   },
 

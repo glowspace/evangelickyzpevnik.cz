@@ -7,7 +7,7 @@
       <StickyContainer :onDashboard="init">
         <div :class="{ 'custom-container': init, 'md:mt-4 lg:mx-5': !init }">
           <SearchBox
-            v-model="search_string"
+            v-model="searchString"
             :on-dashboard="init"
             :search-songs="!showAuthors"
             @enter="inputEnter"
@@ -21,25 +21,19 @@
             <template #row>
               <Filters
                 :is-filter-row="true"
-                v-model:selected-songbooks="selected_songbooks"
-                v-model:selected-tags="selected_tags"
-                v-model:selected-languages="selected_languages"
+                v-model:filters="filters"
                 v-model:show-authors="showAuthors"
                 v-model:sort="sort"
-                v-model:descending="descending"
-                :search-string="search_string"
+                :search-string="searchString"
                 @refresh-seed="refreshSeed"
                 @input="updateHistoryState"
               ></Filters>
             </template>
             <Filters
-              v-model:selected-songbooks="selected_songbooks"
-              v-model:selected-tags="selected_tags"
-              v-model:selected-languages="selected_languages"
+              v-model:filters="filters"
               v-model:show-authors="showAuthors"
               v-model:sort="sort"
-              v-model:descending="descending"
-              :search-string="search_string"
+              :search-string="searchString"
               @refresh-seed="refreshSeed"
               @input="updateHistoryState"
             ></Filters>
@@ -49,7 +43,7 @@
       <div class="custom-container" v-if="init">
         <InitFilters
           v-if="!$config.public.variation.hideTags"
-          v-model="selected_tags"
+          v-model="filters.tags"
           @update:modelValue="init = false"
         ></InitFilters>
         <div class="text-center mt-1">
@@ -118,20 +112,20 @@
         </DashboardCard>
       </div>
       <div v-show="!init">
-        <SongsList
+        <SongList
           v-if="!showAuthors"
-          :search-string="search_string"
-          :selected-tags="selected_tags"
-          :selected-songbooks="selected_songbooks"
-          :selected-languages="selected_languages"
-          :sort="sort"
-          :descending="descending"
+          :search-string="searchString"
+          :selected-tags="filters.tags"
+          :selected-songbooks="filters.songbooks"
+          :selected-languages="filters.languages"
+          :sort="sort.by"
+          :descending="sort.desc"
           :seed="seed"
           @query-loaded="queryLoaded"
-        ></SongsList>
+        ></SongList>
         <AuthorsList
           v-else
-          :search-string="search_string"
+          :search-string="searchString"
           @query-loaded="queryLoaded"
         ></AuthorsList>
       </div>
@@ -142,13 +136,10 @@
     >
       <div>
         <Filters
-          v-model:selected-songbooks="selected_songbooks"
-          v-model:selected-tags="selected_tags"
-          v-model:selected-languages="selected_languages"
+          v-model:filters="filters"
           v-model:show-authors="showAuthors"
           v-model:sort="sort"
-          v-model:descending="descending"
-          :search-string="search_string"
+          :search-string="searchString"
           @refresh-seed="refreshSeed"
           @input="updateHistoryState"
         ></Filters>
@@ -158,7 +149,7 @@
 </template>
 
 <script>
-import SongsList from './components/SongsList';
+import SongList from '~/components/Song/List';
 import FilterRow from './components/FilterRow';
 import AuthorsList from './components/AuthorsList';
 import Filters from './components/Filters';
@@ -203,10 +194,12 @@ export default {
   data() {
     return {
       // Search data
-      search_string: '',
-      selected_songbooks: {},
-      selected_languages: {},
-      selected_tags: {},
+      searchString: '',
+      filters: {
+        songbooks: {},
+        languages: {},
+        tags: {},
+      },
 
       // View state
       // init: true,
@@ -217,8 +210,7 @@ export default {
       seedLocked: false, // seed is shown in url
 
       // Sort
-      sort: 0,
-      descending: false,
+      sort: { by: 0, desc: false },
 
       // Song route loading
       songLoading: false,
@@ -239,12 +231,16 @@ export default {
     },
 
     resetState(manual = false) {
-      this.selected_tags = {};
-      this.selected_languages = {};
-      this.selected_songbooks = {};
-      this.sort = 0;
-      this.descending = false;
-      this.search_string = '';
+      this.searchString = '';
+      this.filters = {
+        tags: {},
+        languages: {},
+        songbooks: {},
+      };
+      this.sort = {
+        by: 0,
+        desc: false,
+      };
 
       if (manual) {
         this.showAuthors = false;
@@ -259,10 +255,10 @@ export default {
 
     inputEnter() {
       // try to open song or administration
-      if (this.search_string) {
-        let searchParsedToInt = parseInt(this.search_string, 10);
+      if (this.searchString) {
+        let searchParsedToInt = parseInt(this.searchString, 10);
 
-        if (this.search_string == 'admin') {
+        if (this.searchString == 'admin') {
           window.location.href = this.$config.public.adminUrl;
         } else if (!isNaN(searchParsedToInt)) {
           let query = this.$config.public.variation.filter
@@ -272,7 +268,7 @@ export default {
                   number:
                     this.$config.public.variation.filter.toUpperCase() +
                     ' ' +
-                    this.search_string,
+                    this.searchString,
                 },
               }
             : {
@@ -320,7 +316,7 @@ export default {
 
   components: {
     Logo,
-    SongsList,
+    SongList,
     AuthorsList,
     Filters,
     InitFilters,
@@ -344,35 +340,30 @@ export default {
     historyStateObject: {
       get() {
         this.seedLocked = !(
-          this.search_string ||
-          this.sort ||
+          this.searchString ||
+          this.sort.by ||
           this.showAuthors ||
           this.init
         );
 
         return {
-          search_string: this.search_string,
-          tags: this.selected_tags,
-          languages: this.selected_languages,
-          songbooks: this.selected_songbooks,
-          show_authors: this.showAuthors,
+          searchString: this.searchString,
+          filters: this.filters,
+          showAuthors: this.showAuthors,
           seed: this.seedLocked ? this.seed : null,
-          is_descending: this.search_string ? null : this.descending,
-          sort: this.search_string ? null : this.sort,
+          sort: this.sort,
         };
       },
 
       set(obj) {
-        this.search_string = obj.search_string;
-        this.selected_tags = obj.tags;
-        this.selected_languages = obj.languages;
-        this.selected_songbooks = obj.songbooks;
-        this.showAuthors = obj.show_authors;
-        this.descending = obj.is_descending;
+        this.searchString = obj.searchString;
+        this.filters = obj.filters;
+        this.showAuthors = obj.showAuthors;
+        this.sort = obj.sort;
+
         if (obj.seed) {
           this.seed = obj.seed;
         }
-        this.sort = obj.sort;
 
         if (this.seed && !this.seedLocked) {
           this.seedLocked = true;
