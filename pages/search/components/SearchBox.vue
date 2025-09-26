@@ -1,5 +1,7 @@
 <template>
-  <div class="flex flex-row items-center justify-between h-14 rounded-full bg-surface-100 dark:bg-surfacedark-100 p-2 m-2 border border-gray-500">
+  <div
+    class="flex flex-row items-center justify-between h-14 rounded-full bg-surface-100 dark:bg-surfacedark-100 p-2 m-2 border border-gray-500"
+  >
     <div class="flex flex-row items-center flex-grow">
       <BasicButton
         v-if="onDashboard"
@@ -29,8 +31,9 @@
         ref="searchInput"
         @click="emit('clickBox')"
       />
+      <LoaderCircular v-if="songLoading" size="6" class="mx-3" />
       <BasicButton
-        v-if="!onDashboard && value != ''"
+        v-else-if="!onDashboard && value != ''"
         icon-name="close"
         icon-only
         @click="
@@ -43,7 +46,12 @@
 </template>
 
 <script setup>
-const props = defineProps(['modelValue', 'onDashboard', 'searchSongs']);
+const props = defineProps([
+  'modelValue',
+  'onDashboard',
+  'searchSongs',
+  'songLoading',
+]);
 const emit = defineEmits(['update:modelValue', 'enter', 'back', 'clickBox']);
 
 const value = computed({

@@ -10,6 +10,7 @@
             v-model="searchString"
             :on-dashboard="init"
             :search-songs="!showAuthors"
+            :song-loading="songLoading"
             @enter="inputEnter"
             @clickBox="init = false"
             @back="
@@ -115,11 +116,8 @@
         <SongList
           v-if="!showAuthors"
           :search-string="searchString"
-          :selected-tags="filters.tags"
-          :selected-songbooks="filters.songbooks"
-          :selected-languages="filters.languages"
-          :sort="sort.by"
-          :descending="sort.desc"
+          :filters="filters"
+          :sort="sort"
           :seed="seed"
           @query-loaded="queryLoaded"
         ></SongList>

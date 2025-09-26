@@ -4,11 +4,8 @@
     <div class="h-[50vh] overflow-auto" v-if="listStore.active">
       <SongList
         :search-string="listStore.searchString"
-        :selected-tags="listStore.filters.tags"
-        :selected-songbooks="listStore.filters.songbooks"
-        :selected-languages="listStore.filters.languages"
-        :sort="listStore.sort.by"
-        :descending="listStore.sort.desc"
+        :filters="listStore.filters"
+        :sort="listStore.sort"
         :seed="listStore.seed"
       ></SongList>
     </div>

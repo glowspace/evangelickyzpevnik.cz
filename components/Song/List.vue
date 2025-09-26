@@ -35,7 +35,7 @@
               :songbook-id="preferred_songbook_id"
               :force-number="
                 preferred_songbook_id != $config.public.variation.songbook ||
-                sort == 2
+                sort.by == 2
               "
               is-search
             />
@@ -140,24 +140,10 @@ export default {
       type: String,
       default: '',
     },
-
-    selectedSongbooks: Object,
-    selectedTags: Object,
-    selectedLanguages: Object,
-
-    // todo: refactor `sort` to String (or a kind of enum)
-    sort: Number,
-    descending: Boolean,
+    filters: Object,
+    // todo: refactor `sort.by` to String (or a kind of enum)
+    sort: Object,
     seed: Number,
-
-    showArrangements: {
-      type: Boolean,
-      default: false,
-    },
-    showRegenschori: {
-      type: Boolean,
-      default: false,
-    },
   },
 
   components: { ScrollTrigger, SongListItem },
@@ -187,23 +173,23 @@ export default {
             saints: this.tags_saints,
             sacred_occasion: this.tags_sacred_occasion,
           },
-          this.selectedTags
+          this.filters.tags
         ),
-        filterLanguages: this.selectedLanguages,
-        filterSongbooks: this.selectedSongbooks,
+        filterLanguages: this.filters.languages,
+        filterSongbooks: this.filters.songbooks,
         sortType: [
           'RANDOM',
           'NAME',
           this.preferred_songbook_id == null ? 'NUMBER' : 'SONGBOOK_NUMBER',
-        ][this.sort],
+        ][this.sort.by],
         sortConfig: {
           seed: this.seed,
           songbook_id: this.preferred_songbook_id,
-          is_descending: this.descending,
+          is_descending: this.sort.desc,
         },
         filterConfig: {
-          show_regenschori: this.showRegenschori,
-          show_arrangements: this.showArrangements,
+          show_regenschori: true, // regenschori filtering is not set up
+          show_arrangements: this.$config.public.variation.showArrangements,
         },
       });
     },
@@ -215,10 +201,14 @@ export default {
     displayHistory() {
       return (
         this.searchString == '' &&
-        isEmpty(this.selectedSongbooks) &&
-        isEmpty(this.selectedTags) &&
-        isEmpty(this.selectedLanguages)
+        isEmpty(this.filters.songbooks) &&
+        isEmpty(this.filters.tags) &&
+        isEmpty(this.filters.languages)
       );
+    },
+
+    selectedSongbooks() {
+      return this.filters.songbooks;
     },
   },
 

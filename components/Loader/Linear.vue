@@ -16,7 +16,6 @@
 <style lang="postcss" scoped>
 .linear-loader {
   animation: start 0.3s ease-in;
-  z-index: -1;
 }
 .linear-loader > * {
   transition: transform 0.2s linear;

@@ -10,6 +10,7 @@ interface IVariation {
   hideTags?: boolean;
   hideAuthorSearch?: boolean;
   showLiturgyApproval?: boolean;
+  showArrangements?: boolean;
 }
 
 const variations: IVariation[] = [
