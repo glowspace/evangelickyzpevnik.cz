@@ -1,12 +1,9 @@
-import type { NuxtPage } from 'nuxt/schema';
-
 interface IVariation {
   key: string;
   filter?: string; // used as header and as songbook shorthand
   name: string;
   title: string;
   itunesId: string;
-  pages?: NuxtPage[];
   songbook?: number;
   hideTags?: boolean;
   hideAuthorSearch?: boolean;
@@ -30,25 +27,6 @@ const variations: IVariation[] = [
     songbook: 58,
     hideTags: true,
     hideAuthorSearch: true,
-    pages: [
-      {
-        name: 'downloads',
-        path: '/materialy',
-        file: '~/pages/about/Downloads.vue',
-      },
-      {
-        path: '/materialy/mobilni-aplikace',
-        redirect: '/',
-      },
-      {
-        path: '/materialy/:page',
-        redirect: '/materialy',
-      },
-      {
-        path: '/zpevnik/:page?',
-        redirect: '/o-zpevniku',
-      },
-    ],
   },
 ];
 

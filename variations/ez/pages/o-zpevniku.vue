@@ -117,11 +117,7 @@
 </template>
 
 <script>
-import TeamSection from './TeamSection';
-
 export default {
-  components: { TeamSection },
-
   head() {
     return generateHead(this.getTitle(), this.getDescription());
   },

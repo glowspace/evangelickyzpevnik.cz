@@ -23,13 +23,13 @@
         <p class="label">Hledání</p>
       </BasicClickable>
       <BasicClickable to="/o-zpevniku" class="link group">
-        <div class="icon-wrapper" :class="{ active: $route.name == 'about' }">
+        <div class="icon-wrapper" :class="{ active: $route.path == '/o-zpevniku' }">
           <BasicIcon name="info" />
         </div>
         <p class="label">O zpěvníku</p>
       </BasicClickable>
       <BasicClickable to="/materialy" class="link group">
-        <div class="icon-wrapper" :class="{ active: $route.name == 'downloads' }">
+        <div class="icon-wrapper" :class="{ active: $route.path == '/materialy' }">
           <BasicIcon name="description" />
         </div>
         <p class="label">Materiály</p>

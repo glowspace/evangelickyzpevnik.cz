@@ -1,6 +1,5 @@
 import graphql from '@rollup/plugin-graphql';
-import customPages from './config/pages';
-import variations from './config/variations';
+import variations from './variations/variations';
 
 const variationKey = process.env.VARIATION || 'ez';
 const variation =
@@ -8,6 +7,7 @@ const variation =
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  extends: ['./variations/' + variationKey],
   // debug: true,
   devtools: {
     enabled: false,
@@ -52,13 +52,29 @@ export default defineNuxtConfig({
   //     isCustomElement: (tag) => tag.startsWith('md-'),
   //   },
   // },
+  dir: { pages: 'pages_' }, // to disable routes in ./pages
+  components: ['~/pages', '~/components'], // to enable tailwind processing in ./pages
   hooks: {
     'pages:extend'(pages) {
-      // replace pages with customPages and variation.pages
-      pages.splice(0, pages.length, ...customPages, ...(variation.pages || []));
+      pages.push(
+        ...[
+          {
+            name: 'index',
+            path: '/',
+            file: '~/pages/search/Search.vue',
+          },
+          {
+            name: 'song',
+            path: '/pisen/:id/:slug?',
+            file: '~/pages/song/Song.vue',
+          },
+          {
+            name: 'author',
+            path: '/autor/:id',
+            file: '~/pages/author/Author.vue',
+          },
+        ]
+      );
     },
-  },
-  dir: {
-    public: 'public/' + variationKey,
   },
 });
