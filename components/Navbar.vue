@@ -22,17 +22,15 @@
         </div>
         <p class="label">Hledání</p>
       </BasicClickable>
-      <BasicClickable to="/o-zpevniku" class="link group">
-        <div class="icon-wrapper" :class="{ active: $route.path == '/o-zpevniku' }">
-          <BasicIcon name="info" />
+      <BasicClickable
+        v-for="item in $config.public.variation.navbar"
+        :to="item.path"
+        class="link group"
+      >
+        <div class="icon-wrapper" :class="{ active: $route.path == item.path }">
+          <BasicIcon :name="item.icon" />
         </div>
-        <p class="label">O zpěvníku</p>
-      </BasicClickable>
-      <BasicClickable to="/materialy" class="link group">
-        <div class="icon-wrapper" :class="{ active: $route.path == '/materialy' }">
-          <BasicIcon name="description" />
-        </div>
-        <p class="label">Materiály</p>
+        <p class="label">{{ item.label }}</p>
       </BasicClickable>
     </div>
   </div>

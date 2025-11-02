@@ -54,6 +54,33 @@ const variations = [
       500: '#D6EEFF',
     },
   },
+  {
+    key: 'ek',
+    primary: {
+      DEFAULT: '#ce4536',
+      '50': '#ffffff',
+      '100': '#fdf7f1',
+      '150': '#fbe7da', // = 200
+      '200': '#fbe7da',
+      '300': '#f6cebc',
+      '400': '#eea28b',
+      '500': '#e27560',
+      '600': '#ce4536',
+      '700': '#ca352f',
+      '800': '#aa2c30',
+      '900': '#952d37',
+      '950': '#5d1420',
+    },
+    surface: {
+      50: '#fdf4f3', // = 100
+      100: '#fdf4f3',
+      200: '#fce7e4',
+      300: '#fad3ce',
+      400: '#f5b4ac',
+      500: '#ee877b',
+      600: '#e26051',
+    }
+  }
 ]
 
 const variationKey = process.env.VARIATION || 'ez'
