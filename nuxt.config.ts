@@ -17,7 +17,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       siteUrl:
-        process.env.APP_URL || `http://localhost:${process.env.PORT || 3000}`,
+        process.env.APP_URL ||
+        `http://localhost:${process.env.DEV_PORT || 3000}`,
       titleSeparator: ' – ',
       apiPath: process.env.API_PATH || '/api',
       adminUrl: process.env.ADMIN_URL || '',
@@ -42,7 +43,7 @@ export default defineNuxtConfig({
     configPath: '~/assets/tailwind.config.js',
   },
   devServer: {
-    port: +(process.env.PORT || 3000),
+    port: +(process.env.DEV_PORT || 3000),
   },
   dir: { pages: 'pages_' }, // to disable routes in ./pages
   components: ['~/pages', '~/components'], // to enable tailwind processing in ./pages
