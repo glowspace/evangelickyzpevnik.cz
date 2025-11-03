@@ -1,5 +1,8 @@
 <template>
-  <div v-if="song_lyric_parts">
+  <div v-if="error">
+    Text písně se nám nepodařilo načíst.
+  </div>
+  <div v-else-if="song_lyric_parts">
     <div
       :class="getSongPartClass(part)"
       v-for="(part, key) in song_lyric_parts"
@@ -56,6 +59,7 @@ export default {
 
   data() {
     return {
+      error: false,
       song_lyric_parts: [],
     };
   },
@@ -73,7 +77,12 @@ export default {
         };
       },
       result() {
-        this.song_lyric_parts = JSON.parse(this.song_lyric_parts_json.json);
+        if (this.song_lyric_parts_json == null) {
+          this.error = true;
+        } else {
+          this.song_lyric_parts = JSON.parse(this.song_lyric_parts_json.json);
+        }
+
         this.$nextTick(() => {
           this.$emit('loaded', null);
         });
