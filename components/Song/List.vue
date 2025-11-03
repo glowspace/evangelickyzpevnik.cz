@@ -35,7 +35,7 @@
               :songbook-id="preferred_songbook_id"
               :force-number="
                 preferred_songbook_id != $config.public.variation.songbook ||
-                sort.by == 2
+                sort == 2
               "
               is-search
             />

@@ -11,7 +11,9 @@ jobs:
       - name: SSH in production server
         uses: appleboy/ssh-action@v1.0.3
         with:
-          script: cd /var/www/html/evangelickyzpevnik && make production-pull --silent && make deploy --silent
+          script: |
+            cd /var/www/html/evangelickyzpevnik   && make production-pull --silent && make deploy --silent
+            cd /var/www/html/evangelickykancional && make production-pull --silent && make deploy --silent
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}

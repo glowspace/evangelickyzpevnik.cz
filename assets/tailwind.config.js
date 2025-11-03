@@ -54,6 +54,32 @@ const variations = [
       500: '#D6EEFF',
     },
   },
+  {
+    key: 'ek',
+    primary: {
+      DEFAULT: '#ce4536',
+      50: '#fdf4f3',
+      100: '#fce6e4',
+      150: '#fce6e4', // 100
+      200: '#fad2ce',
+      300: '#f5b3ac',
+      400: '#ed877c',
+      500: '#e16052',
+      600: '#ce4536',
+      700: '#ad3528',
+      800: '#8f2f25',
+      900: '#772d25',
+      950: '#40140f',
+    },
+    surface: {
+      50: '#FEFBF9',
+      100: '#FEF7F3',
+      200: '#FDF3ED',
+      300: '#FCEFE6',
+      400: '#FCEBE0',
+      500: '#FBE7DA',
+    }
+  }
 ]
 
 const variationKey = process.env.VARIATION || 'ez'
