@@ -1,8 +1,6 @@
 <script>
 import lodash from 'lodash';
 const { isEqual, isEmpty } = lodash; // lodash is CommonJS, therefore we can't do `import { xyz } from 'lodash';`
-import { mapStores } from 'pinia';
-import useListStore from '~/stores/list.js';
 
 export default {
   data() {
@@ -11,22 +9,11 @@ export default {
     };
   },
 
-  computed: {
-    ...mapStores(useListStore),
-  },
-
   methods: {
     updateHistoryState(push = true, force) {
       if (this.$route.query.hledat) {
         push = false;
       }
-
-      // save params to list store
-      this.listStore.active = true;
-      this.listStore.searchString = this.historyStateObject.searchString;
-      this.listStore.filters = this.historyStateObject.filters;
-      this.listStore.sort = this.historyStateObject.sort;
-      this.listStore.seed = this.historyStateObject.seed;
 
       let oldParams = this.$route.query;
       let newParams = toGETParameters(this.historyStateObject);

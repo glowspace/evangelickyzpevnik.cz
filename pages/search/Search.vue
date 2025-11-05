@@ -107,8 +107,9 @@ import Logo from './components/Logo';
 import SearchBox from './components/SearchBox';
 import StickyContainer from './components/StickyContainer';
 import SearchHistoryManager from '~/components/Search/SearchHistoryManager';
-import { mapStores } from 'pinia';
+import { mapWritableState, mapActions } from 'pinia';
 import useHomepageStore from '~/stores/homepage.js';
+import useListStore from '~/stores/list.js';
 
 import gql from 'graphql-tag';
 
@@ -142,27 +143,9 @@ export default {
 
   data() {
     return {
-      // Search data
-      searchString: '',
-      filters: {
-        songbooks: {},
-        languages: {},
-        tags: {},
-      },
-
-      // View state
-      // init: true,
       showAuthors: false,
-
-      // Random order seed
-      seed: this.randomInt(1, 100000),
       seedLocked: false, // seed is shown in url
-
-      // Sort
-      sort: { by: 0, desc: false },
-
-      // Song route loading
-      songLoading: false,
+      songLoading: false, // song route is currently loading
     };
   },
 
@@ -179,17 +162,15 @@ export default {
       return 'Evangelický zpěvník je projektem Českobratrské církve evangelické.';
     },
 
+    ...mapActions(useListStore, ['randomizeSeed', 'resetBasicSearch', 'setActiveList']),
+
+    refreshSeed() {
+      this.seedLocked = false;
+      this.randomizeSeed();
+    },
+
     resetState(manual = false) {
-      this.searchString = '';
-      this.filters = {
-        tags: {},
-        languages: {},
-        songbooks: {},
-      };
-      this.sort = {
-        by: 0,
-        desc: false,
-      };
+      this.resetBasicSearch();
 
       if (manual) {
         this.showAuthors = false;
@@ -248,15 +229,6 @@ export default {
         }
       }
     },
-
-    randomInt(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    },
-
-    refreshSeed() {
-      this.seedLocked = false;
-      this.seed = this.randomInt(1, 100000);
-    },
   },
 
   mounted() {
@@ -275,15 +247,16 @@ export default {
   },
 
   computed: {
-    ...mapStores(useHomepageStore),
-    init: {
-      get() {
-        return this.homepageStore.showDashboard;
-      },
-      set(val) {
-        this.homepageStore.showDashboard = val;
-      },
-    },
+    ...mapWritableState(useHomepageStore, {
+      init: 'showDashboard',
+    }),
+
+    ...mapWritableState(useListStore, [
+      'searchString',
+      'filters',
+      'sort',
+      'seed',
+    ]),
 
     // getter / setter for the SearchHistoryManager extending component
     historyStateObject: {
@@ -327,10 +300,13 @@ export default {
       this.resetState();
     },
     init(val) {
+      console.log('watcher fired');
       if (val) {
+        this.setActiveList();
         this.seedLocked = false;
         this.resetState();
       } else {
+        this.setActiveList('search');
         this.seedLocked = true;
         this.updateHistoryState();
       }

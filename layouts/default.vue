@@ -1,7 +1,11 @@
 <template>
   <div>
     <Navbar />
-    <div class="h-[50vh] overflow-auto" v-if="listStore.active">
+    <div
+      class="h-[50vh] overflow-auto"
+      v-if="listStore.active == 'search'"
+      v-show="$route.name == 'song'"
+    >
       <SongList
         :search-string="listStore.searchString"
         :filters="listStore.filters"
