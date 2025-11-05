@@ -78,7 +78,7 @@
         <BasicIcon v-else name="subject" class="text-gray/20" />
 
         <BasicIcon
-          v-if="song_lyric.scores.length"
+          v-if="song_lyric.scores?.length"
           name="audio_file"
           title="U této písně je k dispozici soubor s notami."
           class="text-red"
@@ -87,7 +87,7 @@
         <BasicIcon v-else name="audio_file" class="text-gray/20" fill />
 
         <BasicIcon
-          v-if="song_lyric.recordings.length"
+          v-if="song_lyric.recordings?.length"
           name="headphones"
           title="U této písně je k dispozici nahrávka."
           class="text-green"
@@ -151,8 +151,10 @@ export const SongListItemFragment = gql`
       pivot {
         songbook {
           id
+          shortcut
         }
         song_name
+        number
       }
     }
     public_route
@@ -167,6 +169,7 @@ export const SongListItemFragment = gql`
       }
     }
     has_lyrics
+    has_chords
     lang
     lang_string
   }

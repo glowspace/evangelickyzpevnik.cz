@@ -76,11 +76,11 @@ export default {
           id: this.songId,
         };
       },
-      result() {
-        if (this.song_lyric_parts_json == null) {
+      result(result) {
+        if (result.data.song_lyric_parts_json == null) {
           this.error = true;
         } else {
-          this.song_lyric_parts = JSON.parse(this.song_lyric_parts_json.json);
+          this.song_lyric_parts = JSON.parse(result.data.song_lyric_parts_json.json);
         }
 
         this.$nextTick(() => {

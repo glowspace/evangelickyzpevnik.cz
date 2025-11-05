@@ -242,20 +242,21 @@ export default {
           id: this.$route.params.id,
         };
       },
+      result(result) {
+        if (result.data.song_lyric === null) {
+          throw createError({
+            statusCode: 404,
+            statusMessage: 'Page Not Found',
+            fatal: true,
+          });
+        }
+      },
     },
   },
 
   mounted() {
     if (!this.$apollo.loading) {
-      if (this.song_lyric === null) {
-        // this.$nuxt.error({ statusCode: 404 });
-        // https://nuxt.com/docs/getting-started/error-handling#createerror
-        throw createError({
-          statusCode: 404,
-          statusMessage: 'Page Not Found',
-          fatal: true,
-        });
-      } else if (
+      if (
         this.song_lyric &&
         window.location.pathname != this.song_lyric.public_route
       ) {

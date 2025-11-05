@@ -25,6 +25,7 @@ export default defineNuxtPlugin(nuxtApp => {
     if (err.response) {
       err.response.errors = undefined;
     }
+    console.error(err);
     // todo: add some error logging (and something else?)
   })
 

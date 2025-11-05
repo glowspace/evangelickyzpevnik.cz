@@ -105,22 +105,6 @@ const FETCH_ITEMS = gql`
         recordings: externals(content_type: RECORDING) {
           id
         }
-        tags {
-          id
-        }
-        has_chords
-        has_lyrics
-        songbook_records {
-          pivot {
-            number
-            song_name
-            songbook {
-              id
-              name
-              shortcut
-            }
-          }
-        }
       }
       paginatorInfo {
         currentPage

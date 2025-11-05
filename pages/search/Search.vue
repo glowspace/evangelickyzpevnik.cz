@@ -300,7 +300,6 @@ export default {
       this.resetState();
     },
     init(val) {
-      console.log('watcher fired');
       if (val) {
         this.setActiveList();
         this.seedLocked = false;

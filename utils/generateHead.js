@@ -1,4 +1,4 @@
-export default function (title, description) {
+export default function generateHead(title, description) {
   return {
     title: title,
     meta: [
