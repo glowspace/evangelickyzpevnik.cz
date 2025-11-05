@@ -85,8 +85,7 @@ import buildElasticSearchParams, {
 import mergeFetchMoreResult from '~/components/Search/mergeFetchMoreResult';
 import tagsFilters from '../../pages/search/components/tagsFilters';
 import SongListItem, { SongListItemFragment } from './ListItem';
-import lodash from 'lodash';
-const { isEmpty } = lodash; // lodash is CommonJS, therefore we can't do `import { xyz } from 'lodash';`
+import { isEmpty } from 'lodash-es';
 
 // Query
 const FETCH_ITEMS = gql`
@@ -236,8 +235,8 @@ export default {
           per_page: this.per_page,
         };
       },
-      // debounce waits 500 ms for query refetching (originally 200 ms)
-      debounce: 500,
+      // debounce waits 50 ms for query refetching (originally 200 or 500)
+      debounce: 50,
       result(result) {
         this.$emit('query-loaded', null);
         this.enable_more =

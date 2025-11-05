@@ -185,7 +185,7 @@
                 <song-lyric-parts
                   :song-id="song_lyric.id"
                   :font-size-percent="chordSharedStore.fontSizePercent"
-                  @loaded="checkScrollability(true)"
+                  @loaded="checkScroll(true)"
                 ></song-lyric-parts>
               </span>
               <span
@@ -259,11 +259,9 @@
 </template>
 
 <script>
+import { debounce } from 'lodash-es';
 import { mapStores } from 'pinia';
 import useChordStore from '~/stores/chord.js';
-
-import lodash from 'lodash';
-const { throttle } = lodash; // lodash is CommonJS, therefore we can't do `import { xyz } from 'lodash';`
 
 import FontSizer from './FontSizer';
 import ChordMode from './ChordMode';
@@ -412,7 +410,7 @@ export default {
   },
 
   methods: {
-    checkScrollability: throttle(function checkScrollabilityTh(initial) {
+    checkScroll(initial) {
       if (process.client && window.innerHeight >= document.body.scrollHeight) {
         // the page isn't scrollable
         this.scrollable = false;
@@ -423,10 +421,11 @@ export default {
       } else {
         this.scrollable = true;
       }
-    }, 100),
+    },
   },
 
   created() {
+    this.debouncedCheckScroll = debounce(this.checkScroll, 200);
     // this prevents transposition from being preserved globally (you want just the one song to be transposed, not the whole songbook)
     this.chordSharedStore.transposition = 0;
     this.chordSharedStore.showChords = this.song_lyric.has_chords;
@@ -442,9 +441,13 @@ export default {
 
       this.scrollable = false;
     } else {
-      window.addEventListener('resize', this.checkScrollability);
-      this.checkScrollability(true);
+      window.addEventListener('resize', this.debouncedCheckScroll);
+      this.checkScroll(true);
     }
+  },
+
+  unmounted() {
+    this.debouncedCheckScroll.cancel()
   },
 };
 </script>

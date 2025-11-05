@@ -13,5 +13,3 @@ Logo ČCE je jejím duševním vlastnictvím a nevztahuje se na něj open-source
 Vývojový server se spustí na adrese `http://localhost:3000`.
 
 Produkční build lze vytvořit pomocí `yarn build`. Náhled produkčního serveru se spouští příkazem `yarn preview`.
-
-Aktuální verzi Node.js lze specifikovat v souboru `package.json` pomocí `engines`. Uvedenou verzí se řídí i Vercel.

@@ -25,19 +25,19 @@
             : 'Hledat autora podle jména'
         "
         class="bg-transparent py-2 px-1 ring-0 focus:outline-none grow"
-        :class="{ 'pr-4': value == '' }"
-        v-model="value"
+        :class="{ 'pr-4': showCross }"
+        v-model="valueModel"
         @keyup.enter="emit('enter')"
         ref="searchInput"
         @click="emit('clickBox')"
       />
       <LoaderCircular v-if="songLoading" size="6" class="mx-3" />
       <BasicButton
-        v-else-if="!onDashboard && value != ''"
+        v-else-if="showCross"
         icon-name="close"
         icon-only
         @click="
-          value = '';
+          emit('update:modelValue', '');
           searchInput.focus();
         "
       />
@@ -46,6 +46,8 @@
 </template>
 
 <script setup>
+import { debounce } from 'lodash-es';
+
 const props = defineProps([
   'modelValue',
   'onDashboard',
@@ -53,22 +55,28 @@ const props = defineProps([
   'songLoading',
 ]);
 const emit = defineEmits(['update:modelValue', 'enter', 'back', 'clickBox']);
-
-const value = computed({
-  get() {
-    return props.modelValue;
-  },
-  set(value) {
-    emit('update:modelValue', value);
-  },
-});
+const debouncedValueEmit = debounce((value) => {
+  emit('update:modelValue', value);
+}, 500);
 
 const searchInput = ref(null);
 
+const valueModel = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(val) {
+    debouncedValueEmit(val);
+  },
+});
+const showCross = computed(
+  () => !props.onDashboard && props.modelValue != ''
+);
+
 watch(
   () => props.onDashboard,
-  (value) => {
-    if (!value) {
+  (val) => {
+    if (!val) {
       searchInput.value.focus();
     }
   }
@@ -78,5 +86,9 @@ onMounted(() => {
   if (!props.onDashboard) {
     searchInput.value.focus();
   }
+});
+
+onUnmounted(() => {
+  debouncedValueEmit.cancel();
 });
 </script>

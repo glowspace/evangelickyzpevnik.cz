@@ -1,8 +1,0 @@
-{
-    "rewrites": [
-        {
-            "source": "/api/:match*",
-            "destination": "https://zpevnik.proscholy.cz/graphql/:match*"
-        }
-    ]
-}
