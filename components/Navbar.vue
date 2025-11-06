@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="menu-wrapper"
-    :class="[{ hidden: $route.name == 'song' }, 'md:flex print:hidden']"
-  >
+  <div class="menu-wrapper">
     <div class="menu">
       <BasicClickable to="/" class="link group">
         <div

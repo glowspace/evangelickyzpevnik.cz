@@ -26,17 +26,15 @@
       </div>
       <Autoscroll :scrollable="scrollable" />
     </div>
+
+    <slot />
   </div>
 </template>
 
 <style lang="postcss" scoped>
 .bottom-bar-wrapper {
-  @apply fixed bottom-0 z-10 bg-surface-200 dark:bg-surfacedark-200
+  @apply sticky bottom-0 z-10 bg-surface-200 dark:bg-surfacedark-200
   shadow md:shadow-none md:border-t border-primary-150 w-full print:hidden;
-
-  @media screen(md) {
-    width: calc(100% - 97px);
-  }
 }
 
 .bottom-bar {

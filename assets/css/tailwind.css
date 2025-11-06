@@ -6,16 +6,8 @@
 /* @import './tm-components'; */
 /* @import './song'; */
 
-body {
-  /* padding-bottom: calc(5.25 * theme(spacing.4)); */
-  @apply pb-[84px] /* this is equal to the line above */
-  md:pb-0 md:pl-[97px] /* pl-24 + 1px to preserve border */
-  print:pb-0 print:pl-0;
-  /* also used in BottomBar.vue and BottomSheets.vue */
-}
-
 .custom-container {
-  @apply max-w-[700px] mx-auto;
+  @apply w-full max-w-[700px] mx-auto;
 }
 
 .stretched-link {

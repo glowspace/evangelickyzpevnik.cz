@@ -1,24 +1,27 @@
 <template>
-  <div>
-    <Navbar />
-    <div
-      class="h-[50vh] overflow-auto"
-      v-if="listStore.active == 'search'"
-      v-show="$route.name == 'song'"
-    >
-      <SongList
-        :search-string="listStore.searchString"
-        :filters="listStore.filters"
-        :sort="listStore.sort"
-        :seed="listStore.seed"
-      ></SongList>
+  <div class="layout" :class="{ 'layout-song': $route.name == 'song' }">
+    <Navbar
+      :class="[{ hidden: $route.name == 'song' }, 'md:flex print:hidden']"
+    />
+    <div class="flex">
+      <SideList />
+      <div class="grow">
+        <slot />
+      </div>
     </div>
-    <slot />
   </div>
 </template>
 
-<script setup>
-import useListStore from '~/stores/list';
-import SongList from '~/components/Song/List';
-const listStore = useListStore();
-</script>
+<style lang="postcss" scoped>
+.layout {
+  /* padding-bottom: calc(5.25 * theme(spacing.4)); */
+  @apply pb-[84px] /* this is equal to the line above (also used in SongDetail) */
+  md:pb-0 md:pl-[97px] /* pl-24 + 1px to preserve border */
+  print:pb-0 print:pl-0
+  overflow-clip; /* to prevent bottom sheets from overflowing */
+}
+
+.layout.layout-song {
+  @apply pb-0;
+}
+</style>

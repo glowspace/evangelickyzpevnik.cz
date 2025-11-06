@@ -1,15 +1,5 @@
 <template>
-  <BottomBar
-    @tools="showTools = true"
-    @media="
-      loadMedia = true;
-      showMedia = true;
-    "
-    :scrollable="scrollable"
-    :media-available="recordings.length"
-    :show-tools-badge="!!chordSharedStore.transposition"
-  />
-  <div class="md:pb-20 custom-container">
+  <div class="custom-container">
     <div class="m-5">
       <div class="print:hidden">
         <div class="-mx-1">
@@ -146,116 +136,121 @@
       <div>
         <div class="my-4 overflow-hidden">
           <div
-            class="d-flex align-items-start justify-content-between flex-column-reverse flex-sm-row"
+            id="song-lyrics"
+            :class="{
+              'song-lyrics': true,
+              'song-lyrics-extended': !chordSharedStore.simpleView,
+            }"
           >
+            <!-- MusicXML is preferred -->
+            <!-- todo: let the user select if they prefer lilypond or mxl -->
             <div
-              id="song-lyrics"
-              :class="{
-                'song-lyrics': true,
-                'song-lyrics-extended': !chordSharedStore.simpleView,
-              }"
-            >
-              <!-- MusicXML is preferred -->
-              <!-- todo: let the user select if they prefer lilypond or mxl -->
+              v-if="
+                song_lyric.lilypond_svg &&
+                !song_lyric.external_rendered_scores[0]?.public_url
+              "
+              v-html="song_lyric.lilypond_svg"
+              class="mb-3 lilypond-container"
+            ></div>
+            <img
+              v-if="song_lyric.external_rendered_scores[0]?.public_url"
+              :src="song_lyric.external_rendered_scores[0]?.public_url"
+              class="mb-3 external-score"
+            />
+            <span v-if="song_lyric.has_lyrics">
               <div
                 v-if="
-                  song_lyric.lilypond_svg &&
-                  !song_lyric.external_rendered_scores[0]?.public_url
+                  !$apollo.loading &&
+                  song_lyric.capo > 0 &&
+                  chordSharedStore.showChords
                 "
-                v-html="song_lyric.lilypond_svg"
-                class="mb-3 lilypond-container"
-              ></div>
-              <img
-                v-if="song_lyric.external_rendered_scores[0]?.public_url"
-                :src="song_lyric.external_rendered_scores[0]?.public_url"
-                class="mb-3 external-score"
-              />
-              <span v-if="song_lyric.has_lyrics">
-                <div
-                  v-if="
-                    !$apollo.loading &&
-                    song_lyric.capo > 0 &&
-                    chordSharedStore.showChords
-                  "
-                  class="mb-2"
-                >
-                  <i>capo: {{ song_lyric.capo }}</i>
-                </div>
-                <!-- here goes the song lyrics -->
-                <song-lyric-parts
-                  :song-id="song_lyric.id"
-                  :font-size-percent="chordSharedStore.fontSizePercent"
-                  @loaded="checkScroll(true)"
-                ></song-lyric-parts>
-              </span>
-              <span
-                v-else
-                :style="{
-                  fontSize: chordSharedStore.fontSizePercent + '%',
-                }"
-                >Text písně připravujeme.</span
+                class="mb-2"
               >
-            </div>
+                <i>capo: {{ song_lyric.capo }}</i>
+              </div>
+              <!-- here goes the song lyrics -->
+              <song-lyric-parts
+                :song-id="song_lyric.id"
+                :font-size-percent="chordSharedStore.fontSizePercent"
+                @loaded="checkScroll(true)"
+              ></song-lyric-parts>
+            </span>
+            <span
+              v-else
+              :style="{
+                fontSize: chordSharedStore.fontSizePercent + '%',
+              }"
+              >Text písně připravujeme.</span
+            >
           </div>
         </div>
-
-        <BottomSheets v-model="showTools" title="Nástroje">
-          <div
-            v-if="song_lyric.has_chords"
-            :class="{
-              'opacity-40 pointer-events-none': !chordSharedStore.showChords,
-            }"
-          >
-            <transposition
-              v-model="chordSharedStore.transposition"
-            ></transposition>
-          </div>
-
-          <div
-            v-if="song_lyric.has_chords"
-            :class="{
-              'opacity-40 pointer-events-none': !chordSharedStore.showChords,
-            }"
-          >
-            <chord-sharp-flat
-              v-model="chordSharedStore.useFlatScale"
-            ></chord-sharp-flat>
-          </div>
-
-          <div>
-            <simple-view v-model="chordSharedStore.simpleView"></simple-view>
-          </div>
-
-          <div v-if="song_lyric.has_chords">
-            <chord-mode v-model="chordSharedStore.showChords"></chord-mode>
-          </div>
-
-          <div>
-            <font-sizer v-model="chordSharedStore.fontSizePercent"></font-sizer>
-          </div>
-
-          <no-sleep />
-        </BottomSheets>
-
-        <BottomSheets v-model="showMedia" title="Nahrávky">
-          <div
-            v-if="hasExternals && loadMedia && !$apollo.loading"
-            class="flex flex-col sm:grid grid-cols-2 gap-5"
-          >
-            <div v-for="(external, index) in recordings" :key="index">
-              <external
-                :line="false"
-                :index="index"
-                :external="external"
-                :song-name="song_lyric.name"
-              ></external>
-            </div>
-          </div>
-        </BottomSheets>
       </div>
       <Footer />
     </div>
   </div>
+  <div class="grow"><!-- ensures that the bottom bar is always at the bottom --></div>
+  <BottomBar
+    @tools="showTools = true"
+    @media="
+      loadMedia = true;
+      showMedia = true;
+    "
+    :scrollable="scrollable"
+    :media-available="recordings.length"
+    :show-tools-badge="!!chordSharedStore.transposition"
+  >
+    <BottomSheets v-model="showTools" title="Nástroje">
+      <div
+        v-if="song_lyric.has_chords"
+        :class="{
+          'opacity-40 pointer-events-none': !chordSharedStore.showChords,
+        }"
+      >
+        <transposition v-model="chordSharedStore.transposition"></transposition>
+      </div>
+
+      <div
+        v-if="song_lyric.has_chords"
+        :class="{
+          'opacity-40 pointer-events-none': !chordSharedStore.showChords,
+        }"
+      >
+        <chord-sharp-flat
+          v-model="chordSharedStore.useFlatScale"
+        ></chord-sharp-flat>
+      </div>
+
+      <div>
+        <simple-view v-model="chordSharedStore.simpleView"></simple-view>
+      </div>
+
+      <div v-if="song_lyric.has_chords">
+        <chord-mode v-model="chordSharedStore.showChords"></chord-mode>
+      </div>
+
+      <div>
+        <font-sizer v-model="chordSharedStore.fontSizePercent"></font-sizer>
+      </div>
+
+      <no-sleep />
+    </BottomSheets>
+
+    <BottomSheets v-model="showMedia" title="Nahrávky">
+      <div
+        v-if="hasExternals && loadMedia && !$apollo.loading"
+        class="flex flex-col sm:grid grid-cols-2 gap-5"
+      >
+        <div v-for="(external, index) in recordings" :key="index">
+          <external
+            :line="false"
+            :index="index"
+            :external="external"
+            :song-name="song_lyric.name"
+          ></external>
+        </div>
+      </div>
+    </BottomSheets>
+  </BottomBar>
 </template>
 
 <script>
@@ -447,7 +442,7 @@ export default {
   },
 
   unmounted() {
-    this.debouncedCheckScroll.cancel()
+    this.debouncedCheckScroll.cancel();
   },
 };
 </script>

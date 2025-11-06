@@ -1,30 +1,32 @@
 <template>
-  <TopBar :title="topBarTitle">
-    <Kebab
-      v-if="song_lyric"
-      :items="[
-        {
-          label: 'Nahlásit',
-          icon: 'warning',
-          href:
-            'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/1/create/19?customfield_10056=' +
-            encodeURIComponent($config.public.siteUrl + $route.fullPath),
-        },
-        {
-          label: 'Upravit',
-          icon: 'edit',
-          href: $config.public.adminUrl + '/song/' + song_lyric.id + '/edit',
-        },
-        {
-          label: 'Tisk',
-          icon: 'print',
-          href: 'javascript:window.print()',
-        },
-      ]"
-    />
-  </TopBar>
-  <song-loading v-if="$apollo.loading"></song-loading>
-  <song-detail v-else-if="song_lyric" :song="song_lyric"></song-detail>
+  <div class="flex flex-col min-h-screen items-stretch">
+    <TopBar :title="topBarTitle">
+      <Kebab
+        v-if="song_lyric"
+        :items="[
+          {
+            label: 'Nahlásit',
+            icon: 'warning',
+            href:
+              'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/1/create/19?customfield_10056=' +
+              encodeURIComponent($config.public.siteUrl + $route.fullPath),
+          },
+          {
+            label: 'Upravit',
+            icon: 'edit',
+            href: $config.public.adminUrl + '/song/' + song_lyric.id + '/edit',
+          },
+          {
+            label: 'Tisk',
+            icon: 'print',
+            href: 'javascript:window.print()',
+          },
+        ]"
+      />
+    </TopBar>
+    <song-loading v-if="$apollo.loading"></song-loading>
+    <song-detail v-else-if="song_lyric" :song="song_lyric"></song-detail>
+  </div>
 </template>
 
 <script>
@@ -35,8 +37,6 @@ import Kebab from '~/components/Kebab';
 import { getFullName } from '~/components/SongName';
 import Bowser from 'bowser';
 import { SongListItemFragment } from '~/components/Song/ListItem';
-import { mapStores } from 'pinia';
-import useListStore from '~/stores/list.js';
 
 const VISIT_SONG = gql`
   mutation (
@@ -214,8 +214,6 @@ export default {
   },
 
   computed: {
-    ...mapStores(useListStore),
-
     topBarTitle() {
       return this.song_lyric
         ? String(

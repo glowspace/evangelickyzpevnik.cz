@@ -37,7 +37,7 @@
                 preferred_songbook_id != $config.public.variation.songbook ||
                 sort == 2
               "
-              is-search
+              :is-search="!compact"
             />
           </template>
           <tr v-if="results_loaded">
@@ -127,6 +127,10 @@ export default {
     // todo: refactor `sort.by` to String (or a kind of enum)
     sort: Object,
     seed: Number,
+    compact: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   components: { ScrollTrigger, SongListItem },
