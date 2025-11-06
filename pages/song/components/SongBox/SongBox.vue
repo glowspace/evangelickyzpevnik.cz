@@ -199,7 +199,7 @@
     :media-available="recordings.length"
     :show-tools-badge="!!chordSharedStore.transposition"
   >
-    <BottomSheets v-model="showTools" title="Nástroje">
+    <BottomSheets v-model="showTools" title="Nástroje" position-absolute>
       <div
         v-if="song_lyric.has_chords"
         :class="{
@@ -235,7 +235,7 @@
       <no-sleep />
     </BottomSheets>
 
-    <BottomSheets v-model="showMedia" title="Nahrávky">
+    <BottomSheets v-model="showMedia" title="Nahrávky" position-absolute>
       <div
         v-if="hasExternals && loadMedia && !$apollo.loading"
         class="flex flex-col sm:grid grid-cols-2 gap-5"

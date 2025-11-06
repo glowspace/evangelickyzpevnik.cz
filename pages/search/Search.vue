@@ -21,7 +21,7 @@
           <FilterRow v-if="!init">
             <template #row>
               <Filters
-                :is-filter-row="true"
+                filter-row-variant="editable"
                 v-model:filters="filters"
                 v-model:show-authors="showAuthors"
                 v-model:sort="sort"

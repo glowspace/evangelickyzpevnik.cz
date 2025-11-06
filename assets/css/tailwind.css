@@ -10,6 +10,10 @@
   @apply w-full max-w-[700px] mx-auto;
 }
 
+.input-box {
+  @apply h-14 rounded-full bg-surface-100 dark:bg-surfacedark-100 p-2 m-2 border border-gray-500;
+}
+
 .stretched-link {
   position: static;
   will-change: initial;

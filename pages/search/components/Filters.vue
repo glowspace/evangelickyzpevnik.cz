@@ -1,15 +1,17 @@
 <template>
   <div>
-    <template v-if="isFilterRow">
+    <template v-if="filterRowVariant">
       <template v-if="true || !$apollo.loading">
         <FilterRowItem
           v-if="localShowAuthors"
           @click="localShowAuthors = false"
+          :variant="filterRowVariant"
         >
           autoři
         </FilterRowItem>
         <FilterRowItem
           v-if="!searchString && localSort.by != 0"
+          :variant="filterRowVariant"
           @click="
             refreshSeed();
             localSort.by = 0;
@@ -39,7 +41,11 @@
           ]"
           :key="tag.id"
         >
-          <FilterRowItem v-if="isSelectedTag(tag)" @click="selectTag(tag)">
+          <FilterRowItem
+            v-if="isSelectedTag(tag)"
+            @click="selectTag(tag)"
+            :variant="filterRowVariant"
+          >
             {{ tag.name }}
           </FilterRowItem>
         </template>
@@ -47,6 +53,7 @@
           <FilterRowItem
             v-if="isSelectedTag(tag, 'songbooks')"
             @click="selectTag(tag, 'songbooks')"
+            :variant="filterRowVariant"
           >
             {{ tag.name }}
           </FilterRowItem>
@@ -55,6 +62,7 @@
           <FilterRowItem
             v-if="isSelectedTag(tag, 'languages')"
             @click="selectTag(tag, 'languages')"
+            :variant="filterRowVariant"
           >
             {{ tag.name }}
           </FilterRowItem>
@@ -237,7 +245,7 @@ import FilterRowItem from './FilterRowItem';
 
 export default {
   props: [
-    'is-filter-row',
+    'filter-row-variant',
     'filters',
     'show-authors',
     'sort',

@@ -1,6 +1,10 @@
 <template>
   <BasicChip class="hover:!bg-surface-200">
     <slot />
-    <BasicIcon name="close" class="-mx-1 text-lg" />
+    <BasicIcon v-if="variant != 'readonly'" name="close" class="-mx-1 text-lg" />
   </BasicChip>
 </template>
+
+<script setup>
+const props = defineProps(['variant']);
+</script>

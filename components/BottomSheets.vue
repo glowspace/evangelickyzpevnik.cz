@@ -7,7 +7,7 @@
       class="background group-[&.show]:opacity-20 dark:group-[&.show]:opacity-20 inset-0 fixed z-40 opacity-0 -top-full bg-black"
     ></div>
     <!-- side sheets dialogs -->
-    <div class="sheet">
+    <div class="sheet" :class="[positionAbsolute ? 'absolute' : 'fixed']">
       <div
         class="bottom-sheets-container pointer-events-auto custom-container bg-surface-100 dark:bg-surfacedark-100 rounded-t-2xl h-full w-full flex flex-col overflow-hidden"
       >
@@ -32,7 +32,11 @@
 </template>
 
 <script setup>
-const props = defineProps(['title', 'modelValue']);
+const props = defineProps({
+  title: String,
+  modelValue: Boolean,
+  positionAbsolute: Boolean,
+});
 const emit = defineEmits(['update:modelValue']);
 const show = computed({
   get() {
@@ -46,8 +50,8 @@ const show = computed({
 
 <style lang="postcss" scoped>
 .sheet {
-  @apply pointer-events-none group-[&.show]:translate-y-0 absolute left-0 bottom-0 right-0 h-[60vh] z-50 translate-y-full flex flex-col gap-2;
-  /* translation clipped in SongDetail */
+  @apply pointer-events-none group-[&.show]:translate-y-0 left-0 bottom-0 right-0 h-[60vh] z-50 translate-y-full flex flex-col gap-2;
+  /* translation for absolute clipped in default.vue */
 }
 
 .background,
