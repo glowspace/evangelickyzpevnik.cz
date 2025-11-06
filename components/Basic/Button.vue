@@ -30,8 +30,8 @@
 <script setup>
 const props = defineProps({
   eventId: String,
-  href: String,
-  to: String,
+  href: [String, Object],
+  to: [String, Object],
   type: String,
   compact: Boolean,
   disabled: Boolean,
@@ -91,10 +91,10 @@ const btnType = computed(() => {
 }
 
 .mobile-icon-only > :not(.icon) {
-  @apply hidden md:block;
+  @apply hidden lg:block;
 }
 
-@media screen(md) {
+@media screen(lg) {
   .mobile-icon-only {
     @apply w-auto h-auto py-2.5 pl-5 pr-6;
   }

@@ -15,8 +15,8 @@ import { NuxtLink } from '#components';
 
 const props = defineProps({
   eventId: String,
-  href: String,
-  to: String,
+  href: [String, Object],
+  to: [String, Object],
   underline: Boolean,
 });
 </script>

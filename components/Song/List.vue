@@ -240,7 +240,7 @@ export default {
         };
       },
       // debounce waits 50 ms for query refetching (originally 200 or 500)
-      debounce: 50,
+      // debounce: 50,
       result(result) {
         this.$emit('query-loaded', null);
         this.enable_more =

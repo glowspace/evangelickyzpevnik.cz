@@ -13,10 +13,7 @@
             :song-loading="songLoading"
             @enter="inputEnter"
             @clickBox="init = false"
-            @back="
-              init = true;
-              resetState(true);
-            "
+            @back="init = true"
           />
           <FilterRow v-if="!init">
             <template #row>
@@ -26,7 +23,7 @@
                 v-model:show-authors="showAuthors"
                 v-model:sort="sort"
                 :search-string="searchString"
-                @refresh-seed="refreshSeed"
+                @refresh-seed="randomizeSeed"
                 @input="updateHistoryState"
               ></Filters>
             </template>
@@ -35,7 +32,7 @@
               v-model:show-authors="showAuthors"
               v-model:sort="sort"
               :search-string="searchString"
-              @refresh-seed="refreshSeed"
+              @refresh-seed="randomizeSeed"
               @input="updateHistoryState"
             ></Filters>
           </FilterRow>
@@ -63,7 +60,7 @@
       >
         <Dashboard />
       </div>
-      <div v-show="!init">
+      <div v-if="urlLoaded" v-show="!init">
         <SongList
           v-if="!showAuthors"
           :search-string="searchString"
@@ -89,7 +86,7 @@
           v-model:show-authors="showAuthors"
           v-model:sort="sort"
           :search-string="searchString"
-          @refresh-seed="refreshSeed"
+          @refresh-seed="randomizeSeed"
           @input="updateHistoryState"
         ></Filters>
       </div>
@@ -106,7 +103,7 @@ import InitFilters from './components/InitFilters';
 import Logo from './components/Logo';
 import SearchBox from './components/SearchBox';
 import StickyContainer from './components/StickyContainer';
-import SearchHistoryManager from '~/components/Search/SearchHistoryManager';
+import SearchHistoryManager from '~/components/Search/HistoryManager';
 import { mapWritableState, mapActions } from 'pinia';
 import useHomepageStore from '~/stores/homepage.js';
 import useListStore from '~/stores/list.js';
@@ -144,8 +141,8 @@ export default {
   data() {
     return {
       showAuthors: false,
-      seedLocked: false, // seed is shown in url
       songLoading: false, // song route is currently loading
+      urlLoaded: false, // query was loaded from URL
     };
   },
 
@@ -162,22 +159,11 @@ export default {
       return 'Evangelický zpěvník je projektem Českobratrské církve evangelické.';
     },
 
-    ...mapActions(useListStore, ['randomizeSeed', 'resetBasicSearch', 'setActiveList']),
-
-    refreshSeed() {
-      this.seedLocked = false;
-      this.randomizeSeed();
-    },
-
-    resetState(manual = false) {
-      this.resetBasicSearch();
-
-      if (manual) {
-        this.showAuthors = false;
-        this.refreshSeed();
-        this.updateHistoryState();
-      }
-    },
+    ...mapActions(useListStore, [
+      'randomizeSeed',
+      'resetBasicSearch',
+      'setActiveList',
+    ]),
 
     queryLoaded() {
       this.updateHistoryState();
@@ -233,6 +219,7 @@ export default {
 
   mounted() {
     this.applyStateChange();
+    this.urlLoaded = true;
   },
 
   components: {
@@ -261,7 +248,7 @@ export default {
     // getter / setter for the SearchHistoryManager extending component
     historyStateObject: {
       get() {
-        this.seedLocked = !(
+        const showSeed = !(
           this.searchString ||
           this.sort.by ||
           this.showAuthors ||
@@ -272,7 +259,7 @@ export default {
           searchString: this.searchString,
           filters: this.filters,
           showAuthors: this.showAuthors,
-          seed: this.seedLocked ? this.seed : null,
+          seed: showSeed ? this.seed : null,
           sort: this.sort,
         };
       },
@@ -286,29 +273,24 @@ export default {
         if (obj.seed) {
           this.seed = obj.seed;
         }
-
-        if (this.seed && !this.seedLocked) {
-          this.seedLocked = true;
-          this.updateHistoryState(false);
-        }
       },
     },
   },
 
   watch: {
     showAuthors(val) {
-      this.resetState();
+      this.resetBasicSearch();
     },
     init(val) {
       if (val) {
         this.setActiveList();
-        this.seedLocked = false;
-        this.resetState();
+        this.resetBasicSearch();
+        this.showAuthors = false;
       } else {
         this.setActiveList('search');
-        this.seedLocked = true;
-        this.updateHistoryState();
       }
+
+      this.updateHistoryState();
     },
     $route() {
       this.applyStateChange();

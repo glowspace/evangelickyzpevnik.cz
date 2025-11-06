@@ -1,6 +1,6 @@
 <template>
   <component
-    :is="to ? NuxtLink : href ? 'a' : 'button'"
+    :is="(to || href) ? NuxtLink : 'button'"
     :to="to"
     :href="href"
     :target="target"
@@ -13,8 +13,8 @@ import { NuxtLink } from '#components';
 
 const props = defineProps({
   eventId: String,
-  href: String,
-  to: String,
+  href: [String, Object],
+  to: [String, Object],
   target: String,
 });
 

@@ -6,8 +6,8 @@
 
 <script setup>
 const props = defineProps({
-  href: String,
-  to: String,
+  href: [String, Object],
+  to: [String, Object],
 });
 </script>
 

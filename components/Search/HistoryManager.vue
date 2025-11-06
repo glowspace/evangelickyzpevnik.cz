@@ -67,7 +67,7 @@ export default {
   },
 };
 
-function toGETParameters(
+export function toGETParameters(
   params = {
     searchString: '',
     filters: {
