@@ -26,9 +26,9 @@
           >Pokud byste nám chtěli poslat námět na novou píseň do zpěvníku, máme
           pro vás připravený formulář:
         </span>
-        <BasicButton href="https://forms.gle/AYXXxkWtDHQQ13856"
-          >Přidat píseň</BasicButton
-        >
+        <BasicButton href="https://forms.gle/AYXXxkWtDHQQ13856" type="outlined">
+          Přidat píseň
+        </BasicButton>
       </p>
     </div>
   </div>

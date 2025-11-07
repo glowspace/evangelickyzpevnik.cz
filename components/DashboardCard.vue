@@ -33,7 +33,7 @@ const props = defineProps({ title: String });
   }
 
   :deep(.list-icon) {
-    @apply text-center w-7;
+    @apply text-center w-7 h-6;
   }
 }
 </style>

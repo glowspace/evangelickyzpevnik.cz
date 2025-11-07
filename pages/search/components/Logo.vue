@@ -1,6 +1,10 @@
 <template>
   <div class="logo">
-    <img src="/img/logo.svg" alt="logo" />
+    <img
+      src="/img/logo.svg"
+      :class="[$config.public.variation.key == 'zps' ? 'w-[45px]' : 'w-[50px]']"
+      alt="logo"
+    />
     <h1>{{ $config.public.variation.name }}</h1>
   </div>
 </template>
@@ -8,10 +12,6 @@
 <style lang="postcss" scoped>
 .logo {
   @apply flex items-center my-3 mx-5;
-}
-
-img {
-  width: 50px;
 }
 
 h1 {

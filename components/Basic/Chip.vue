@@ -17,6 +17,10 @@ const props = defineProps({
   border border-gray-500 dark:border-gray-200 rounded-lg text-sm tracking-[.00714em] m-1 transition-colors
   hover:bg-surface-400 [&.active]:bg-primary-150;
 
+  &.tag-blue {
+    @apply hover:bg-blue/[.15] [&.active]:bg-blue/30;
+  }
+
   &.tag-green {
     @apply hover:bg-green/[.15] [&.active]:bg-green/30;
   }

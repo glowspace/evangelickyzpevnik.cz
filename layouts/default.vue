@@ -18,7 +18,7 @@
   @apply pb-[84px] /* this is equal to the line above (also used in SongDetail) */
   md:pb-0 md:pl-[97px] /* pl-24 + 1px to preserve border */
   print:pb-0 print:pl-0
-  overflow-clip; /* to prevent bottom sheets from overflowing */
+  overflow-y-clip; /* to prevent bottom sheets from overflowing */
 }
 
 .layout.layout-song {

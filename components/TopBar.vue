@@ -1,10 +1,19 @@
 <template>
   <div class="top-bar-wrapper">
     <div class="top-bar custom-container">
-      <BasicButton v-if="$router.options.history.state.back" icon-name="arrow_back" icon-only @click="$router.back()" />
+      <BasicButton
+        v-if="mounted && $router.options.history.state.back"
+        icon-name="arrow_back"
+        icon-only
+        @click="$router.back()"
+      />
       <template v-else>
-        <div class="md:hidden"><BasicButton icon-type="img" icon-name="logo.svg" icon-only to="/" /></div>
-        <div class="hidden md:block"><BasicButton icon-name="arrow_back" icon-only disabled /></div>
+        <div class="md:hidden">
+          <BasicButton icon-type="img" icon-name="logo.svg" icon-only to="/" />
+        </div>
+        <div class="hidden md:block">
+          <BasicButton icon-name="arrow_back" icon-only disabled />
+        </div>
       </template>
       <component
         :is="isH1 ? 'h1' : 'h2'"
@@ -21,6 +30,11 @@
 
 <script setup>
 const props = defineProps({ title: String, isH1: Boolean });
+const mounted = ref(false);
+
+onMounted(() => {
+  mounted.value = true;
+});
 </script>
 
 <style lang="postcss" scoped>

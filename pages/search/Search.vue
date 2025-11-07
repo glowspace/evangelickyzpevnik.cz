@@ -1,6 +1,9 @@
 <template>
-  <div class="flex flex-row">
-    <div :class="{ 'md:w-3/5 xl:w-2/3': !init }" class="w-full">
+  <div
+    class="grid grid-cols-1"
+    :class="{ 'md:grid-cols-[60%_1fr] xl:grid-cols-[66%_1fr]': !init }"
+  >
+    <div>
       <div v-if="init" class="custom-container md:mt-8">
         <Logo />
       </div>
@@ -77,7 +80,7 @@
     </div>
     <div
       v-if="!init"
-      class="hidden md:block sticky top-0 flex-grow-0 w-2/5 xl:w-1/3 p-8 h-screen overflow-auto border-l border-primary-150 bg-surface-50"
+      class="hidden md:block sticky top-0 p-8 h-screen overflow-auto border-l border-primary-150 bg-surface-50"
     >
       <div>
         <Filters

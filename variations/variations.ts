@@ -17,7 +17,7 @@ const variations: IVariation[] = [
     name: 'Zpěvník pro scholy',
     title: 'ProScholy.cz',
     itunesId: '1475375453',
-    navbar: [],
+    navbar: [{ path: '/o-zpevniku', icon: 'info', label: 'O zpěvníku' }],
     showLiturgyApproval: true,
   },
   {
@@ -40,9 +40,7 @@ const variations: IVariation[] = [
     name: 'Evangelický kancionál',
     title: 'Evangelický kancionál',
     itunesId: '',
-    navbar: [
-      { path: '/o-projektu', icon: 'info', label: 'O projektu' },
-    ],
+    navbar: [{ path: '/o-projektu', icon: 'info', label: 'O projektu' }],
     songbook: 63,
     hideTags: true,
     hideAuthorSearch: true,

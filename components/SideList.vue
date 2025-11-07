@@ -7,10 +7,13 @@
     <BasicClickable :to="editQueryLink">
       <StickyContainer :onDashboard="false" class="min-h-[81px]">
         <div class="input-box cursor-text">
-          <div class="py-2 px-4">{{ listStore.searchString }}</div>
+          <div class="py-2 px-4">
+            <span v-if="listStore.searchString">{{ listStore.searchString }}</span>
+            <span v-else class="text-gray-400">Hledat píseň podle názvu, čísla nebo textu…</span>
+          </div>
         </div>
         <Filters
-          class="p-1 overflow-auto whitespace-nowrap pointer-events-none empty:hidden"
+          class="pt-0 pb-1 px-4 overflow-hidden whitespace-nowrap pointer-events-none empty:hidden"
           filter-row-variant="readonly"
           v-model:filters="listStore.filters"
           :show-authors="false"

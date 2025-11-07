@@ -5,7 +5,7 @@
       <BasicButton icon-name="filter_alt" icon-only icon-fill class="flex-shrink-0 !hidden md:!inline-flex pointer-events-none" tabindex="-1" />
       <!-- mobile button -->
       <BasicButton icon-name="filter_alt" icon-only icon-fill class="flex-shrink-0 md:!hidden" @click="showFilters = true" />
-      <div class="flex flex-row items-center overflow-auto whitespace-nowrap">
+      <div class="flex flex-row items-center overflow-auto whitespace-nowrap xl:whitespace-normal">
         <slot name="row" />
         <BasicChip class="chip-add hover:!bg-surface-200 md:!hidden" @click="showFilters = true"><BasicIcon name="add" class="-mx-1 text-lg" />přidat filtr</BasicChip>
       </div>

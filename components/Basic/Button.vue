@@ -50,7 +50,7 @@ const btnType = computed(() => {
 <style lang="postcss" scoped>
 .btn {
   @apply inline-flex flex-row items-center justify-center gap-x-2 py-2.5 px-5 rounded-[6.25rem]
-  text-sm tracking-[.00714em] font-custom-medium transition;
+  text-sm tracking-[.00714em] font-custom-medium no-underline transition;
 }
 
 .btn.primary {
