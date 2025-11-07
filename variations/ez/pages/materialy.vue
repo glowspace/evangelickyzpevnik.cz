@@ -62,22 +62,13 @@
   </div>
 </template>
 
-<script>
-export default {
-  head() {
-    return generateHead(this.getTitle(), this.getDescription());
-  },
-
-  methods: {
-    getTitle() {
-      return 'Materiály ke stažení – Evangelický zpěvník';
-    },
-
-    getDescription() {
-      return 'Materiály k evangelickému zpěvníku, které jsme pro vás připravili';
-    },
-  },
-};
+<script setup>
+useHead(
+  generateHead(
+    'Materiály ke stažení – Evangelický zpěvník',
+    'Materiály k evangelickému zpěvníku, které jsme pro vás připravili'
+  )
+);
 </script>
 
 <style lang="postcss" scoped>

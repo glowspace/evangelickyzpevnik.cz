@@ -116,22 +116,13 @@
   </div>
 </template>
 
-<script>
-export default {
-  head() {
-    return generateHead(this.getTitle(), this.getDescription());
-  },
-
-  methods: {
-    getTitle() {
-      return 'O evangelickém zpěvníku';
-    },
-
-    getDescription() {
-      return 'Podrobnosti o tvorbě nového evangelického zpěvníku a jeho digitální verze';
-    },
-  },
-};
+<script setup>
+useHead(
+  generateHead(
+    'O evangelickém zpěvníku',
+    'Podrobnosti o tvorbě nového evangelického zpěvníku a jeho digitální verze'
+  )
+);
 </script>
 
 <style lang="postcss" scoped>
