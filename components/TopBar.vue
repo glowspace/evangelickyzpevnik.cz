@@ -1,8 +1,11 @@
 <template>
   <div class="top-bar-wrapper">
     <div class="top-bar custom-container">
-      <!-- <BasicButton icon-name="arrow_back" icon-only @click="emit('back')" /> -->
-      <BasicButton icon-type="img" icon-name="logo.svg" icon-only to="/" />
+      <BasicButton v-if="$router.options.history.state.back" icon-name="arrow_back" icon-only @click="$router.back()" />
+      <template v-else>
+        <div class="md:hidden"><BasicButton icon-type="img" icon-name="logo.svg" icon-only to="/" /></div>
+        <div class="hidden md:block"><BasicButton icon-name="arrow_back" icon-only disabled /></div>
+      </template>
       <component
         :is="isH1 ? 'h1' : 'h2'"
         class="flex flex-grow justify-start text-[1.375rem] leading-7"
@@ -17,7 +20,6 @@
 </template>
 
 <script setup>
-const emit = defineEmits(['back']);
 const props = defineProps({ title: String, isH1: Boolean });
 </script>
 

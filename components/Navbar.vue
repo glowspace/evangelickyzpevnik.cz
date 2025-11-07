@@ -1,6 +1,17 @@
 <template>
   <div class="menu-wrapper">
     <div class="menu">
+      <BasicClickable
+        to="/"
+        :class="[
+          'hidden md:flex justify-center mt-2 mb-10',
+          {
+            invisible: $route.name == 'index' && store.showDashboard,
+          },
+        ]"
+      >
+        <img src="/img/logo.svg" class="h-8" />
+      </BasicClickable>
       <BasicClickable to="/" class="link group">
         <div
           class="icon-wrapper"
@@ -38,12 +49,12 @@
   @apply w-full text-sm fixed bottom-0 flex-col items-center
   shadow md:shadow-none md:border-r border-primary-150
   bg-surface-200 dark:bg-surfacedark-200
-  md:left-0 md:top-0 md:w-auto md:pt-20;
+  md:left-0 md:top-0 md:w-auto md:h-full md:py-4 md:overflow-y-auto md:overflow-x-hidden;
 }
 
 .menu {
   @apply flex flex-row justify-center gap-2 w-full
-  md:flex-col md:w-auto md:gap-5 md:mb-[30vh];
+  md:flex-col md:w-auto md:gap-5;
 }
 
 .link {

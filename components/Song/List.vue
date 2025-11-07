@@ -239,8 +239,7 @@ export default {
           per_page: this.per_page,
         };
       },
-      // debounce waits 50 ms for query refetching (originally 200 or 500)
-      // debounce: 50,
+      debounce: 1, // 1ms debounce probably makes the page switching faster
       result(result) {
         this.$emit('query-loaded', null);
         this.enable_more =
