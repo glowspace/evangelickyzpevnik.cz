@@ -4,7 +4,7 @@
   >
     <div class="flex flex-row items-center flex-grow">
       <BasicButton
-        v-if="onDashboard"
+        v-if="onDashboard || !$router.options.history.state.back"
         icon-name="search"
         icon-only
         class="nohover"
@@ -15,7 +15,7 @@
         v-else
         icon-name="arrow_back"
         icon-only
-        @click="emit('back')"
+        @click="$router.back()"
       />
       <input
         type="search"
@@ -54,7 +54,7 @@ const props = defineProps([
   'searchSongs',
   'songLoading',
 ]);
-const emit = defineEmits(['update:modelValue', 'enter', 'back', 'clickBox']);
+const emit = defineEmits(['update:modelValue', 'enter', 'clickBox']);
 const debouncedValueEmit = debounce((value) => {
   emit('update:modelValue', value);
 }, 500);

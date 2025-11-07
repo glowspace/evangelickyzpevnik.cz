@@ -13,7 +13,6 @@
             :song-loading="songLoading"
             @enter="inputEnter"
             @clickBox="init = false"
-            @back="init = true"
           />
           <FilterRow v-if="!init">
             <template #row>
