@@ -35,7 +35,7 @@ const fontSizePercent = computed({
     return props.modelValue;
   },
   set(value) {
-    let sl = process.client ? document.getElementById('song-lyrics') : null;
+    let sl = import.meta.client ? document.getElementById('song-lyrics') : null;
 
     if (!sl.style.height) {
       sl.style.height = sl.clientHeight + 'px';

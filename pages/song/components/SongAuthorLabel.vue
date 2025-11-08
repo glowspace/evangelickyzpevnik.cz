@@ -65,17 +65,8 @@
 </template>
 
 <script>
-import SongName from '~/components/SongName';
-
 export default {
-  name: 'SongAuthorLabel',
-
   props: ['song'],
-
-  components: {
-    SongName,
-  },
-
   computed: {
     original: function () {
       return this.song.song.song_lyrics.find((sl) => {

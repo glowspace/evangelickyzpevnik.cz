@@ -28,7 +28,7 @@ export default {
 
   data() {
     return {
-      browser: process.client
+      browser: import.meta.client
         ? Bowser.getParser(window.navigator.userAgent)
         : null,
       supportPdfIframesCondition: {

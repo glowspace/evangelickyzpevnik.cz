@@ -406,7 +406,7 @@ export default {
 
   methods: {
     checkScroll(initial) {
-      if (process.client && window.innerHeight >= document.body.scrollHeight) {
+      if (import.meta.client && window.innerHeight >= document.body.scrollHeight) {
         // the page isn't scrollable
         this.scrollable = false;
 

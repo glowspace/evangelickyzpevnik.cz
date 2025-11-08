@@ -119,11 +119,8 @@
 
 <script>
 import Bowser from 'bowser';
-import Kebab from '~/components/Kebab';
 
 export default {
-  components: { Kebab },
-
   props: {
     line: Boolean,
     index: Number,
@@ -137,7 +134,7 @@ export default {
 
   data() {
     return {
-      browser: process.client
+      browser: import.meta.client
         ? Bowser.getParser(window.navigator.userAgent)
         : null,
       supportPdfIframesCondition: {

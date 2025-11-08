@@ -58,7 +58,7 @@ export default {
       clearInterval(this.autoScroller);
       clearInterval(this.heightChecker);
 
-      if (process.client && num > 0 && num < 21 && condition) {
+      if (import.meta.client && num > 0 && num < 21 && condition) {
         this.autoScroller = setInterval(function () {
           window.scrollBy(0, 1);
         }, (21 - num) * 10);

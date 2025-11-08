@@ -97,7 +97,6 @@
 </template>
 
 <script>
-import SongList from '~/components/Song/List';
 import FilterRow from './components/FilterRow';
 import AuthorsList from './components/AuthorsList';
 import Filters from './components/Filters';
@@ -226,7 +225,6 @@ export default {
 
   components: {
     Logo,
-    SongList,
     AuthorsList,
     Filters,
     InitFilters,

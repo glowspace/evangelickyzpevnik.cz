@@ -14,7 +14,7 @@ import useChordStore from '~/stores/homepage';
 
 const store = useChordStore();
 
-if (process.client && store.noSleep == null) {
+if (import.meta.client && store.noSleep == null) {
   store.noSleep = new NoSleep();
 }
 

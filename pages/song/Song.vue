@@ -33,9 +33,8 @@
 import gql from 'graphql-tag';
 import SongDetail from './SongDetail';
 import SongLoading from './SongLoading';
-import Kebab from '~/components/Kebab';
-import { getFullName } from '~/components/SongName';
 import Bowser from 'bowser';
+import { getFullName } from '~/components/Song/Name';
 import { SongListItemFragment } from '~/components/Song/ListItem';
 
 const VISIT_SONG = gql`
@@ -160,9 +159,6 @@ const FETCH_SONG_LYRIC = gql`
 `;
 
 export default {
-  name: 'Song',
-  components: { SongLoading, SongDetail, Kebab },
-
   head() {
     return generateHead(this.getTitle(), this.getDescription());
   },
@@ -197,7 +193,7 @@ export default {
           mutation: VISIT_SONG,
           variables: {
             // todo: detect desktop/mobile on server side
-            is_mobile: process.client ? this.isMobileBrowser() : null,
+            is_mobile: import.meta.client ? this.isMobileBrowser() : null,
             song_lyric_id: parseInt(this.$route.params.id),
             visit_type: visit_type,
           },
@@ -253,13 +249,11 @@ export default {
   },
 
   mounted() {
-    if (!this.$apollo.loading) {
-      if (
-        this.song_lyric &&
-        window.location.pathname != this.song_lyric.public_route
-      ) {
-        window.history.replaceState(null, '', this.song_lyric.public_route);
-      }
+    if (
+      this.song_lyric &&
+      window.location.pathname != this.song_lyric.public_route
+    ) {
+      window.history.replaceState(null, '', this.song_lyric.public_route);
     }
 
     // todo: notify when SSR (this works only on client)

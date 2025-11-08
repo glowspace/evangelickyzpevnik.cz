@@ -34,7 +34,7 @@ export default defineNuxtPlugin(nuxtApp => {
   const apolloClient = new ApolloClient({
     cache,
     link,
-    ...(process.server
+    ...(import.meta.server
       ? { ssrMode: true }
       : { ssrForceFetchDelay: 100 }),
   })
@@ -48,7 +48,7 @@ export default defineNuxtPlugin(nuxtApp => {
     nuxtApp.payload.data[cacheKey] = cache.extract()
   })
 
-  if (process.client && nuxtApp.payload.data[cacheKey]) {
+  if (import.meta.client && nuxtApp.payload.data[cacheKey]) {
     cache.restore(destr(JSON.stringify(nuxtApp.payload.data[cacheKey])))
   }
 

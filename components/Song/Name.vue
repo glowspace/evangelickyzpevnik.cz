@@ -55,7 +55,7 @@ export default {
   },
 };
 
-function getNames(song, songbookId) {
+export function getNames(song, songbookId) {
   if (songbookId != null && song.songbook_records != null) {
     const songbookName = song.songbook_records.find(
       (record) => record.pivot.songbook.id == songbookId

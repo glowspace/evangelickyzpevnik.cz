@@ -42,7 +42,7 @@
           </template>
           <tr v-if="results_loaded">
             <td class="p-0 border-top-0">
-              <scroll-trigger
+              <SearchScrollTrigger
                 @triggerIntersected="loadMore"
                 @noObserver="caniuseObserver = false"
                 :enabled="enable_more"
@@ -78,13 +78,12 @@
 
 <script>
 import gql from 'graphql-tag';
-import ScrollTrigger from '~/components/Search/ScrollTrigger';
 import buildElasticSearchParams, {
   getSelectedTagsDcnf,
 } from '~/components/Search/buildElasticSearchParams';
 import mergeFetchMoreResult from '~/components/Search/mergeFetchMoreResult';
 import tagsFilters from '../../pages/search/components/tagsFilters';
-import SongListItem, { SongListItemFragment } from './ListItem';
+import { SongListItemFragment } from './ListItem';
 import { isEmpty } from 'lodash-es';
 
 // Query
@@ -132,8 +131,6 @@ export default {
       default: false,
     },
   },
-
-  components: { ScrollTrigger, SongListItem },
 
   data() {
     return {

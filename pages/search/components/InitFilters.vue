@@ -50,7 +50,7 @@ export default {
     },
 
     randomTags() {
-      if (process.client && this.$apollo.loading === false) {
+      if (import.meta.client && this.$apollo.loading === false) {
         return this.shuffleArray(this.usefulTags).slice(0, 10);
       } else {
         return [];

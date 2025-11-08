@@ -12,18 +12,11 @@
   </span>
 </template>
 
-<script>
-export default {
-  name: 'SongInfo',
-
-  computed: {
-    licenceValues() {
-      return this.song.licence_type_cc_string_values
-        ? JSON.parse(this.song.licence_type_cc_string_values)
-        : undefined;
-    },
-  },
-
-  props: ['song'],
-};
+<script setup>
+const props = defineProps(['song']);
+const licenceValues = computed(() =>
+  props.song.licence_type_cc_string_values
+    ? JSON.parse(props.song.licence_type_cc_string_values)
+    : undefined
+);
 </script>

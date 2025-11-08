@@ -8,62 +8,47 @@
   </BasicButton>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      fullscreen: false,
-    };
-  },
+<script setup>
+const fullscreen = ref(false);
 
-  methods: {
-    toggleFullscreen() {
-      if (process.client) {
-        var element = document.documentElement;
-        var isFullscreen =
-          document.webkitIsFullScreen || document.mozFullScreen || false;
-        element.requestFullScreen =
-          element.requestFullScreen ||
-          element.webkitRequestFullScreen ||
-          element.mozRequestFullScreen ||
-          function () {
-            return false;
-          };
-        document.cancelFullScreen =
-          document.cancelFullScreen ||
-          document.webkitCancelFullScreen ||
-          document.mozCancelFullScreen ||
-          function () {
-            return false;
-          };
+function isFullscreen() {
+  return (
+    document.fullscreenElement != null ||
+    document.webkitIsFullScreen ||
+    document.mozFullScreen ||
+    false
+  );
+}
 
-        if (isFullscreen) {
-          document.cancelFullScreen();
-        } else {
-          element.requestFullScreen();
-        }
-      }
-    },
+function toggleFullscreen() {
+  var element = document.documentElement;
+  element.requestFullScreen =
+    element.requestFullScreen ||
+    element.webkitRequestFullScreen ||
+    element.mozRequestFullScreen ||
+    (() => false);
+  document.cancelFullScreen =
+    document.cancelFullScreen ||
+    document.webkitCancelFullScreen ||
+    document.mozCancelFullScreen ||
+    (() => false);
 
-    fullscreenChanged() {
-      if (process.client) {
-        this.fullscreen =
-          document.webkitIsFullScreen || document.mozFullScreen || false;
-      }
-    },
-  },
+  if (isFullscreen()) {
+    document.cancelFullScreen();
+  } else {
+    element.requestFullScreen();
+  }
+}
 
-  mounted() {
-    if (process.client) {
-      document.addEventListener('fullscreenchange', this.fullscreenChanged);
-      document.addEventListener('mozfullscreenchange', this.fullscreenChanged);
-      document.addEventListener(
-        'webkitfullscreenchange',
-        this.fullscreenChanged
-      );
-      document.addEventListener('msfullscreenchange', this.fullscreenChanged);
-      this.fullscreenChanged();
-    }
-  },
-};
+function fullscreenChanged() {
+  fullscreen.value = isFullscreen();
+}
+
+onMounted(() => {
+  document.addEventListener('fullscreenchange', fullscreenChanged);
+  document.addEventListener('mozfullscreenchange', fullscreenChanged);
+  document.addEventListener('webkitfullscreenchange', fullscreenChanged);
+  document.addEventListener('msfullscreenchange', fullscreenChanged);
+  fullscreenChanged();
+});
 </script>
