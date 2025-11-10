@@ -2,8 +2,8 @@
   <div v-if="news_items && news_items.length">
     <DashboardCard title="Novinky">
       <UniversalLink
-        v-for="(item, key) in news_items"
-        :key="key"
+        v-for="item in news_items"
+        :key="item.id"
         :type="item.link_type"
         :link="item.link"
         class="list-item"
@@ -23,6 +23,7 @@ import gql from 'graphql-tag';
 const FETCH_NEWS = gql`
   query {
     news_items(active: true) {
+      id
       text
       fa_icon
       link

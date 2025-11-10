@@ -1,5 +1,6 @@
 <template>
   <DashboardNews />
+  <DashboardSongbooks />
   <DashboardCard title="Další možnosti">
     <BasicClickable
       href="https://play.google.com/store/apps/details?id=cce.evangelicky_zpevnik"
