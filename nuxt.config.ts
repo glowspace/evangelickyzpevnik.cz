@@ -1,7 +1,7 @@
 import variations from './variations/variations';
 
 const variationKey = process.env.VARIATION || 'ez';
-const variation = variations.find((v) => v.key == variationKey) || variations[0];
+const variation = variations.find((v) => v.key == variationKey) || variations[0]!;
 
 const siteUrl = process.env.APP_URL || `http://localhost:${process.env.DEV_PORT || 3000}`;
 
@@ -40,6 +40,7 @@ export default defineNuxtConfig({
   },
   tailwindcss: {
     configPath: '~/assets/tailwind.config.js',
+    cssPath: '~/assets/css/tailwind.css',
   },
   devServer: {
     port: +(process.env.DEV_PORT || 3000),

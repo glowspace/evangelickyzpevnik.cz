@@ -2000,11 +2000,11 @@ __metadata:
   linkType: hard
 
 "@romcal/calendar.czech-republic@npm:^3.0.0-alpha.0":
-  version: 3.0.0-alpha.0
-  resolution: "@romcal/calendar.czech-republic@npm:3.0.0-alpha.0"
+  version: 3.0.0-dev.115
+  resolution: "@romcal/calendar.czech-republic@npm:3.0.0-dev.115"
   peerDependencies:
-    romcal: 3.0.0-alpha.0
-  checksum: 10c0/6f9979ced95c1f7a9c731543c6fccf995b6f2412d11632f422f5ac65f120efaca6a2612e46b257c88ce1dadfc78fbcbeaf10bc85fc37eadb9bd0022cc68b3266
+    romcal: 3.0.0-dev.115
+  checksum: 10c0/096e66e48f20a9497a246247bc577a272ab896c0871ff4ef02a9efb1e11a80a5723360383e8a1150c2aa85fe39c30602f664cf1f4e6b9a2d534f4cdb47c5d48c
   languageName: node
   linkType: hard
 
@@ -2042,6 +2042,15 @@ __metadata:
   version: 1.0.8
   resolution: "@types/estree@npm:1.0.8"
   checksum: 10c0/39d34d1afaa338ab9763f37ad6066e3f349444f9052b9676a7cc0252ef9485a41c6d81c9c4e0d26e9077993354edf25efc853f3224dd4b447175ef62bdcc86a5
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^24.10.0":
+  version: 24.10.0
+  resolution: "@types/node@npm:24.10.0"
+  dependencies:
+    undici-types: "npm:~7.16.0"
+  checksum: 10c0/f82ed7194e16f5590ef7afdc20c6d09068c76d50278b485ede8f0c5749683536e3064ffa8def8db76915196afb3724b854aa5723c64d6571b890b14492943b46
   languageName: node
   linkType: hard
 
@@ -2731,12 +2740,12 @@ __metadata:
   linkType: hard
 
 "bible-liturgy-utils@https://github.com/glowspace/bible-liturgy-utils#commonjs":
-  version: 2.0.2
-  resolution: "bible-liturgy-utils@https://github.com/glowspace/bible-liturgy-utils.git#commit=e4823e6df31cffec67073002283496d726ec32bf"
+  version: 2.0.3
+  resolution: "bible-liturgy-utils@https://github.com/glowspace/bible-liturgy-utils.git#commit=3756b236af791cbf4ba628e667a3237118bb061d"
   dependencies:
     "@romcal/calendar.czech-republic": "npm:^3.0.0-alpha.0"
     romcal: "npm:3.0.0-alpha.0"
-  checksum: 10c0/08f13be1f9518729506a7f9f675d823081b6e04aa78b44ac38435541d4edf6b083bb138308c3aa5d9cd770e0880b3316f87e8412694eb734350d6f4fa80242d6
+  checksum: 10c0/a7deb61f9ca4b34de451d9047ff31baeb20d54fe50083d04457693413a35e408359a2e15e49bda69ccfacdb4d6fc514fe2857058222ca326314d3df74c794cb3
   languageName: node
   linkType: hard
 
@@ -3944,6 +3953,7 @@ __metadata:
     "@nuxtjs/apollo": "npm:^5.0.0-alpha.15"
     "@nuxtjs/tailwindcss": "npm:^6.14.0"
     "@pinia/nuxt": "npm:^0.11.3"
+    "@types/node": "npm:^24.10.0"
     bible-liturgy-utils: "https://github.com/glowspace/bible-liturgy-utils#commonjs"
     bigpicture: "npm:^2.6.2"
     bowser: "npm:^2.11.0"
@@ -8153,6 +8163,13 @@ __metadata:
     magic-string: "npm:^0.30.17"
     unplugin: "npm:^2.1.0"
   checksum: 10c0/08d334fbe51ad4bad4c7b7cc5efec84e61b39ca44e20cda2750a37f20b8e122ed4ce525d6a152b4c463ca1545c38fb556049d8c4ee0299afba4fdb0057d711ee
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~7.16.0":
+  version: 7.16.0
+  resolution: "undici-types@npm:7.16.0"
+  checksum: 10c0/3033e2f2b5c9f1504bdc5934646cb54e37ecaca0f9249c983f7b1fc2e87c6d18399ebb05dc7fd5419e02b2e915f734d872a65da2e3eeed1813951c427d33cc9a
   languageName: node
   linkType: hard
 
