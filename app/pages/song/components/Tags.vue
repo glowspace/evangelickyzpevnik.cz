@@ -1,13 +1,8 @@
 <template>
   <div>
-    <div
-      class="tag-group"
-      v-if="song.tags_liturgy_part.length || song.is_approved_for_liturgy"
-    >
+    <div class="tag-group" v-if="song.tags_liturgy_part.length || song.is_approved_for_liturgy">
       <BasicChip
-        v-if="
-          $config.public.variation.showLiturgyApproval && song.is_approved_for_liturgy
-        "
+        v-if="$config.public.variation.showLiturgyApproval && song.is_approved_for_liturgy"
         class="tag-blue"
       >
         schváleno ČBK pro liturgii
@@ -41,9 +36,7 @@
         {{ tag.name }}
       </BasicChip>
       <BasicChip
-        v-for="tag in song.tags_saints
-          .concat(song.tags_sacred_occasion)
-          .concat(song.tags_generic)"
+        v-for="tag in song.tags_saints.concat(song.tags_sacred_occasion).concat(song.tags_generic)"
         :key="tag.id"
         :to="'/?stitky=' + tag.id"
         class="tag-green"
@@ -60,7 +53,8 @@
         :to="'/?zpevniky=' + sb.pivot.songbook.id + '&razeni=2'"
       >
         <template v-if="sb.pivot.number">
-          <span class="songbook-name">{{ sb.pivot.songbook.name }}</span><span class="songbook-number">{{ sb.pivot.number }}</span>
+          <span class="songbook-name">{{ sb.pivot.songbook.name }}</span
+          ><span class="songbook-number">{{ sb.pivot.number }}</span>
         </template>
         <span v-else>{{ sb.pivot.songbook.name }}</span>
       </BasicChip>
@@ -77,45 +71,27 @@
   </div>
 </template>
 
-<script>
-/**
- * Song tags component.
- *
- * It renders:
- * 1) related tags
- * 2) related songbooks
- * 3) liturgy approval
- * 4) bible reference
- */
-
+<script setup>
+// todo: move reference parsing to the server to reduce the client bundle size
 import bible from 'bible-liturgy-utils/bible/bible';
 
-export default {
-  name: 'Tags',
+const props = defineProps(['song']);
 
-  props: ['song'],
+// todo: refactor to use server-side filtering of songbooks
+const publicSongbookRecords = computed(() =>
+  props.song.songbook_records.filter((sb) => !sb.pivot.songbook.is_private)
+);
 
-  computed: {
-    // todo: refactor to use server-side filtering of songbooks
+const bibleRefs = computed(() => {
+  if (props.song.bible_refs_src) {
+    const lines = props.song.bible_refs_src.split('\n');
+    const bib_refs = lines.map((l) => bible.parseEuropean(l));
+    const lines_cz = bib_refs.flatMap((r) => r.toCzechStrings());
+    return lines_cz;
+  }
 
-    publicSongbookRecords() {
-      return this.song.songbook_records.filter(
-        (sb) => !sb.pivot.songbook.is_private
-      );
-    },
-
-    bibleRefs() {
-      if (this.song.bible_refs_src) {
-        const lines = this.song.bible_refs_src.split('\n');
-        const bib_refs = lines.map((l) => bible.parseEuropean(l));
-        const lines_cz = bib_refs.flatMap((r) => r.toCzechStrings());
-        return lines_cz;
-      }
-
-      return false;
-    },
-  },
-};
+  return false;
+});
 </script>
 
 <style lang="postcss" scoped>

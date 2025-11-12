@@ -3,8 +3,7 @@
     <span v-if="song.type">
       <span v-if="original">
         <span>Originál: </span>
-        <BasicClickable :to="original.public_route"
-          ><song-name :song="original" /></BasicClickable
+        <BasicClickable :to="original.public_route"><song-name :song="original" /></BasicClickable
         ><br />
         <span v-if="original.authors_pivot.length == 0">Autor neznámý, </span>
         <span v-else>
@@ -13,11 +12,7 @@
           <span v-for="(ap, key) in original.authors_pivot" :key="key">
             <BasicClickable
               :to="ap.pivot.author.public_route"
-              :title="
-                { GENERIC: '', LYRICS: 'text', MUSIC: 'hudba' }[
-                  ap.pivot.authorship_type
-                ]
-              "
+              :title="{ GENERIC: '', LYRICS: 'text', MUSIC: 'hudba' }[ap.pivot.authorship_type]"
               >{{ ap.pivot.author.name }}</BasicClickable
             ><span>, </span>
           </span>
@@ -28,9 +23,7 @@
         >{{ original ? 'a' : 'A' }}utor překladu neznámý</span
       >
       <span v-else>
-        <span v-if="song.authors_pivot.length == 1"
-          >{{ original ? 'a' : 'A' }}utor překladu:
-        </span>
+        <span v-if="song.authors_pivot.length == 1">{{ original ? 'a' : 'A' }}utor překladu: </span>
         <span v-else>{{ original ? 'a' : 'A' }}utoři překladu: </span>
         <span v-for="(ap, key2) in song.authors_pivot" :key="key2">
           <span v-if="key2">, </span>
@@ -51,11 +44,7 @@
           <span v-if="key3">, </span>
           <BasicClickable
             :to="ap.pivot.author.public_route"
-            :title="
-              { GENERIC: '', LYRICS: 'text', MUSIC: 'hudba' }[
-                ap.pivot.authorship_type
-              ]
-            "
+            :title="{ GENERIC: '', LYRICS: 'text', MUSIC: 'hudba' }[ap.pivot.authorship_type]"
             >{{ ap.pivot.author.name }}</BasicClickable
           >
         </span>
@@ -64,15 +53,7 @@
   </span>
 </template>
 
-<script>
-export default {
-  props: ['song'],
-  computed: {
-    original: function () {
-      return this.song.song.song_lyrics.find((sl) => {
-        return sl.type === 0;
-      });
-    },
-  },
-};
+<script setup>
+const props = defineProps(['song']);
+const original = computed(() => props.song.song.song_lyrics.find((sl) => sl.type == 0));
 </script>
