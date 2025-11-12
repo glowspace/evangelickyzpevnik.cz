@@ -1,5 +1,5 @@
 <template>
-  <TopBar title="O zpěvníku ProScholy.cz" is-h1 />
+  <PageTopBar title="O zpěvníku ProScholy.cz" is-h1 />
   <div class="custom-container">
     <div class="cont basic-content">
       <h2>Kdo za projektem stojí?</h2>

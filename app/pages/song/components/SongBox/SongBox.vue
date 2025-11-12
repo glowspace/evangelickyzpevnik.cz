@@ -185,7 +185,7 @@
           </div>
         </div>
       </div>
-      <Footer />
+      <PageFooter />
     </div>
   </div>
   <div class="grow"><!-- ensures that the bottom bar is always at the bottom --></div>
@@ -199,7 +199,7 @@
     :media-available="recordings.length"
     :show-tools-badge="!!chordSharedStore.transposition"
   >
-    <BottomSheets v-model="showTools" title="Nástroje" position-absolute>
+    <PageBottomSheets v-model="showTools" title="Nástroje" position-absolute>
       <div
         v-if="song_lyric.has_chords"
         :class="{
@@ -233,9 +233,9 @@
       </div>
 
       <no-sleep />
-    </BottomSheets>
+    </PageBottomSheets>
 
-    <BottomSheets v-model="showMedia" title="Nahrávky" position-absolute>
+    <PageBottomSheets v-model="showMedia" title="Nahrávky" position-absolute>
       <div
         v-if="hasExternals && loadMedia && !$apollo.loading"
         class="flex flex-col sm:grid grid-cols-2 gap-5"
@@ -249,7 +249,7 @@
           ></external>
         </div>
       </div>
-    </BottomSheets>
+    </PageBottomSheets>
   </BottomBar>
 </template>
 

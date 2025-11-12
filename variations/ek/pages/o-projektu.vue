@@ -1,5 +1,5 @@
 <template>
-  <TopBar title="O evangelickém kancionálu" is-h1 />
+  <PageTopBar title="O evangelickém kancionálu" is-h1 />
   <div class="custom-container">
     <div class="cont basic-content">
       <h2>O projektu</h2>

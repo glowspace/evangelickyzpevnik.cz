@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col min-h-screen items-stretch">
-    <TopBar :title="topBarTitle">
+    <PageTopBar :title="topBarTitle">
       <Kebab
         v-if="song_lyric"
         :items="[
@@ -23,7 +23,7 @@
           },
         ]"
       />
-    </TopBar>
+    </PageTopBar>
     <song-loading v-if="$apollo.loading"></song-loading>
     <song-detail v-else-if="song_lyric" :song="song_lyric"></song-detail>
   </div>

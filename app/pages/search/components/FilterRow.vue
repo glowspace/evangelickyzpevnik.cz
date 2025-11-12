@@ -10,9 +10,9 @@
         <BasicChip class="chip-add hover:!bg-surface-200 md:!hidden" @click="showFilters = true"><BasicIcon name="add" class="-mx-1 text-lg" />přidat filtr</BasicChip>
       </div>
     </div>
-    <BottomSheets v-model="showFilters" title="Filtrovat">
+    <PageBottomSheets v-model="showFilters" title="Filtrovat">
       <slot />
-    </BottomSheets>
+    </PageBottomSheets>
   </div>
 </template>
 

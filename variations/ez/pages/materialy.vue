@@ -1,5 +1,5 @@
 <template>
-  <TopBar title="Materiály ke stažení" is-h1 />
+  <PageTopBar title="Materiály ke stažení" is-h1 />
   <div class="custom-container">
     <div class="cont basic-content">
       <p>Hledáte chorálník nebo kytarový doprovodník? Odpovídající materiály najdete u&nbsp;jednotlivých písní v sekci Noty.</p>

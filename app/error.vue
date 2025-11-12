@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout>
-    <TopBar :title="'Chyba ' + error.statusCode" is-h1 />
+    <PageTopBar :title="'Chyba ' + error.statusCode" is-h1 />
     <div class="custom-container">
       <div class="shadow bg-surface-100 mx-4 my-12 px-6 py-4 inline-block">
         <p class="mb-3">

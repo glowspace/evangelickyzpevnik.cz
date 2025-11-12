@@ -1,10 +1,10 @@
 <template>
   <div class="layout" :class="{ 'layout-song': $route.name == 'song' }">
-    <Navbar
+    <PageNavbar
       :class="[{ hidden: $route.name == 'song' }, 'md:flex print:hidden']"
     />
     <div class="flex">
-      <SideList />
+      <PageSideList />
       <div class="grow">
         <slot />
       </div>

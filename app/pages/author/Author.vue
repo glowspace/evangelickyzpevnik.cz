@@ -1,5 +1,5 @@
 <template>
-  <TopBar :title="author ? author.type_string : 'načítám…'">
+  <PageTopBar :title="author ? author.type_string : 'načítám…'">
     <Kebab
       v-if="author"
       :items="[
@@ -17,7 +17,7 @@
         },
       ]"
     />
-  </TopBar>
+  </PageTopBar>
   <div class="custom-container">
     <div class="m-5">
       <template v-if="$apollo.loading">
@@ -86,7 +86,7 @@
           V databázi zatím nemáme žádné související písně.
         </div>
 
-        <Footer />
+        <PageFooter />
       </template>
     </div>
   </div>
