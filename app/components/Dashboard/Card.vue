@@ -29,7 +29,7 @@ const props = defineProps({ title: String });
 
   :deep(.list-icon),
   :deep(.list-date) {
-    @apply inline-block mr-3 text-gray-700;
+    @apply inline-flex items-center justify-center mr-3 text-gray-700;
   }
 
   :deep(.list-icon) {

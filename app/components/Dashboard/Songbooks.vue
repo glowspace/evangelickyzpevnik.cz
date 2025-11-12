@@ -7,7 +7,10 @@
         :to="'/zpevnik/' + songbook.id"
         class="list-item"
       >
-        {{ songbook.name }}
+        <span class="list-icon">
+          <div class="w-5 h-5 rounded" :style="{ background: songbook.color }"></div>
+        </span>
+        <span>{{ songbook.name }}</span>
       </BasicClickable>
     </DashboardCard>
   </div>
