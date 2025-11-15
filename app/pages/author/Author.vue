@@ -1,5 +1,5 @@
 <template>
-  <PageTopBar :title="author ? author.type_string : 'načítám…'">
+  <PageTopBar :title="author?.type_string ?? 'načítám…'">
     <Kebab
       v-if="author"
       :items="[
@@ -20,11 +20,15 @@
   </PageTopBar>
   <div class="custom-container">
     <div class="m-5">
-      <template v-if="$apollo.loading">
+      <template v-if="pending">
         <LoaderSkeleton type="heading" class="mt-6" />
         <LoaderSkeleton type="paragraph" class="mt-6" />
       </template>
-      <template v-else-if="author">
+      <template v-else-if="!author">
+        <!-- displayed only after client-side navigation (SSR throws) -->
+        <p>Autor nebyl nalezen.</p>
+      </template>
+      <template v-else>
         <h1 class="mb-3 text-2xl font-semibold">{{ author.name }}</h1>
 
         <div class="basic-content">
@@ -37,9 +41,7 @@
             <strong>Související autoři: </strong>
             <span v-for="(members, key) in author.members" :key="key">
               <span v-if="key">, </span>
-              <BasicClickable :to="members.public_route">{{
-                members.name
-              }}</BasicClickable>
+              <BasicClickable :to="members.public_route">{{ members.name }}</BasicClickable>
             </span>
           </p>
 
@@ -47,9 +49,7 @@
             <strong>Skupiny: </strong>
             <span v-for="(membership, key2) in author.memberships" :key="key2">
               <span v-if="key2">, </span>
-              <BasicClickable :to="membership.public_route">{{
-                membership.name
-              }}</BasicClickable>
+              <BasicClickable :to="membership.public_route">{{ membership.name }}</BasicClickable>
             </span>
           </p>
         </div>
@@ -82,9 +82,7 @@
             :songs="author.songs_interpreted"
           />
         </div>
-        <div v-else class="py-5">
-          V databázi zatím nemáme žádné související písně.
-        </div>
+        <div v-else class="py-5">V databázi zatím nemáme žádné související písně.</div>
 
         <PageFooter />
       </template>
@@ -92,7 +90,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import AuthorSongList, { AuthorSongListFields } from './AuthorSongList';
 import gql from 'graphql-tag';
 
@@ -128,73 +126,34 @@ const FETCH_AUTHOR = gql`
   ${AuthorSongListFields}
 `;
 
-export default {
-  name: 'Author',
+// load data
+const route = useRoute();
+const { data, pending } = await useLazyAsyncQuery(FETCH_AUTHOR, { id: route.params.id });
+const author = computed(() => data.value?.author);
 
-  components: {
-    AuthorSongList,
-  },
+if (import.meta.server) {
+  checkNotFound(author.value);
+}
 
-  head() {
-    return generateHead(this.getTitle(), this.getDescription());
-  },
+// head content
+const { variation, titleSeparator } = useRuntimeConfig()?.public;
+const aboutStrings = ['autorovi', 'hudebním uskupení', 'schole', 'kapele', 'sboru'];
+const thisStrings = [
+  'tohoto autora',
+  'tohoto hudebního uskupení',
+  'této scholy',
+  'této kapely',
+  'tohoto sboru',
+];
 
-  data() {
-    return {
-      aboutStrings: [
-        'autorovi',
-        'hudebním uskupení',
-        'schole',
-        'kapele',
-        'sboru',
-      ],
-      thisStrings: [
-        'tohoto autora',
-        'tohoto hudebního uskupení',
-        'této scholy',
-        'této kapely',
-        'tohoto sboru',
-      ],
-    };
-  },
+const title = computed(() => (author.value?.name ?? 'Autor') + titleSeparator + variation.title);
+const description = computed(() => {
+  if (author.value?.description) {
+    return author.value.description;
+  }
 
-  methods: {
-    getTitle() {
-      return (
-        (this.author ? this.author.name : 'Autor') +
-        this.$config.public.titleSeparator +
-        this.$config.public.variation.title
-      );
-    },
-
-    getDescription() {
-      if (this.author && this.author.description) {
-        return this.author.description;
-      }
-
-      let type = this.author && this.author.type ? this.author.type : 0;
-      return `Písně i ${this.thisStrings[type]} obsahuje ${this.$config.public.variation.name}.`;
-    },
-  },
-
-  apollo: {
-    author: {
-      query: FETCH_AUTHOR,
-      variables() {
-        return {
-          id: this.$route.params.id,
-        };
-      },
-      result(result) {
-        if (result.data.author === null) {
-          throw createError({
-            statusCode: 404,
-            statusMessage: 'Page Not Found',
-            fatal: true,
-          });
-        }
-      },
-    },
-  },
-};
+  const type = author.value?.type ?? 0;
+  return `Písně i ${thisStrings[type]} obsahuje ${variation.name}.`;
+});
+useHead(generateHead(title, description));
 </script>
