@@ -7,9 +7,7 @@
           {
             label: 'Nahlásit',
             icon: 'warning',
-            href:
-              'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/1/create/19?customfield_10056=' +
-              encodeURIComponent($config.public.siteUrl + $route.fullPath),
+            href: getReportLink('song'),
           },
           {
             label: 'Upravit',
@@ -38,11 +36,7 @@ import { getFullName } from '~/components/Song/Name';
 import { SongListItemFragment } from '~/components/Song/ListItem';
 
 const VISIT_SONG = gql`
-  mutation (
-    $song_lyric_id: Int!
-    $is_mobile: Boolean
-    $visit_type: VisitType!
-  ) {
+  mutation ($song_lyric_id: Int!, $is_mobile: Boolean, $visit_type: VisitType!) {
     visit_song(
       song_lyric_id: $song_lyric_id
       source: PROSCHOLY
@@ -202,10 +196,7 @@ export default {
     },
 
     isMobileBrowser() {
-      return (
-        Bowser.getParser(window.navigator.userAgent).getPlatformType() ===
-        'mobile'
-      );
+      return Bowser.getParser(window.navigator.userAgent).getPlatformType() === 'mobile';
     },
   },
 
@@ -222,8 +213,7 @@ export default {
 
     songbookNumber() {
       return this.song_lyric.songbook_records.find(
-        (record) =>
-          record.pivot.songbook.id == this.$config.public.variation.songbook
+        (record) => record.pivot.songbook.id == this.$config.public.variation.songbook
       )?.pivot.number;
     },
   },
@@ -249,10 +239,7 @@ export default {
   },
 
   mounted() {
-    if (
-      this.song_lyric &&
-      window.location.pathname != this.song_lyric.public_route
-    ) {
+    if (this.song_lyric && window.location.pathname != this.song_lyric.public_route) {
       window.history.replaceState(null, '', this.song_lyric.public_route);
     }
 

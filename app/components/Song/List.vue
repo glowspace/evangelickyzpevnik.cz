@@ -1,10 +1,7 @@
 <template>
   <div class="mb-4">
     <LoaderLinear
-      :class="[
-        { 'opacity-0': results_loaded || !loading_bar },
-        'transition-opacity',
-      ]"
+      :class="[{ 'opacity-0': results_loaded || !loading_bar }, 'transition-opacity']"
     />
     <table class="w-full">
       <tbody>
@@ -14,15 +11,7 @@
           </td>
           <td>Načítám…</td>
           <td class="p-2 text-right pr-7">
-            <BasicButton
-              :href="
-                'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/6/create/20?customfield_10056=' +
-                encodeURIComponent($config.public.siteUrl + $route.fullPath)
-              "
-              type="outlined"
-            >
-              Nahlásit
-            </BasicButton>
+            <BasicButton :href="getReportLink()" type="outlined"> Nahlásit </BasicButton>
           </td>
         </tr>
         <template v-else-if="song_lyrics && song_lyrics.length">
@@ -34,8 +23,7 @@
               :song_lyric="song_lyric"
               :songbook-id="preferred_songbook_id"
               :force-number="
-                preferred_songbook_id != $config.public.variation.songbook ||
-                sort == 2
+                preferred_songbook_id != $config.public.variation.songbook || sort == 2
               "
               :is-search="!compact"
             />
@@ -239,16 +227,14 @@ export default {
       debounce: 1, // 1ms debounce probably makes the page switching faster
       result(result) {
         this.$emit('query-loaded', null);
-        this.enable_more =
-          result.data.song_lyrics_paginated.paginatorInfo.hasMorePages;
+        this.enable_more = result.data.song_lyrics_paginated.paginatorInfo.hasMorePages;
         this.results_loaded = true;
 
         // when the graphql result is cached, then currentPage is higher than 1 at component mounting
         // this needs to get mirrored in the local page property
         // we also have to check if the user has fired loadMore event as otherwise he could accidentally fetch one page multiple times
         if (!this.loadedMore) {
-          this.page =
-            result.data.song_lyrics_paginated.paginatorInfo.currentPage;
+          this.page = result.data.song_lyrics_paginated.paginatorInfo.currentPage;
         }
       },
       watchLoading(isLoading, countModifier) {

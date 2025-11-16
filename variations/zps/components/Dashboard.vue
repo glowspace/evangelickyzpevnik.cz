@@ -16,13 +16,7 @@
       <BasicIcon name="ios" class="list-icon" />
       <span>Aplikace pro iOS</span>
     </BasicClickable>
-    <BasicClickable
-      :href="
-        'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/6/create/20?customfield_10056=' +
-        encodeURIComponent($config.public.siteUrl + $route.fullPath)
-      "
-      class="list-item"
-    >
+    <BasicClickable :href="getReportLink()" class="list-item">
       <BasicIcon name="warning" class="list-icon" />
       <span>Nahlásit chybu</span>
     </BasicClickable>

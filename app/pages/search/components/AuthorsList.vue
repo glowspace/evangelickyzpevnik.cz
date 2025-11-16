@@ -2,9 +2,7 @@
   <!-- todo: refactor so that it does not need client-only wrapper -->
   <!-- <client-only> -->
   <div class="mb-4">
-    <LoaderLinear
-      :class="[{ 'opacity-0': results_loaded }, 'transition-opacity']"
-    />
+    <LoaderLinear :class="[{ 'opacity-0': results_loaded }, 'transition-opacity']" />
     <table class="w-full">
       <tbody>
         <tr v-if="!results_loaded && !(authors && authors.length)">
@@ -13,15 +11,7 @@
           </td>
           <td>Načítám…</td>
           <td class="p-2 text-right pr-7">
-            <BasicButton
-              :href="
-                'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/6/create/20?customfield_10056=' +
-                encodeURIComponent($config.public.siteUrl + $route.fullPath)
-              "
-              type="outlined"
-            >
-              Nahlásit
-            </BasicButton>
+            <BasicButton :href="getReportLink()" type="outlined"> Nahlásit </BasicButton>
           </td>
         </tr>
         <template v-else-if="authors && authors.length">
@@ -48,8 +38,7 @@
               >Žádný autor odpovídající zadaným kritériím nebyl nalezen.</span
             >
             <span v-else
-              >Začněte psát do vyhledávacího pole nahoře a&nbsp;seznam autorů se
-              zobrazí…</span
+              >Začněte psát do vyhledávacího pole nahoře a&nbsp;seznam autorů se zobrazí…</span
             >
           </td>
         </tr>

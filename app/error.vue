@@ -13,25 +13,14 @@
           </span>
         </p>
         <div class="-m-1">
-          <BasicButton
-            icon-name="search"
-            type="primary"
-            class="m-1"
-            to="/?hledat=ano"
-          >
+          <BasicButton icon-name="search" type="primary" class="m-1" to="/?hledat=ano">
             Hledat
           </BasicButton>
           <BasicButton
             icon-name="warning"
             type="outlined"
             class="m-1"
-            :href="
-              'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/6/create/20?customfield_10056=' +
-              encodeURIComponent($config.public.siteUrl + $route.fullPath) +
-              '&summary=Chyba+webu+(' +
-              error.statusCode +
-              ')'
-            "
+            :href="getReportLink(null, error.statusCode)"
           >
             Nahlásit
           </BasicButton>
@@ -46,10 +35,7 @@ const props = defineProps(['error']);
 const { variation, titleSeparator } = useRuntimeConfig()?.public;
 
 useHead({
-  ...generateHead(
-    'Chyba ' + props.error.statusCode + titleSeparator + variation.title,
-    ''
-  ),
+  ...generateHead('Chyba ' + props.error.statusCode + titleSeparator + variation.title, ''),
   htmlAttrs: { lang: 'cs', dir: 'ltr' },
   link: getLinks(),
 });

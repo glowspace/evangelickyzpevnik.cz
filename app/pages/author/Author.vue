@@ -6,9 +6,7 @@
         {
           label: 'Nahlásit',
           icon: 'warning',
-          href:
-            'https://glowspace.atlassian.net/servicedesk/customer/portal/1/group/1/create/21?customfield_10056=' +
-            encodeURIComponent($config.public.siteUrl + $route.fullPath),
+          href: getReportLink('author'),
         },
         {
           label: 'Upravit',
