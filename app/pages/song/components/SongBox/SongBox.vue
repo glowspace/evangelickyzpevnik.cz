@@ -1,6 +1,6 @@
 <template>
   <div class="custom-container">
-    <div class="m-5">
+    <div class="m-5 mb-8">
       <div class="print:hidden">
         <div class="-mx-1">
           <BasicChip

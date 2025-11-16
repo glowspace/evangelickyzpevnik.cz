@@ -58,7 +58,7 @@
       </div>
       <div
         v-if="init"
-        class="p-5 sm:grid sm:grid-cols-2 gap-x-7 gap-y-5 space-y-4 sm:space-y-0 max-w-[1000px] mx-auto"
+        class="p-5 mb-5 sm:grid sm:grid-cols-2 gap-x-7 gap-y-5 space-y-4 sm:space-y-0 max-w-[1000px] mx-auto"
       >
         <Dashboard />
       </div>
